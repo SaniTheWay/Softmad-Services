@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Softmad.Services.LeadGeneration", "Softmad.Services.LeadGeneration\Softmad.Services.LeadGeneration.csproj", "{3E6DF725-365C-4C67-ACA6-16596AEF591D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3E6DF725-365C-4C67-ACA6-16596AEF591D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E6DF725-365C-4C67-ACA6-16596AEF591D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E6DF725-365C-4C67-ACA6-16596AEF591D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E6DF725-365C-4C67-ACA6-16596AEF591D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FB1E32FE-07A5-4BA0-9396-DB494B4A2459}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,6 @@
+@Softmad.Services.LeadGeneration_HostAddress = http://localhost:5123
+
+GET {{Softmad.Services.LeadGeneration_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
