@@ -4,7 +4,7 @@ namespace Softmad.Services.LeadGeneration.Repository.Interfaces
 {
     public interface ILeadRepository
     {
-        public bool SaveChanges();
+        public Task<bool> SaveLead(Lead leadEntry);
         public Task<List<Lead>> GetLeadsAsync();
 
     }
