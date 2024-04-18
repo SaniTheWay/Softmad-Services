@@ -1,27 +1,50 @@
-﻿using Softmad.Services.LeadGeneration.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Softmad.Services.LeadGeneration.Data;
 using Softmad.Services.LeadGeneration.Repository.Interfaces;
 using Softmad.Services.Models;
 
 namespace Softmad.Services.LeadGeneration.Repository
 {
-    public class LeadRepository:ILeadRepository
+    public class LeadRepository : ILeadRepository
     {
         private readonly DataContext _dataContext;
-        public LeadRepository(DataContext dataContext)
+        private readonly ILogger<LeadRepository> _logger;
+        public LeadRepository(DataContext dataContext, ILogger<LeadRepository> logger)
         {
             _dataContext = dataContext;
+            _logger = logger;
         }
 
         public async Task<List<Lead>> GetLeadsAsync()
         {
-            var leads = _dataContext.Leads.ToList();
-
+            ///Learn: https://www.linkedin.com/advice/3/how-do-you-avoid-ef-lazy-loading-pitfalls-n1-problem
+            //Here '.Include()' do EAGER loading 
+            var leads = _dataContext.Leads.Include(l => l.CustomerDetails)
+                                                    .ThenInclude(cd => cd.HospitalDetails)
+                                                    .Include(l => l.CustomerDetails)
+                                                    .ThenInclude(cd => cd.DoctorDetails).ToList(); 
             return leads;
         }
 
-        public bool SaveChanges()
+        public async Task<bool> SaveLead(Lead leadEntry)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _dataContext.Leads.AddAsync(leadEntry);
+                await SaveChanges();
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString(), "Error Occured while saving the new lead entry.");
+                throw;
+            }
+        }
+
+        private async Task SaveChanges()
+        {
+            await _dataContext.SaveChangesAsync();
         }
     }
 }

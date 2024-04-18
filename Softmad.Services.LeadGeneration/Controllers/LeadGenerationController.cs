@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Softmad.Services.LeadGeneration.Services.Interfaces;
 using Softmad.Services.Models;
 
@@ -22,7 +23,8 @@ namespace Softmad.Services.LeadGeneration.Controllers
         [HttpGet]
         public async Task<IEnumerable<Lead>> GetLeads()
         {
-            return await _leadGenerationService.GetLeads();
+            var result = await _leadGenerationService.GetLeads();
+            return result;
         }
 
         // GET api/<LeadGenerationController>/5
@@ -34,8 +36,17 @@ namespace Softmad.Services.LeadGeneration.Controllers
 
         // POST api/<LeadGenerationController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] Lead lead)
         {
+            try
+            {
+                var result = await _leadGenerationService.PostLeadAsync(lead);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // PUT api/<LeadGenerationController>/5

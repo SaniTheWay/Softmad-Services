@@ -12,14 +12,18 @@ namespace Softmad.Services.LeadGeneration.Services
         {
             _leadRepository = leadRepository; 
         }
+
+        /// <inheritdoc/>
         public async Task<List<Lead>> GetLeads()
         {
             var LeadsList = await _leadRepository.GetLeadsAsync();  
             return LeadsList;
         }
 
-        public async Task<bool> PostLead()
+        /// <inheritdoc/>
+        public async Task<bool> PostLeadAsync(Lead lead)
         {
+            await _leadRepository.SaveLead(lead);
             return true;
         }
     }
