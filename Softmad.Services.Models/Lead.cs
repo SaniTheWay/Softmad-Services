@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Softmad.Services.Models
 {
     public class Lead
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         [Required]
         public LeadType Type { get; set; }
@@ -33,6 +35,7 @@ namespace Softmad.Services.Models
     public class CustomerDetails
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set;}
         [Required]
         public HospitalDetails HospitalDetails { get; set; }
@@ -43,6 +46,7 @@ namespace Softmad.Services.Models
     public class HospitalDetails:Address
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Phone { get; set; }
@@ -52,6 +56,7 @@ namespace Softmad.Services.Models
     public class DoctorDetails
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Specialization { get; set; }
