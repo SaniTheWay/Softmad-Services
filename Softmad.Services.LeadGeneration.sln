@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Softmad.Services.LeadGeneration", "Softmad.Services.LeadGeneration\Softmad.Services.LeadGeneration.csproj", "{3E6DF725-365C-4C67-ACA6-16596AEF591D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Softmad.Services.LeadGeneration", "Softmad.Services.LeadGeneration\Softmad.Services.LeadGeneration.csproj", "{3E6DF725-365C-4C67-ACA6-16596AEF591D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Softmad.Services.Models", "Softmad.Services.Models\Softmad.Services.Models.csproj", "{E799B077-9F43-4CE8-A5D7-A16DC8A9D422}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Softmad.Services.Models", "Softmad.Services.Models\Softmad.Services.Models.csproj", "{E799B077-9F43-4CE8-A5D7-A16DC8A9D422}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Softmad.LeadGeneration", "Softmad.LeadGeneration\Softmad.LeadGeneration.csproj", "{DF92D5CC-EDB8-4D2C-BE28-5FCFEBE92D64}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{E799B077-9F43-4CE8-A5D7-A16DC8A9D422}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E799B077-9F43-4CE8-A5D7-A16DC8A9D422}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E799B077-9F43-4CE8-A5D7-A16DC8A9D422}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF92D5CC-EDB8-4D2C-BE28-5FCFEBE92D64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF92D5CC-EDB8-4D2C-BE28-5FCFEBE92D64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF92D5CC-EDB8-4D2C-BE28-5FCFEBE92D64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF92D5CC-EDB8-4D2C-BE28-5FCFEBE92D64}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
