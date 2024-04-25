@@ -1,0 +1,40 @@
+version: '3.4'
+
+services:
+  softmad.leadgeneration:
+    image: ${DOCKER_REGISTRY-}softmadleadgeneration
+    build:
+      context: .
+      dockerfile: Softmad.LeadGeneration/Dockerfile
+  softmad.leadgeneration-dapr:
+    image: "daprio/daprd:latest"
+    command: [ "./daprd", "-app-id", "Softmad-LeadGeneration", "-app-port", "8080" ]
+    depends_on:
+      - softmad.leadgeneration
+    network_mode: "service:softmad.leadgeneration"
+
+  softmad.services.leadgeneration:
+    image: ${DOCKER_REGISTRY-}softmadservicesleadgeneration
+    build:
+      context: .
+      dockerfile: Softmad.Services.LeadGeneration/Dockerfile
+  
+  softmad.services.leadgeneration-dapr:
+    image: "daprio/daprd:latest"
+    command: [ "./daprd", "-app-id", "Softmad-Services-LeadGeneration", "-app-port", "8080" ]
+    depends_on:
+      - softmad.services.leadgeneration
+    network_mode: "service:softmad.services.leadgeneration"
+
+  # local.sqlservercontainer:
+  #   image: mcr.microsoft.com/mssql/server:2022-latest 
+  #   hostname: 'sqlserver'
+  #   environment:  
+  #     ACCEPT_EULA: Y  
+  #     SA_PASSWORD: "adminPassw0rd"  
+  #   volumes:  
+  #     - ./data/mssql:/var/opt/mssql3  
+  #   ports:  
+  #     - '1433:1433'  
+  #   expose:  
+  #     - 1433  

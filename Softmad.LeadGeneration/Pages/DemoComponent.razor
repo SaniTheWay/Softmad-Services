@@ -1,5 +1,10 @@
-﻿<h3>DemoComponent</h3>
-
-@code {
+﻿@using Softmad.Services.Models
+<h3>DemoComponent</h3>
+@if (LeadList != null)
+{
+    @foreach (var lead in (IEnumerable<Lead>)LeadList)
+    {
+        <p>The Lead for @lead.Id has type - @lead.Type</p>
+    }
 
 }
