@@ -1,0 +1,115 @@
+﻿@page
+@model MultiStepForm
+<head>
+    <link rel="stylesheet" href="~/css/multistepform.css" />
+    <script src="~/js/multistepform.js"></script>
+</head>
+
+<div class="container">
+    <h2>Multi-Step Lead Form</h2>
+    <form id="leadForm" asp-page-handler="SubmitForm" method="post">
+        <!-- Step 1: Model 1 fields -->
+        <div class="step active" id="step1">
+            <input type="hidden" name="Id" value="00000000-0000-0000-0000-000000000000" />
+            <div class="form-group">
+                <label asp-for="Lead.Type">Lead Type:</label>
+                <select asp-for="Lead.Type" class="form-control" id="leadType" name="Type">
+                    <option value="Hot">Hot</option>
+                    <option value="Mild">Mild</option>
+                    <option value="Cold">Cold</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lead.Budget">Budget:</label>
+                <input type="number" class="form-control" id="budget" name="Budget" asp-for="Lead.Budget">
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary btn-next">Next</button>
+            </div>
+        </div>
+
+        <!-- Step 2: Model 2 fields -->
+        <div class="step" id="step2">
+            <div class="form-group">
+                <label asp-for="Lead.CustomerDetails.HospitalDetails.Name">Hospital Name:</label>
+                <input asp-for="Lead.CustomerDetails.HospitalDetails.Name" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="Lead.CustomerDetails.HospitalDetails.Phone">Hospital Phone</label>
+                <input asp-for="Lead.CustomerDetails.HospitalDetails.Phone" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="Lead.CustomerDetails.HospitalDetails.Email">Email:</label>
+                <input asp-for="Lead.CustomerDetails.HospitalDetails.Email" type="text" class="form-control">
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Lead.CustomerDetails.HospitalDetails.AddressLine1">Address Line 1:</label>
+                <input asp-for="Lead.CustomerDetails.HospitalDetails.AddressLine1" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="Lead.CustomerDetails.HospitalDetails.AddressLine2">Address Line 2:</label>
+                <input asp-for="Lead.CustomerDetails.HospitalDetails.AddressLine2" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="Lead.CustomerDetails.HospitalDetails.Country">Country</label>
+                <input asp-for="Lead.CustomerDetails.HospitalDetails.Country" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="Lead.CustomerDetails.HospitalDetails.City">City</label>
+                <input asp-for="Lead.CustomerDetails.HospitalDetails.City" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="Lead.CustomerDetails.HospitalDetails.State">State</label>
+                <input asp-for="Lead.CustomerDetails.HospitalDetails.State" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="Lead.CustomerDetails.HospitalDetails.PinCode">PinCode</label>
+                <input asp-for="Lead.CustomerDetails.HospitalDetails.PinCode" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary btn-next">Next</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Address fields -->
+        <div class="step" id="step3">
+            <div class="form-group">
+                <label asp-for="Lead.CustomerDetails.DoctorDetails.Name">Doctor Name</label>
+                <input asp-for="Lead.CustomerDetails.DoctorDetails.Name" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="Lead.CustomerDetails.DoctorDetails.Email">Doctor Email</label>
+                <input asp-for="Lead.CustomerDetails.DoctorDetails.Email" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="Lead.CustomerDetails.DoctorDetails.Phone">Doctor Phone No.</label>
+                <input asp-for="Lead.CustomerDetails.DoctorDetails.Phone" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="Lead.CustomerDetails.DoctorDetails.Specialization">Doctor Specialization</label>
+                <input asp-for="Lead.CustomerDetails.DoctorDetails.Specialization" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="step" id="step4">
+            <div class="form-group">
+                <label asp-for="Lead.ClosurePlan">Closure Plan</label>
+                <input asp-for="Lead.ClosurePlan" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="Lead.Requirements">Requirements</label>
+                <input asp-for="Lead.Requirements" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="Lead.ExistingMachines">Existing Machines</label>
+                <input asp-for="Lead.ExistingMachines" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="Lead.Remarks">Remark</label>
+                <input asp-for="Lead.Remarks" type="text" class="form-control">
+            </div>
+            </<div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>

@@ -1,0 +1,47 @@
+﻿body {
+    background-color: #f8f9fa;
+    padding-top: 50px;
+}
+
+.container {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.btn-primary {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.scrollable-form {
+    max-height: 500px; /* Adjust the height as needed */
+    overflow-y: auto;
+}
+
+.step {
+    display: none;
+}
+
+    .step.active {
+        display: block;
+    }
+
+.step-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-next {
+    margin-top: 20px;
+}
