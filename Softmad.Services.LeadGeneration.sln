@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Softmad.LeadGeneration", "S
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{3AF09649-B698-41E4-9C8C-1D7BB655CA2D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Softmad.Service.Account", "Softmad.Service.Account\Softmad.Service.Account.csproj", "{62CAB71C-17A9-41EC-A401-B0A6966FE128}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{3AF09649-B698-41E4-9C8C-1D7BB655CA2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AF09649-B698-41E4-9C8C-1D7BB655CA2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AF09649-B698-41E4-9C8C-1D7BB655CA2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62CAB71C-17A9-41EC-A401-B0A6966FE128}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62CAB71C-17A9-41EC-A401-B0A6966FE128}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62CAB71C-17A9-41EC-A401-B0A6966FE128}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62CAB71C-17A9-41EC-A401-B0A6966FE128}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
