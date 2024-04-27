@@ -1,10 +1,52 @@
 ﻿@using Softmad.Services.Models
 <h3>DemoComponent</h3>
+<head>
+    <style>
+        tr {
+
+        }
+    </style>
+</head>
 @if (LeadList != null)
 {
-    @foreach (var lead in (IEnumerable<Lead>)LeadList)
-    {
-        <p>The Lead for @lead.Id has type - @lead.Type</p>
-    }
+    <table class="table">
+        <thead>
+            All Leads List
+            <tr>
+                <th scope="col">
+                    @nameof(Lead.Type)
+                </th>
+                <th scope="col">
+                    @nameof(Lead.Budget)
+                </th>
+                <th scope="col">
+                    Hospital Name
+                </th>
+                <th scope="col">
+                    @nameof(Lead.Requirements)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var lead in (IEnumerable<Lead>)LeadList)
+            {
+                <tr>
+                    <td>
+                        @lead.Type
+                    </td>
+                    <td>
+                        @lead.Budget
+                    </td>
+                    <td>
+                        @lead.CustomerDetails.HospitalDetails.Name
+                    </td>
+                    <td>
+                        @lead.Requirements
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
 
 }

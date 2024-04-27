@@ -1,9 +1,11 @@
 ﻿body {
-    background-color: #f8f9fa;
-    padding-top: 50px;
+/*    background-color: #f8f9fa;
+    padding-top: 50px;*/
+    font-family: Open Sans;
 }
 
-.container {
+
+.form-container {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -16,12 +18,30 @@ h2 {
 }
 
 .form-group label {
-    font-weight: bold;
+    font-weight: 500;
+    margin-bottom: .3rem;
+    margin-top: .8rem;
 }
 
 .btn-primary {
-    width: 100%;
     margin-top: 20px;
+    background-color: black;
+    color: whitesmoke;
+    border: 0;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.btn-secondary {
+    margin-top: 20px;
+    background-color: white;
+    color: black;
+    border: 1px solid;
+    transition-duration: 0.4s;
+}
+
+.btn-primary: {
+    background-color: rgb(239, 75, 75) !important;
 }
 
 .scrollable-form {
@@ -44,4 +64,45 @@ h2 {
 
 .btn-next {
     margin-top: 20px;
+}
+
+.footer {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    box-shadow: inset;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    height: 5%;
+    align-items: center;
+    background-color: #fff;
+}
+
+.smd-heading-div {
+    width: 100%;
+    height: 5rem;
+    background-color: rgb(18, 18, 18);
+    color: #fff;
+    padding-top: 0px;
+    overflow-y: 1px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-group input {
+    width: 100%;
+    border: black 2px solid;
+}
+
+.form-select {
+    border: 2px solid black;
+}
+
+.form-option {
+    color: black;
+    font-weight: 400;
 }

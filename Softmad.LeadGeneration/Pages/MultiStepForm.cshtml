@@ -5,7 +5,149 @@
     <script src="~/js/multistepform.js"></script>
 </head>
 
-<div class="container">
+
+<div class="smd-heading-div">
+    <h4>Generate new lead</h4>
+</div>
+<div class="form-container">
+    <form id="leadForm" asp-page-handler="SubmitForm" method="post">
+        <!-- Step 1: Lead fields -->
+        <div class="step active" id="step1">
+            <input type="hidden" name="Id" value="00000000-0000-0000-0000-000000000000" />
+            <div class="form-group">
+                <label asp-for="Lead.Type">Lead Type:</label>
+                <select asp-for="Lead.Type" class="form-select">
+                    <option class="form-option" selected value="Hot">Hot</option>
+                    <option class="form-option" value="Mild">Mild</option>
+                    <option class="form-option" value="Cold">Cold</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lead.Budget">Budget: <sup>(in Lac)</sup></label>
+                <input type="text" class="form-control" id="budget" name="Budget" asp-for="Lead.Budget">
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary btn-next">Next</button>
+            </div>
+        </div>
+
+        <!-- Step 2: Hospital fields -->
+        <div class="step" id="step2">
+            <legend class="">Hospital Details</legend>
+            <div class="form-group">
+                <label asp-for="Lead.CustomerDetails.HospitalDetails.Name">Name</label>
+                <input asp-for="Lead.CustomerDetails.HospitalDetails.Name" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="Lead.CustomerDetails.HospitalDetails.Phone">Phone</label>
+                <input asp-for="Lead.CustomerDetails.HospitalDetails.Phone" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="Lead.CustomerDetails.HospitalDetails.Email">Email</label>
+                <input asp-for="Lead.CustomerDetails.HospitalDetails.Email" type="email" class="form-control">
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Lead.CustomerDetails.HospitalDetails.AddressLine1">Address Line 1</label>
+                <input asp-for="Lead.CustomerDetails.HospitalDetails.AddressLine1" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="Lead.CustomerDetails.HospitalDetails.AddressLine2">Address Line 2</label>
+                <input asp-for="Lead.CustomerDetails.HospitalDetails.AddressLine2" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="Lead.CustomerDetails.HospitalDetails.Country">Country</label>
+                <input asp-for="Lead.CustomerDetails.HospitalDetails.Country" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="Lead.CustomerDetails.HospitalDetails.City">City</label>
+                <input asp-for="Lead.CustomerDetails.HospitalDetails.City" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="Lead.CustomerDetails.HospitalDetails.State">State</label>
+                <input asp-for="Lead.CustomerDetails.HospitalDetails.State" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="Lead.CustomerDetails.HospitalDetails.PinCode">PinCode</label>
+                <input asp-for="Lead.CustomerDetails.HospitalDetails.PinCode" type="text" class="form-control">
+            </div>
+            <div class="d-flex" style="column-gap: 10px;">
+                <div class="form-group">
+                    <button type="button" class="btn btn-secondary btn-prev">Back</button>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary btn-next">Next</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3: Docter fields -->
+        <div class="step" id="step3">
+            <legend class="">Doctor Details</legend>
+            <div class="form-group">
+                <label asp-for="Lead.CustomerDetails.DoctorDetails.Name">Doctor Name</label>
+                <input asp-for="Lead.CustomerDetails.DoctorDetails.Name" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="Lead.CustomerDetails.DoctorDetails.Email">Doctor Email</label>
+                <input asp-for="Lead.CustomerDetails.DoctorDetails.Email" type="email" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="Lead.CustomerDetails.DoctorDetails.Phone">Doctor Phone No.</label>
+                <input asp-for="Lead.CustomerDetails.DoctorDetails.Phone" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="Lead.CustomerDetails.DoctorDetails.Specialization">Doctor Specialization</label>
+                <input asp-for="Lead.CustomerDetails.DoctorDetails.Specialization" type="text" class="form-control">
+            </div>
+            <div class="d-flex" style="column-gap: 10px;">
+                <div class="form-group">
+                    <button type="button" class="btn btn-secondary btn-prev">Back</button>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary btn-next">Next</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 4: Remaining Lead fields -->
+        <div class="step" id="step4">
+            <legend class="">Additional Details</legend>
+
+            <div class="form-group">
+                <label asp-for="Lead.ClosurePlan">Closure Plan</label>
+                <input asp-for="Lead.ClosurePlan" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="Lead.Requirements">Requirements</label>
+                <input asp-for="Lead.Requirements" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="Lead.ExistingMachines">Existing Machines</label>
+                <input asp-for="Lead.ExistingMachines" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="Lead.Remarks">Remark</label>
+                <input asp-for="Lead.Remarks" type="text" class="form-control">
+            </div>
+            <div class="d-flex" style="column-gap: 10px;">
+                <div class="form-group">
+                    <button type="button" class="btn btn-secondary btn-prev">Back</button>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+
+@* <div class="container">
     <h2>Multi-Step Lead Form</h2>
     <form id="leadForm" asp-page-handler="SubmitForm" method="post">
         <!-- Step 1: Model 1 fields -->
@@ -112,4 +254,4 @@
             </<div>
                 <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-</div>
+</div> *@

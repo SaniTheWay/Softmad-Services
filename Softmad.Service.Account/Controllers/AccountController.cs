@@ -78,5 +78,3 @@ namespace Softmad.Service.Account.Controllers
 
     }
 }
-
-}
