@@ -106,3 +106,9 @@ h2 {
     color: black;
     font-weight: 400;
 }
+
+.radio-buttons label {
+    display: inline-block;
+    margin-right: 20px; /* Adjust as needed */
+}
+

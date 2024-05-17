@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.Contracts;
 
 namespace Softmad.Services.Models
 {
@@ -11,7 +12,7 @@ namespace Softmad.Services.Models
         [Required]
         public LeadType Type { get; set; }
         [Required]
-        public decimal Budget { get; set; }
+        public string Budget { get; set; }      //
         [Required]
         public CustomerDetails CustomerDetails { get; set; }
         
@@ -21,8 +22,10 @@ namespace Softmad.Services.Models
         public string ClosurePlan { get; set; }
         [Required]
         public string ExistingMachines { get; set; }
-        
-        public string Remarks { get; set; }
+        public bool Competitor { get; set; } //fixed now
+        public string? CompetitorName { get; set; }
+        public string? CompetitorModel { get; set; }
+        public string? Remarks { get; set; }
     }
 
     public enum LeadType
@@ -48,8 +51,11 @@ namespace Softmad.Services.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
+        public string OrgType { get; set; }
         public string Name { get; set; }
-        public string Phone { get; set; }
+        public string Type {  get; set; }
+        public string TypeName { get; set; }
+        public string TypePhone { get; set; }
         public string Email { get; set; }
     }
 
