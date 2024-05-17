@@ -66,25 +66,59 @@
         btn.addEventListener('click', prevStep);
     });
 
-    function toggleOtherInput() {
-        var dropdown = document.getElementById("requirementsDropdown");
-        var otherInput = document.getElementById("otherRequirementsInput");
-        if (dropdown.value === "other") {
-            otherInput.style.display = "block";
-        } else {
-            otherInput.style.display = "none";
+    //Add Addition Field with "Other" selection
+
+    var reqDropdown = document.getElementById("requirementsDropdown"); //dropdown
+    var reqOtherInputDiv = document.getElementById("add-input-req");   //dropdown additional input "div"
+    var reqOtherInput = document.getElementById("otherRequirementsInput"); //dropdown additional input
+
+    var specializationDropdown = document.getElementById("Specialization"); //dropdown
+    var specializationOtherInputDiv = document.getElementById("add-input-spec");   //dropdown additional input "div"
+    var specializationOtherInput = document.getElementById("otherSpecializationInput"); //dropdown additional input
+
+    //Requirements Dropdown
+    reqDropdown.addEventListener("change", function () { toggleOtherInputField(reqDropdown, reqOtherInputDiv, reqOtherInput) });
+    reqOtherInput.addEventListener('input', function () {
+        // Set the selected option value based on the input field value
+        reqDropdown.value = reqOtherInput.value;
+    });
+
+    //Specialization Dropdown
+    specializationDropdown.addEventListener("change", toggleOtherInputField(specializationDropdown, specializationOtherInputDiv, specializationOtherInput) );
+    specializationOtherInput.addEventListener('input', function () {
+        // Set the selected option value based on the input field value
+        specializationDropdown.value = specializationOtherInput.value;
+        specializationDropdown.ariaPlaceholder = 'Other';
+    });
+
+    // Method to change display of input field
+    function toggleOtherInputField(dropdown, otherInputDiv, otherInput) {
+        var selectedValue = dropdown.value;
+        if (selectedValue === 'other') {
+            otherInputDiv.style.display = 'block';
+            outputInput.style.display = 'block';
+        }
+        else {
+            otherInputDiv.style.display = 'none';
+            // Clear the input field when a different option is selected
+            otherInput.value = '';
         }
     }
 
-    function toggleOtherInput22() {
-        var dropdown = document.getElementById("Specialization");
-        var otherInput = document.getElementById("otherRequirementsInput1");
-        if (dropdown.value === "other") {
-            otherInput.style.display = "block";
-        } else {
-            otherInput.style.display = "none";
-        }
-    }
+
+    //Add Addition Field with "Other" selection for Lead.Doctor.Specialization
+    //const Specialization = document.getElementById("Specialization");
+    //Specialization.addEventListener("change", toggleOtherInput22);
+
+    //function toggleOtherInput22() {
+    //    var dropdown = document.getElementById("Specialization");
+    //    var otherInput = document.getElementById("otherSpecializationInput");
+    //    if (dropdown.value === "other") {
+    //        otherInput.style.display = "block";
+    //    } else {
+    //        otherInput.style.display = "none";
+    //    }
+    //}
 
     const chooseType = document.getElementById("chooseType");
     chooseType.addEventListener("change", showFields);
@@ -114,9 +148,5 @@
         }
     }
 
-    const requirementsDropdown = document.getElementById("requirementsDropdown");
-    requirementsDropdown.addEventListener("change", toggleOtherInput);
 
-    const Specialization = document.getElementById("Specialization");
-    Specialization.addEventListener("change", toggleOtherInput22);
 });
