@@ -44,6 +44,7 @@ namespace Softmad.Services.Models
         public HospitalDetails HospitalDetails { get; set; }
         [Required]
         public DoctorDetails DoctorDetails { get; set; }
+        public string CustomerType { get; set; }
     }
 
     public class HospitalDetails:Address
@@ -51,7 +52,6 @@ namespace Softmad.Services.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-        public string OrgType { get; set; }
         public string Name { get; set; }
         public string Type {  get; set; }
         public string TypeName { get; set; }

@@ -5,9 +5,10 @@
     let competitorCount = 0;
 
     function toggleCompetitorFields() {
-        if (competitorDropdown.value === "Yes") {
+        if (competitorDropdown.value === "True") {
             competitorContainer.style.display = "block";
-        } else {
+        }
+        else {
             competitorContainer.style.display = "none";
         }
     }
@@ -30,8 +31,8 @@
         competitorContainer.appendChild(newFields);
     }
 
-    competitorDropdown.addEventListener("change", toggleCompetitorFields);
-    addCompetitorBtn.addEventListener("click", addCompetitorFields);
+    competitorDropdown.addEventListener("change", function () { toggleCompetitorFields(); });
+    addCompetitorBtn.addEventListener("click", function () { addCompetitorFields(); });
 
     // Initialize the display based on the default selected option in the dropdown
     toggleCompetitorFields();
@@ -93,7 +94,7 @@
     specializationOtherInput.addEventListener('input', function () {
         // Set the selected option value based on the input field value
         specializationDropdown.value = this.value;
-         specializationDropdown.ariaPlaceholder = 'Other';
+        specializationDropdown.ariaPlaceholder = 'Other';
     });
 
     // Method to change display of input field
@@ -103,7 +104,7 @@
         if (selectedValue === 'other') {
             console.log("other clicked.");
             otherInputDiv.style.display = 'block';
-             otherInput.style.display = 'block';
+            otherInput.style.display = 'block';
         } else {
             otherInputDiv.style.display = 'none';
             // Clear the input field when a different option is selected
