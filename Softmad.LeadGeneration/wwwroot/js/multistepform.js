@@ -127,7 +127,7 @@
     //        otherInput.style.display = "none";
     //    }
     //}
-
+    
     const chooseType = document.getElementById("chooseType");
     chooseType.addEventListener("change", showFields);
 

@@ -1,8 +1,7 @@
 ﻿@page "/"
 @model MultiStepForm
 <head>
-    <link rel="stylesheet" href="~/css/Shubh.css
-" />
+    <link rel="stylesheet" href="~/css/Shubh.css" />
     <script src="~/js/MultiStepForm.js"></script>
 </head>
 
@@ -15,61 +14,62 @@
         <!-- Step 2: Hospital fields -->
         <div class="step active" id="step1">
             <legend class="">Details</legend>
-            <div class="form-group">
-                <label asp-for="Lead.CustomerDetails.CustomerType">Customer Type:</label>
-                <div class="row radio-buttons">
-                    <label class="col">
-                        <input asp-for="Lead.CustomerDetails.CustomerType" type="radio" value="Hospital"> Hospital
-                    </label>
-                    <label class="col">
-                        <input asp-for="Lead.CustomerDetails.CustomerType" type="radio" value="Diagnostic Center"> Diagnostic Center
-                    </label>
-                </div>
+            <div class="form-check">
+                <input class="form-check-input" asp-for="Lead.CustomerDetails.CustomerType" type="radio" value="Hospital">
+                <label class="form-check-label" asp-for="Lead.CustomerDetails.CustomerType">
+                    Hospital
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" asp-for="Lead.CustomerDetails.CustomerType" type="radio" value="Diagnostic Center" checked>
+                <label class="form-check-label" asp-for="Lead.CustomerDetails.CustomerType">
+                    Diagnostic Center
+                </label>
             </div>
             <div class="form-group">
                 <label asp-for="Lead.CustomerDetails.HospitalDetails.Name">Customer Name</label>
                 <input asp-for="Lead.CustomerDetails.HospitalDetails.Name" type="text" class="form-control">
             </div>
             <div class="form-group">
-                <label asp-for="Lead.CustomerDetails.HospitalDetails.Type">Choose Type:</label>
-                <select asp-for="Lead.CustomerDetails.HospitalDetails.Type" id="chooseType" class="form-select" onchange="showFields()">
+                <label>Choose Type:</label>
+                <select id="chooseType" class="form-select" onchange="showFields()">
                     <option value="Default" selected>-- Select --</option>
+                    <option value="Owner">Owner</option>
                     <option value="Purchase Head">Purchase Head</option>
                     <option value="Bio Medical">Bio Medical</option>
-                    <option value="Owner">Owner</option>
                 </select>
             </div>
 
-            <div id="purchaseHeadFields" style="display: none;">
+            <div id="purchaseHeadFields" style="display: none;background:#eeecec; padding:10px;">
                 <div class="form-group">
-                    <label asp-for="Lead.CustomerDetails.HospitalDetails.TypeName">Purchase Head Name:</label>
-                    <input asp-for="Lead.CustomerDetails.HospitalDetails.TypeName" type="text" id="purchaseHeadName" class="form-control">
+                    <label asp-for="Lead.CustomerDetails.HospitalDetails.PurchaseHeadName">Name:</label>
+                    <input asp-for="Lead.CustomerDetails.HospitalDetails.PurchaseHeadName" type="text" id="purchaseHeadName" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label asp-for="Lead.CustomerDetails.HospitalDetails.TypePhone">Purchase Head Phone:</label>
-                    <input asp-for="Lead.CustomerDetails.HospitalDetails.TypePhone" type="text" id="purchaseHeadPhone" class="form-control">
-                </div>
-            </div>
-
-            <div id="bioMedicalFields" style="display: none;">
-                <div class="form-group">
-                    <label asp-for="Lead.CustomerDetails.HospitalDetails.TypeName">Bio Medical Name:</label>
-                    <input asp-for="Lead.CustomerDetails.HospitalDetails.TypeName" type="text" id="bioMedicalName" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label asp-for="Lead.CustomerDetails.HospitalDetails.TypePhone">Bio Medical Phone:</label>
-                    <input asp-for="Lead.CustomerDetails.HospitalDetails.TypePhone" type="text" id="bioMedicalPhone" class="form-control">
+                    <label asp-for="Lead.CustomerDetails.HospitalDetails.PurchaseHeadPhone">Phone:</label>
+                    <input asp-for="Lead.CustomerDetails.HospitalDetails.PurchaseHeadPhone" type="text" id="purchaseHeadPhone" class="form-control">
                 </div>
             </div>
 
-            <div id="ownerFields" style="display: none;">
+            <div id="bioMedicalFields" style="display: none;background:#eeecec; padding:10px;">
                 <div class="form-group">
-                    <label asp-for="Lead.CustomerDetails.HospitalDetails.TypeName">Owner Name:</label>
-                    <input asp-for="Lead.CustomerDetails.HospitalDetails.TypeName" type="text" id="ownerName" class="form-control">
+                    <label asp-for="Lead.CustomerDetails.HospitalDetails.BioMedicalName">Name:</label>
+                    <input asp-for="Lead.CustomerDetails.HospitalDetails.BioMedicalName" type="text" id="bioMedicalName" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label asp-for="Lead.CustomerDetails.HospitalDetails.TypePhone">Owner Phone:</label>
-                    <input asp-for="Lead.CustomerDetails.HospitalDetails.TypePhone" type="text" id="ownerPhone" class="form-control">
+                    <label asp-for="Lead.CustomerDetails.HospitalDetails.BioMedicalPhone">Phone:</label>
+                    <input asp-for="Lead.CustomerDetails.HospitalDetails.BioMedicalPhone" type="text" id="bioMedicalPhone" class="form-control">
+                </div>
+            </div>
+
+            <div id="ownerFields" style="display: none;background:#eeecec; padding:10px;">
+                <div class="form-group">
+                    <label asp-for="Lead.CustomerDetails.HospitalDetails.OwnerName">Name:</label>
+                    <input asp-for="Lead.CustomerDetails.HospitalDetails.OwnerName" type="text" id="ownerName" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label asp-for="Lead.CustomerDetails.HospitalDetails.OwnerPhone">Phone:</label>
+                    <input asp-for="Lead.CustomerDetails.HospitalDetails.OwnerPhone" type="text" id="ownerPhone" class="form-control">
                 </div>
             </div>
 
@@ -191,30 +191,29 @@
                 <input asp-for="Lead.ExistingMachines" type="text" class="form-control">
             </div>
             <!-- #region Competitor -->
-            <div class="container">
-                <div class="form-group">
-                    <label asp-for="Lead.Competitor">Any Competitor?</label><br>
-                    <select asp-for="Lead.Competitor" id="competitorDropdown" class="form-control">
-                        <option value="@false" selected>False</option>
-                        <option value="@true">True</option>
-                    </select>
-                </div>
-                <div id="competitorContainer" style="display: none;">
-                    <div id="competitorFields">
-                        <div class="form-group">
-                            <label asp-for="Lead.CompetitorName">Competitor Name</label>
-                            <input asp-for="Lead.CompetitorName" type="text" class="form-control" id="competitorName">
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Lead.CompetitorModel">Competitor Model</label>
-                            <input asp-for="Lead.CompetitorModel" type="text" class="form-control" id="competitorModel">
-                        </div>
+            <div class="form-group">
+                <label asp-for="Lead.Competitor">Any Competitor?</label><br>
+                <select asp-for="Lead.Competitor" id="competitorDropdown" class="form-control">
+                    <option value="@true">Yes</option>
+                    <option value="@false" selected>No</option>
+                </select>
+            </div>
+            <div id="competitorContainer" style="display: none;background:#eeecec; padding:10px;">
+                <div id="competitorFields">
+                    <div class="form-group">
+                        <label asp-for="Lead.CompetitorName">Competitor Name</label>
+                        <input asp-for="Lead.CompetitorName" type="text" class="form-control" id="competitorName">
                     </div>
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary mt-3" id="addCompetitorBtn">Add More Competitor</button>
+                        <label asp-for="Lead.CompetitorModel">Competitor Model</label>
+                        <input asp-for="Lead.CompetitorModel" type="text" class="form-control" id="competitorModel">
                     </div>
                 </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary mt-3" id="addCompetitorBtn">Add More Competitor</button>
+                </div>
             </div>
+
             <!-- #endregion -->
             <div class="form-group">
                 <label asp-for="Lead.Remarks">Remark</label>
