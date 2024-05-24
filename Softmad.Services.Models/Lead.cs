@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Softmad.Services.Models.Enums;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.Contracts;
 
@@ -44,6 +45,7 @@ namespace Softmad.Services.Models
         public HospitalDetails HospitalDetails { get; set; }
         [Required]
         public DoctorDetails DoctorDetails { get; set; }
+        [Required]
         public string CustomerType { get; set; }
     }
 
@@ -53,10 +55,14 @@ namespace Softmad.Services.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string Type {  get; set; }
-        public string TypeName { get; set; }
-        public string TypePhone { get; set; }
         public string Email { get; set; }
+        public string OwnerPhone { get; set; }
+        public string OwnerName { get; set; }
+        public string BioMedicalPhone { get; set; }
+        public string BioMedicalName { get; set; }
+        public string PurchaseHeadPhone { get; set; }
+        public string PurchaseHeadName { get; set; }
+        //public ICollection<HospitalContact> HospitalContacts { get; set; }
     }
 
     public class DoctorDetails
@@ -70,5 +76,17 @@ namespace Softmad.Services.Models
         public string Email { get; set; }
     }
 
+    //public class HospitalContact
+    //{
+    //    [Key]
+    //    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    //    public Guid Id { get; set; }
+    //    public Guid HospitalDetailsId { get; set; }
+    //    [ForeignKey("HospitalDetailsId")]
+    //    public HospitalDetails HospitalDetails { get; set; }
+    //    public ContactRoleEnum Role { get; set; }
+    //    public string Name { get; set; }
+    //    public string Phone { get; set; }
+    //}
 
 }
