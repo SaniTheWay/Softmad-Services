@@ -13,7 +13,10 @@ namespace Softmad.Services.Models
         [Required]
         public LeadType Type { get; set; }
         [Required]
-        public string Budget { get; set; }      //
+        public LeadStatus Status { get; set; }
+        public DateTime LastUpdated { get; set;}
+        [Required]
+        public string Budget { get; set; }      
         [Required]
         public CustomerDetails CustomerDetails { get; set; }
         
@@ -34,6 +37,13 @@ namespace Softmad.Services.Models
         Hot,
         Mild,
         Cold
+    }
+
+    public enum LeadStatus
+    {
+        Start,
+        Hold,
+        Completed
     }
 
     public class CustomerDetails
