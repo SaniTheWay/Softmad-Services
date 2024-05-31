@@ -1,4 +1,5 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
+    // Competitor fields logic
     const competitorDropdown = document.getElementById("competitorDropdown");
     const addCompetitorBtn = document.getElementById("addCompetitorBtn");
     const competitorContainer = document.getElementById("competitorContainer");
@@ -7,8 +8,7 @@
     function toggleCompetitorFields() {
         if (competitorDropdown.value === "True") {
             competitorContainer.style.display = "block";
-        }
-        else {
+        } else {
             competitorContainer.style.display = "none";
         }
     }
@@ -31,12 +31,13 @@
         competitorContainer.appendChild(newFields);
     }
 
-    competitorDropdown.addEventListener("change", function () { toggleCompetitorFields(); });
-    addCompetitorBtn.addEventListener("click", function () { addCompetitorFields(); });
+    competitorDropdown.addEventListener("change", toggleCompetitorFields);
+    addCompetitorBtn.addEventListener("click", addCompetitorFields);
 
     // Initialize the display based on the default selected option in the dropdown
     toggleCompetitorFields();
 
+    // Multi-step form logic
     const form = document.getElementById('leadForm');
     const steps = form.querySelectorAll('.step');
     let currentStep = 0;
@@ -67,72 +68,50 @@
         btn.addEventListener('click', prevStep);
     });
 
-    // Add Addition Field with "Other" selection
+    // Dropdown with "Other" selection logic
+    const reqDropdown = document.getElementById("requirementsDropdown");
+    const reqOtherInputDiv = document.getElementById("add-input-req");
+    const reqOtherInput = document.getElementById("otherRequirementsInput");
 
-    var reqDropdown = document.getElementById("requirementsDropdown"); // dropdown
-    var reqOtherInputDiv = document.getElementById("add-input-req");   // dropdown additional input "div"
-    var reqOtherInput = document.getElementById("otherRequirementsInput"); // dropdown additional input
+    const specializationDropdown = document.getElementById("Specialization");
+    const specializationOtherInputDiv = document.getElementById("add-input-spec");
+    const specializationOtherInput = document.getElementById("otherSpecializationInput");
 
-    var specializationDropdown = document.getElementById("Specialization"); // dropdown
-    var specializationOtherInputDiv = document.getElementById("add-input-spec");   // dropdown additional input "div"
-    var specializationOtherInput = document.getElementById("otherSpecializationInput"); // dropdown additional input
-
-    // Requirements Dropdown
     reqDropdown.addEventListener("change", function () {
         toggleOtherInputField(reqDropdown, reqOtherInputDiv, reqOtherInput);
     });
+
     reqOtherInput.addEventListener('input', function () {
-        // Set the selected option value based on the input field value
         reqDropdown.value = this.value;
         specializationDropdown.ariaPlaceholder = 'Other';
     });
 
-    // Specialization Dropdown
     specializationDropdown.addEventListener("change", function () {
         toggleOtherInputField(specializationDropdown, specializationOtherInputDiv, specializationOtherInput);
     });
+
     specializationOtherInput.addEventListener('input', function () {
-        // Set the selected option value based on the input field value
         specializationDropdown.value = this.value;
         specializationDropdown.ariaPlaceholder = 'Other';
     });
 
-    // Method to change display of input field
     function toggleOtherInputField(dropdown, otherInputDiv, otherInput) {
         var selectedValue = dropdown.value;
-        console.log("toggle");
         if (selectedValue === 'other') {
-            console.log("other clicked.");
             otherInputDiv.style.display = 'block';
             otherInput.style.display = 'block';
         } else {
             otherInputDiv.style.display = 'none';
-            // Clear the input field when a different option is selected
             otherInput.value = '';
         }
     }
 
-
-
-    //Add Addition Field with "Other" selection for Lead.Doctor.Specialization
-    //const Specialization = document.getElementById("Specialization");
-    //Specialization.addEventListener("change", toggleOtherInput22);
-
-    //function toggleOtherInput22() {
-    //    var dropdown = document.getElementById("Specialization");
-    //    var otherInput = document.getElementById("otherSpecializationInput");
-    //    if (dropdown.value === "other") {
-    //        otherInput.style.display = "block";
-    //    } else {
-    //        otherInput.style.display = "none";
-    //    }
-    //}
-    
+    // Show fields based on selected type logic
     const chooseType = document.getElementById("chooseType");
     chooseType.addEventListener("change", showFields);
 
     function showFields() {
-        var selectedValue = chooseType.options[chooseType.selectedIndex].value;
+        var selectedValue = chooseType.value;
         var purchaseHeadFields = document.getElementById("purchaseHeadFields");
         var bioMedicalFields = document.getElementById("bioMedicalFields");
         var ownerFields = document.getElementById("ownerFields");
@@ -156,5 +135,29 @@
         }
     }
 
+    // Update Pincode based on city selection
+    function updatePincode() {
+        const citiesDataElement = document.getElementById('cities-data');
+        if (!citiesDataElement) {
+            console.error('cities-data element not found');
+            return;
+        }
+        const cities = JSON.parse(citiesDataElement.textContent);
+        console.log('Cities data:', cities); // Debugging statement
 
+        const selectedCity = document.getElementById('citySelect').value;
+        console.log('Selected city:', selectedCity); // Debugging statement
+
+        const city = cities.find(c => c.CityName === selectedCity);
+        console.log('Matching city:', city); // Debugging statement
+
+        const pincodeField = document.getElementById('pincode');
+        if (city) {
+            pincodeField.value = city.Pincode;
+        } else {
+            pincodeField.value = '';
+        }
+    }
+
+    document.getElementById('citySelect').addEventListener('change', updatePincode);
 });
