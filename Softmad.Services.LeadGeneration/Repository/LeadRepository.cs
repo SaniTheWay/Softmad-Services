@@ -25,8 +25,8 @@ namespace Softmad.Services.LeadGeneration.Repository
                 var leads = _dataContext.Leads.Include(l => l.CustomerDetails)
                                                         .ThenInclude(cd => cd.HospitalDetails)
                                                         .Include(l => l.CustomerDetails)
-                                                        .ThenInclude(cd => cd.DoctorDetails).ToList();
-                return leads;
+                                                        .ThenInclude(cd => cd.DoctorDetails);
+                return leads.OrderByDescending(x=>x.LastUpdated).ToList();
             }
             catch (Exception ex)
             {
