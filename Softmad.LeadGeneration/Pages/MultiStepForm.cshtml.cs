@@ -26,12 +26,6 @@ namespace Softmad.LeadGeneration.Pages
             new City { CityName = "Amanaka", Pincode = "492010" },
             new City { CityName = "Gudhiyari", Pincode = "492009" }
         };
-
-        [BindProperty]
-        public string SelectedCity { get; set; }
-
-        [BindProperty]
-        public string Pincode { get; set; }
         [BindProperty]
         public Lead? Lead { get; set; }
 

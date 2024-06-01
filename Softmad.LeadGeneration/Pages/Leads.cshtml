@@ -9,62 +9,24 @@
     <h4>My Leads</h4>
 </div>
 <div class="max-w-4xl mx-auto">
-    
-    <div class="p-4 m-2 border rounded-lg shadow-sm">
-        <div class="d-flex" style="column-gap:6px;">
-            <label class="col-8 fw-bold">110095</label>
-            <label class="col-2 badge bg-warning">Mild</label>
-            <label class="col-2 badge bg-info">Started</label>
-        </div>
-        <div>
-            <span class="fw-semibold">Hospital:</span>
-            <label>Appolo Hospital, Gwalior Branch</label>
-        </div>
-        <div>
-            <label class="font-bold">Budget</label> <label>12,30,000</label>
-        </div>
-        <div>
-            <label class="text-muted">Last Modified</label> <label>@DateTime.UtcNow.Date</label>
-        </div>
-    </div>
     @foreach (var lead in Model.leadList)
     {
         <div class="p-4 m-2 border rounded-lg shadow-sm">
-            <div class="font-bold">@lead.Id</div>
-            <div class="mt-2">
-                <label class="font-bold">Lead Type:</label>
-                @if (lead.Type == Services.Models.LeadType.Hot)
-                {
-                    <label style="color:red">@lead.Type</label>
-                }
-                @if (lead.Type == Services.Models.LeadType.Cold)
-                {
-                    <label style="color:cornflowerblue">@lead.Type</label>
-                }
-                @if (lead.Type == Services.Models.LeadType.Mild)
-                {
-                    <label style="color:yellowgreen">@lead.Type</label>
-                }
+            <div class="d-flex" style="column-gap:6px;">
+                <label class="col-8 fw-bold">ID: @lead.Id</label>
+                <label class="col-2 badge @Model.GetCSSBadgeColor(leadType:lead.Type)">@lead.Type</label>
+                <label class="col-2 badge @Model.GetCSSBadgeColor(leadStatus:lead.Status)">@lead.Status</label>
+            </div>
+            <div class="d-flex">
+                <span class="fw-bold">@lead.CustomerDetails.CustomerType : </span>
+                <label class="fw-bold">@lead.CustomerDetails.HospitalDetails.Name</label>
             </div>
             <div>
-                @if (lead.CustomerDetails.CustomerType == "Hospital")
-                {
-                    <span class="font-bold">Hospital</span>
-                }
-                else
-                {
-                    <span class="font-bold">Diagnostic Center</span>
-                }
-
-                <label>@lead.CustomerDetails.HospitalDetails.Name</label>
+                <label class="font-bold">Budget</label> <label>12,30,000</label>
             </div>
-            <div>
-                <label class="font-bold">Last Modified</label> <label>@DateTime.UtcNow.Date</label>
-            </div>
-            <div>
-                <label class="font-bold">Budget</label> <label>@lead.Budget</label>
+            <div class="text-muted">
+                <label>Last Modified</label> <label>@lead?.LastUpdated</label>
             </div>
         </div>
-
     }
 </div>

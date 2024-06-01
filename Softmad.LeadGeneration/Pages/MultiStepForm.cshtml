@@ -109,7 +109,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Lead.CustomerDetails.HospitalDetails.PinCode">PinCode</label>
-                <input asp-for="Lead.CustomerDetails.HospitalDetails.PinCode" type="text" id="pincode" class="form-control" value="@Model.Pincode" disabled>
+                <input asp-for="Lead.CustomerDetails.HospitalDetails.PinCode" type="text" id="pincode" class="form-control" disabled>
             </div>
             <script id="cities-data" type="application/json">
                 @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Cities))
