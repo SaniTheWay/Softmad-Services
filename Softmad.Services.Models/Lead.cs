@@ -13,8 +13,8 @@ namespace Softmad.Services.Models
         [Required]
         public LeadType Type { get; set; }
         [Required]
-        public LeadStatus Status { get; set; }
-        public DateTime LastUpdated { get; set;}
+        public LeadStatus Status { get; set; } = LeadStatus.Start;
+        public DateTimeOffset? LastUpdated { get; set; } = DateTimeOffset.UtcNow;
         [Required]
         public string Budget { get; set; }      
         [Required]
@@ -43,6 +43,7 @@ namespace Softmad.Services.Models
     {
         Start,
         Hold,
+        Lost,
         Completed
     }
 

@@ -17,13 +17,22 @@ namespace Softmad.Services.LeadGeneration.Repository
 
         public async Task<List<Lead>> GetLeadsAsync()
         {
-            ///Learn: https://www.linkedin.com/advice/3/how-do-you-avoid-ef-lazy-loading-pitfalls-n1-problem
-            //Here '.Include()' do EAGER loading 
-            var leads = _dataContext.Leads.Include(l => l.CustomerDetails)
-                                                    .ThenInclude(cd => cd.HospitalDetails)
-                                                    .Include(l => l.CustomerDetails)
-                                                    .ThenInclude(cd => cd.DoctorDetails).ToList(); 
-            return leads;
+            try
+            {
+
+                ///Learn: https://www.linkedin.com/advice/3/how-do-you-avoid-ef-lazy-loading-pitfalls-n1-problem
+                //Here '.Include()' do EAGER loading 
+                var leads = _dataContext.Leads.Include(l => l.CustomerDetails)
+                                                        .ThenInclude(cd => cd.HospitalDetails)
+                                                        .Include(l => l.CustomerDetails)
+                                                        .ThenInclude(cd => cd.DoctorDetails).ToList();
+                return leads;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, "One or more error occured while fetching Leads.");
+                throw;
+            }
         }
 
         public async Task<bool> SaveLead(Lead leadEntry)

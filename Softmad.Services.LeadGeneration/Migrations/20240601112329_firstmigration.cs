@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace Softmad.Services.LeadGeneration.Data.migrations
+namespace Softmad.Services.LeadGeneration.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class firstmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
