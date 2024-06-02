@@ -101,7 +101,7 @@
                 <input asp-for="Lead.CustomerDetails.HospitalDetails.State" type="text" class="form-control" value="Chhattisgarh" disabled>
             </div>
 
-            <div class="form-group">
+            @* <div class="form-group">
                 <label asp-for="Lead.CustomerDetails.HospitalDetails.City">Select City:</label>
                 <select id="citySelect" asp-for="Lead.CustomerDetails.HospitalDetails.City" class="form-control" asp-items="@(new SelectList(Model.Cities, "CityName", "CityName"))">
                     <option value="">-- Select a City --</option>
@@ -110,7 +110,7 @@
             <div class="form-group">
                 <label asp-for="Lead.CustomerDetails.HospitalDetails.PinCode">PinCode</label>
                 <input asp-for="Lead.CustomerDetails.HospitalDetails.PinCode" type="text" id="pincode" class="form-control" value="@Model.Pincode" disabled>
-            </div>
+            </div> *@
             <script id="cities-data" type="application/json">
                 @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Cities))
             </script>

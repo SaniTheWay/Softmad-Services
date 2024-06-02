@@ -26,9 +26,9 @@ namespace Softmad.Services.Models
     {
         public string AddressLine1 { get; set; }
         public string AddressLine2 { get; set; }
-        public string City { get; set; }
+        public string? City { get; set; }
         public string State { get; set; } = "Chhattisgarh";
-        public string PinCode { get; set; }
+        public string? PinCode { get; set; }
         public string Country { get; set; } = "India";
 
     }

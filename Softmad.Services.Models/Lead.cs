@@ -14,7 +14,7 @@ namespace Softmad.Services.Models
         public LeadType Type { get; set; }
         [Required]
         public LeadStatus Status { get; set; }
-        public DateTime LastUpdated { get; set;}
+        public DateTime LastUpdated { get; set; } = DateTime.UtcNow;
         [Required]
         public string Budget { get; set; }      
         [Required]
