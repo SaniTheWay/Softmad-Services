@@ -20,3 +20,19 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.text-center {
+    text-align: center;
+}
+
+.fw-bolder {
+    font-weight: bolder;
+}
+
+/* Adjustments for smaller screens */
+@media screen and (max-width: 768px) {
+    .text-center {
+        padding: 20px;
+    }
+}
+

@@ -6,12 +6,12 @@ using Softmad.Services.Models;
 
 namespace Softmad.LeadGeneration.Pages
 {
-    public class LeadViewModel : PageModel
+    public class LeadDetailsModel : PageModel
     {
         private readonly DaprClient _daprClient;
         private const string AppId = "Softmad-Services-LeadGeneration";
         private const string MethodURL = "api/LeadGeneration/";
-        public LeadViewModel(DaprClient daprClient)
+        public LeadDetailsModel(DaprClient daprClient)
         {
             _daprClient = daprClient;
         }

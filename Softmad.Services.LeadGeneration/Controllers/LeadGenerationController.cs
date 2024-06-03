@@ -35,6 +35,17 @@ namespace Softmad.Services.LeadGeneration.Controllers
             return value;
         }
 
+        [HttpGet("GetUserLeads/{currentUserId}")]
+        public async Task<IActionResult> GetByUser(Guid currentUserId)
+        {
+                var leads = await _leadGenerationService.GetCurrentUserLeads(currentUserId);
+                if (leads == null)
+                {
+                    return NotFound($"No leads found for the current employee {currentUserId}");
+                }
+                return Ok(leads);
+        }
+
         // POST api/<LeadGenerationController>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Lead lead)

@@ -30,6 +30,7 @@ namespace Softmad.Services.Models
         public string? CompetitorName { get; set; }
         public string? CompetitorModel { get; set; }
         public string? Remarks { get; set; }
+        public Guid EmployeeId { get; set; }
     }
 
     public enum LeadType

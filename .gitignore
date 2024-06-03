@@ -362,3 +362,4 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /Softmad.Services.LeadGeneration/appsettings.Development.json
+/Softmad.LeadGeneration/appsettings.Development.json

@@ -60,6 +60,17 @@ namespace Softmad.Services.LeadGeneration.Repository
                                  .FirstOrDefaultAsync(l => l.Id == id);
         }
 
+        public async Task<List<Lead>> GetCurrentUserLeads(Guid currentUserId)
+        {
+            return await _dataContext.Leads
+                                 .Include(l => l.CustomerDetails)
+                                 .ThenInclude(cd => cd.HospitalDetails)
+                                 .Include(l => l.CustomerDetails.DoctorDetails)
+                                 .Where(l => l.EmployeeId == currentUserId)
+                                 .ToListAsync();
+        }
+
+
         private async Task SaveChanges()
         {
             await _dataContext.SaveChangesAsync();

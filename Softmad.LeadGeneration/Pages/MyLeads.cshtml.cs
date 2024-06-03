@@ -1,20 +1,20 @@
 using Dapr.Client;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Softmad.Services.Models;
 
 namespace Softmad.LeadGeneration.Pages
 {
-    public class LeadsModel : PageModel
+    [Authorize]
+    public class MyLeadsModel : PageModel
     {
         private const string AppId = "Softmad-Services-LeadGeneration";
-        private const string MethodURL = "api/LeadGeneration";
-
+        private const string MethodURL = "api/LeadGeneration/GetUserLeads/";
+        private Guid CurrentUserId => new Guid(User.Claims.ToList()[0].Value);
         public List<Lead> leadList { get; set; }
 
         private readonly DaprClient _daprClient;
-        public LeadsModel(DaprClient dapr)
+        public MyLeadsModel(DaprClient dapr)
         {
             _daprClient = dapr;
         }
@@ -22,13 +22,13 @@ namespace Softmad.LeadGeneration.Pages
         {
             if (_daprClient != null)
             {
-                leadList = await GetAllLeads();
+                leadList = await GetCurrentUserLeads();
             }
 
         }
-        private async Task<List<Lead>> GetAllLeads()
+        private async Task<List<Lead>> GetCurrentUserLeads()
         {
-            var result = await _daprClient.InvokeMethodAsync<IEnumerable<Lead>>(HttpMethod.Get, AppId, MethodURL);
+            var result = await _daprClient.InvokeMethodAsync<IEnumerable<Lead>>(HttpMethod.Get, AppId, MethodURL +$"{CurrentUserId}");
             return result.ToList();
         }
 

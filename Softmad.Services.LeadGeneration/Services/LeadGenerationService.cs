@@ -37,5 +37,15 @@ namespace Softmad.Services.LeadGeneration.Services
             }
             throw new Exception($"No Lead Detials Found for {id}");
         }
+
+        public async Task<List<Lead>> GetCurrentUserLeads(Guid currentUserId)
+        {
+            var leads = await _leadRepository.GetCurrentUserLeads(currentUserId);
+            if (leads != null)
+            {
+                return leads;
+            }
+            throw new Exception($"No leads found for the current employee {currentUserId}");
+        }
     }
 }

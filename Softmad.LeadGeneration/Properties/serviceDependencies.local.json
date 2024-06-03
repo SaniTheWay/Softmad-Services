@@ -2,11 +2,7 @@
   "dependencies": {
     "mssql1": {
       "type": "mssql.local",
-      "connectionId": "ConnectionStrings:SoftmadLeadGenerationContextConnection"
-    },
-    "mssql2": {
-      "type": "mssql.local",
-      "connectionId": "ConnectionStrings:IdentityContextConnection"
+      "connectionId": "ConnectionStrings:AccountsContextConnection"
     }
   }
 }
