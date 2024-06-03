@@ -10,7 +10,7 @@ namespace Softmad.LeadGeneration.Pages
     {
         private const string AppId = "Softmad-Services-LeadGeneration";
         private const string MethodURL = "api/LeadGeneration";
-
+        private Guid CurrentUserId => new Guid(User.Claims.ToList()[0].Value);
         public List<Lead> leadList { get; set; }
 
         private readonly DaprClient _daprClient;
@@ -22,11 +22,11 @@ namespace Softmad.LeadGeneration.Pages
         {
             if (_daprClient != null)
             {
-                leadList = await GetAllLeads();
+                leadList = await GetCurrentUserLeads();
             }
 
         }
-        private async Task<List<Lead>> GetAllLeads()
+        private async Task<List<Lead>> GetCurrentUserLeads()
         {
             var result = await _daprClient.InvokeMethodAsync<IEnumerable<Lead>>(HttpMethod.Get, AppId, MethodURL);
             return result.ToList();

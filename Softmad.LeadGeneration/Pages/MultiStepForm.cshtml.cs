@@ -1,7 +1,9 @@
 ﻿using Dapr.Client;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Softmad.LeadGeneration.Areas.Identity.Data;
 using Softmad.Services.Models;
 
 namespace Softmad.LeadGeneration.Pages
@@ -42,6 +44,7 @@ namespace Softmad.LeadGeneration.Pages
         }
         public async Task<IActionResult> OnPostSubmitForm()
         {
+            var userId = new Guid(User.Claims.ToList()[0].Value);
             if (!ModelState.IsValid)
             {
                 // If model validation fails, return the page with validation errors
@@ -53,6 +56,7 @@ namespace Softmad.LeadGeneration.Pages
             // SaveLeadToDatabase(Lead);
 
             // Redirect to a success page or return a different view
+            Lead.EmployeeId = userId;
             await _daprClient.InvokeMethodAsync<Lead>(HttpMethod.Post, AppId, MethodURL, Lead);
             return RedirectToPage("/Index");
         }
