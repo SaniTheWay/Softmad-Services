@@ -7,5 +7,8 @@ namespace Softmad.Services.LeadGeneration.Repository.Interfaces
         public Task<bool> SaveLead(Lead leadEntry);
         public Task<List<Lead>> GetLeadsAsync();
 
+        Task<Lead> GetLeadByIdAsync(Guid id);
+
+
     }
 }

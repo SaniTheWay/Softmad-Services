@@ -51,6 +51,15 @@ namespace Softmad.Services.LeadGeneration.Repository
             }
         }
 
+        public async Task<Lead> GetLeadByIdAsync(Guid id)
+        {
+            return await _dataContext.Leads
+                                 .Include(l => l.CustomerDetails)
+                                 .ThenInclude(cd => cd.HospitalDetails)
+                                 .Include(l => l.CustomerDetails.DoctorDetails)
+                                 .FirstOrDefaultAsync(l => l.Id == id);
+        }
+
         private async Task SaveChanges()
         {
             await _dataContext.SaveChangesAsync();

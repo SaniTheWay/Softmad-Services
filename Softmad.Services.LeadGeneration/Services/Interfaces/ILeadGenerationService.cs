@@ -16,5 +16,12 @@ namespace Softmad.Services.LeadGeneration.Services.Interfaces
         /// <param name="lead"></param>
         /// <returns>true if succeed, else false</returns>
         public Task<bool> PostLeadAsync(Lead lead);
+        /// <summary>
+        /// Get Lead By LeadId
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Task<Lead> GetLeadByIdAsync(Guid id);
+
     }
 }

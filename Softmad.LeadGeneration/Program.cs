@@ -1,4 +1,14 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Softmad.LeadGeneration.Areas.Identity.Data;
+using Softmad.LeadGeneration.Data;
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("SoftmadLeadGenerationContextConnection") ?? throw new InvalidOperationException("Connection string 'SoftmadLeadGenerationContextConnection' not found.");
+
+builder.Services.AddDbContext<IdentityContext>(options => options.UseSqlServer(connectionString));
+
+builder.Services.AddDefaultIdentity<SoftmadLeadGenerationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<IdentityContext>();
+
 
 // Add services to the container.
 builder.Services.AddControllers();

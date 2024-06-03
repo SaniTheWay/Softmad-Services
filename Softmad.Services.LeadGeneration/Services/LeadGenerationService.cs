@@ -1,4 +1,5 @@
-﻿using Softmad.Services.LeadGeneration.Data;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Softmad.Services.LeadGeneration.Data;
 using Softmad.Services.LeadGeneration.Repository.Interfaces;
 using Softmad.Services.LeadGeneration.Services.Interfaces;
 using Softmad.Services.Models;
@@ -25,6 +26,16 @@ namespace Softmad.Services.LeadGeneration.Services
         {
             await _leadRepository.SaveLead(lead);
             return true;
+        }
+
+        public async Task<Lead> GetLeadByIdAsync(Guid id)
+        {
+            var lead = await _leadRepository.GetLeadByIdAsync(id);
+            if(lead!=null)
+            {
+                return lead;
+            }
+            throw new Exception($"No Lead Detials Found for {id}");
         }
     }
 }

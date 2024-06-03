@@ -1,32 +1,40 @@
 ﻿@page "/myleads"
 @model Softmad.LeadGeneration.Pages.LeadsModel
+<!DOCTYPE html>
+<html>
 <head>
     <link rel="stylesheet" href="~/css/Shubh.css" />
     <script src="~/js/MultiStepForm.js"></script>
 </head>
-
-<div class="smd-heading-div">
-    <h4>My Leads</h4>
-</div>
-<div class="max-w-4xl mx-auto d-grid">
-    @foreach (var lead in Model.leadList)
-    {
-        <div class="px-4 py-2 m-2 border rounded-lg shadow-sm" style="row-gap:10px;">
-            <div class="d-flex align-items-center" style="column-gap:6px;">
-                <label class="col-8 text-muted">@lead.Id.ToString().Split("-")[0].ToUpper()</label>
-                <label title="Type" class="col badge rounded-pill @Model.GetCSSBadgeColor(leadType:lead.Type)">@lead.Type</label>
-                <label title="Status" class="col badge rounded-pill @Model.GetCSSBadgeColor(leadStatus:lead.Status)">@lead.Status</label>
-            </div>
-            <div class="d-flex">
-                <span class="fw-bold">@lead.CustomerDetails.CustomerType:&nbsp;</span>
-                <label>@lead.CustomerDetails.HospitalDetails.Name</label>
-            </div>
-            <div>
-                <label class="fw-bold">Budget:&nbsp;</label> <label>12,30,000</label>
-            </div>
-            <div class="text-muted">
-                <label>Last Modified:&nbsp;</label> <label>@lead?.LastUpdated</label>
-            </div>
-        </div>
-    }
-</div>
+<body>
+    <div class="smd-heading-div">
+        <h4>My Leads</h4>
+    </div>
+    <div class="max-w-4xl mx-auto d-grid">
+        @foreach (var lead in Model.leadList)
+        {
+            <a href="/lead/@lead.Id/details" class="text-decoration-none">
+                <div class="lead-card px-4 py-2 m-2 border rounded-lg shadow-sm" style="row-gap:10px;">
+                    <div class="d-flex align-items-center" style="column-gap:6px;">
+                        <label class="col-8 text-muted">@lead.Id.ToString().Split("-")[0].ToUpper()</label>
+                        <span title="Type" class="col badge rounded-pill @Model.GetCSSBadgeColor(leadType: lead.Type)">@lead.Type</span>
+                        <span title="Status" class="col badge rounded-pill @Model.GetCSSBadgeColor(leadStatus: lead.Status)">@lead.Status</span>
+                    </div>
+                    <div class="d-flex">
+                        <span class="fw-bold">@lead.CustomerDetails.CustomerType:&nbsp;</span>
+                        <span>@lead.CustomerDetails.HospitalDetails.Name</span>
+                    </div>
+                    <div>
+                        <span class="fw-bold">Budget:&nbsp;</span>
+                        <span>@lead.Budget</span>
+                    </div>
+                    <div class="text-muted">
+                        <span>Last Modified:&nbsp;</span>
+                        <span>@lead?.LastUpdated</span>
+                    </div>
+                </div>
+            </a>
+        }
+    </div>
+</body>
+</html>

@@ -29,9 +29,10 @@ namespace Softmad.Services.LeadGeneration.Controllers
 
         // GET api/<LeadGenerationController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task <Lead> Get(Guid id)
         {
-            return "value";
+            var value = await _leadGenerationService.GetLeadByIdAsync(id);
+            return value;
         }
 
         // POST api/<LeadGenerationController>
@@ -60,6 +61,7 @@ namespace Softmad.Services.LeadGeneration.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+
         }
     }
 }

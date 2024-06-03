@@ -18,7 +18,7 @@
     <form id="leadForm" asp-page-handler="SubmitForm" method="post">
         <!-- Step 2: Hospital fields -->
         <div class="step active" id="step1">
-            <legend class="">Details</legend>
+            <legend class="fw-bolder">Hospital Details</legend>
             <div class="form-check">
                 <input class="form-check-input" asp-for="Lead.CustomerDetails.CustomerType" type="radio" value="Hospital">
                 <label class="form-check-label" asp-for="Lead.CustomerDetails.CustomerType">
@@ -127,7 +127,7 @@
 
         <!-- Step 3: Docter fields -->
         <div class="step" id="step2">
-            <legend class="">Doctor Details</legend>
+            <legend class="fw-bolder">Doctor Details</legend>
             <div class="form-group">
                 <label asp-for="Lead.CustomerDetails.DoctorDetails.Name">Doctor Name</label>
                 <input asp-for="Lead.CustomerDetails.DoctorDetails.Name" type="text" class="form-control">
@@ -169,7 +169,7 @@
 
         <!-- Step 4: Remaining Lead fields -->
         <div class="step" id="step3">
-            <legend class="">Additional Details</legend>
+            <legend class="fw-bolder">Additional Details</legend>
             <input type="hidden" name="Id" value="00000000-0000-0000-0000-000000000000" />
             <div class="form-group">
                 <label asp-for="Lead.Type">Lead Type:</label>
