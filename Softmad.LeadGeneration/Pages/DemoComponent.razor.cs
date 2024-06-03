@@ -1,10 +1,11 @@
 ﻿using Dapr.Client;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Softmad.Services.Models;
 using System.ComponentModel;
-
 namespace Softmad.LeadGeneration.Pages
 {
+    [Authorize]
     public partial class DemoComponent : ComponentBase
     {
         private const string AppId = "Softmad-Services-LeadGeneration";

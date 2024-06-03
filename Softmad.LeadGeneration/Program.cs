@@ -1,4 +1,13 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Softmad.LeadGeneration.Areas.Identity.Data;
+using Softmad.LeadGeneration.Data;
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("AccountsContextConnection") ?? throw new InvalidOperationException("Connection string 'AccountsContextConnection' not found.");
+
+builder.Services.AddDbContext<AccountsContext>(options => options.UseSqlServer(connectionString));
+
+builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<AccountsContext>();
 
 // Add services to the container.
 builder.Services.AddControllers();

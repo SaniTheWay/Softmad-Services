@@ -1,10 +1,12 @@
 ﻿using Dapr.Client;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Softmad.Services.Models;
 
 namespace Softmad.LeadGeneration.Pages
 {
+    [Authorize]
     public class MultiStepForm : PageModel
     {
         public List<City> Cities { get; } = new List<City>

@@ -1,11 +1,11 @@
 using Dapr.Client;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Softmad.Services.Models;
 
 namespace Softmad.LeadGeneration.Pages
 {
+    [Authorize]
     public class LeadsModel : PageModel
     {
         private const string AppId = "Softmad-Services-LeadGeneration";
