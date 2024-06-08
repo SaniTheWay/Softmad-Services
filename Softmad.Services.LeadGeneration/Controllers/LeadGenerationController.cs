@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using Softmad.Services.LeadGeneration.Services.Interfaces;
 using Softmad.Services.Models;
 
@@ -13,12 +14,13 @@ namespace Softmad.Services.LeadGeneration.Controllers
     {
 
         private readonly ILeadGenerationService _leadGenerationService;
+        private readonly ILogger<LeadGenerationController> _logger;
 
-        public LeadGenerationController(ILeadGenerationService leadGenerationService)
+        public LeadGenerationController(ILeadGenerationService leadGenerationService, ILogger<LeadGenerationController> logger)
         {
             _leadGenerationService = leadGenerationService;
+            _logger = logger;
         }
-
         // GET: api/<LeadGenerationController>
         [HttpGet]
         public async Task<IEnumerable<Lead>> GetLeads()
@@ -63,11 +65,22 @@ namespace Softmad.Services.LeadGeneration.Controllers
 
         // PUT api/<LeadGenerationController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(Guid id, [FromBody] Lead newLead)
         {
-            return;
+            try
+            {
+                if (newLead != null)
+                {
+                    await _leadGenerationService.UpdateLeadAsync(newLead);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);   
+                throw;
+            }
+            return Ok();
         }
-
         // DELETE api/<LeadGenerationController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)

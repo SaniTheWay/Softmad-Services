@@ -9,9 +9,11 @@ namespace Softmad.Services.LeadGeneration.Services
     public class LeadGenerationService : ILeadGenerationService
     {
         private readonly ILeadRepository _leadRepository;
-        public LeadGenerationService(ILeadRepository leadRepository)
+        private readonly ILogger<LeadGenerationService> _logger;
+        public LeadGenerationService(ILeadRepository leadRepository, ILogger<LeadGenerationService> logger)
         {
-            _leadRepository = leadRepository; 
+            _leadRepository = leadRepository;
+            _logger = logger;
         }
 
         /// <inheritdoc/>
@@ -47,5 +49,23 @@ namespace Softmad.Services.LeadGeneration.Services
             }
             throw new Exception($"No leads found for the current employee {currentUserId}");
         }
+
+        public async Task UpdateLeadAsync(Lead lead)
+        {
+            try
+            {
+                var updatedLead =  _leadRepository.UpdateLeadAsync(lead);
+                if (updatedLead == null)
+                {
+                    throw new Exception($"Lead not found for Id: {lead.Id}");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while updating the lead with Id: {lead.Id}");
+                throw;
+            }
+        }
+
     }
 }

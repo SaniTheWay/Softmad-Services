@@ -70,6 +70,12 @@ namespace Softmad.Services.LeadGeneration.Repository
                                  .ToListAsync();
         }
 
+        public async Task UpdateLeadAsync(Lead lead)
+        {
+             _dataContext.Leads.Update(lead);
+             await SaveChanges();
+        }
+
 
         private async Task SaveChanges()
         {

@@ -11,6 +11,8 @@ namespace Softmad.Services.LeadGeneration.Repository.Interfaces
 
         public Task<List<Lead>> GetCurrentUserLeads(Guid currentUserId);
 
+        public Task UpdateLeadAsync(Lead lead);
+
 
     }
 }
