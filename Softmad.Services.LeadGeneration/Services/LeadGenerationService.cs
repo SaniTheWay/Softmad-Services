@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.CodeAnalysis.Elfie.Serialization;
 using Softmad.Services.LeadGeneration.Data;
 using Softmad.Services.LeadGeneration.Repository.Interfaces;
 using Softmad.Services.LeadGeneration.Services.Interfaces;
@@ -19,7 +20,7 @@ namespace Softmad.Services.LeadGeneration.Services
         /// <inheritdoc/>
         public async Task<List<Lead>> GetLeads()
         {
-            var LeadsList = await _leadRepository.GetLeadsAsync();  
+            var LeadsList = await _leadRepository.GetLeadsAsync();
             return LeadsList;
         }
 
@@ -33,7 +34,7 @@ namespace Softmad.Services.LeadGeneration.Services
         public async Task<Lead> GetLeadByIdAsync(Guid id)
         {
             var lead = await _leadRepository.GetLeadByIdAsync(id);
-            if(lead!=null)
+            if (lead != null)
             {
                 return lead;
             }
@@ -54,7 +55,7 @@ namespace Softmad.Services.LeadGeneration.Services
         {
             try
             {
-                var updatedLead =  _leadRepository.UpdateLeadAsync(lead);
+                var updatedLead = _leadRepository.UpdateLeadAsync(lead);
                 if (updatedLead == null)
                 {
                     throw new Exception($"Lead not found for Id: {lead.Id}");
@@ -67,5 +68,9 @@ namespace Softmad.Services.LeadGeneration.Services
             }
         }
 
+        public async Task CreateVisitAsync(Visit visit)
+        {
+            await _leadRepository.SaveVisit(visit);
+        }
     }
 }

@@ -11,6 +11,7 @@ namespace Softmad.Services.LeadGeneration.Data
         }
 
         public DbSet<Lead> Leads { get; set; }
+        public DbSet<Visit> Visits { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             

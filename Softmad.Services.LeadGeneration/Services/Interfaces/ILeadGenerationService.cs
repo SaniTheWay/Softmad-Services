@@ -27,5 +27,12 @@ namespace Softmad.Services.LeadGeneration.Services.Interfaces
 
         public Task UpdateLeadAsync(Lead lead);
 
+        /// <summary>
+        /// Create a new visit for a lead 
+        /// </summary>
+        /// <param name="visit"></param>
+        /// <returns></returns>
+        public Task CreateVisitAsync(Visit visit);
+
     }
 }

@@ -1,4 +1,4 @@
-﻿@page "/lead/{id:guid}/edit"
+﻿@page "/lead/{Id:Guid}/edit"
 @model EditDetailsModel
 
 @{
@@ -16,6 +16,7 @@
 </div>
 <div class="form-container">
     <form id="leadForm" asp-page-handler="SubmitForm" method="post">
+        <input type="hidden" asp-for="Lead.Id" />
         <!-- Step 2: Hospital fields -->
         <div class="step active" id="step1">
             <legend class="fw-bolder">Hospital Details</legend>
@@ -101,19 +102,19 @@
                 <input asp-for="Lead.CustomerDetails.HospitalDetails.State" type="text" class="form-control" value="Chhattisgarh" disabled>
             </div>
 
-            @* <div class="form-group">
+            <div class="form-group">
                 <label asp-for="Lead.CustomerDetails.HospitalDetails.City">Select City:</label>
                 <select id="citySelect" asp-for="Lead.CustomerDetails.HospitalDetails.City" class="form-control" asp-items="@(new SelectList(Model.Cities, "CityName", "CityName"))">
                     <option value="">-- Select a City --</option>
                 </select>
-            </div> *@
-            @* <div class="form-group">
+            </div>
+            <div class="form-group">
                 <label asp-for="Lead.CustomerDetails.HospitalDetails.PinCode">PinCode</label>
                 <input asp-for="Lead.CustomerDetails.HospitalDetails.PinCode" type="text" id="pincode" class="form-control" disabled>
             </div>
             <script id="cities-data" type="application/json">
                 @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Cities))
-            </script> *@
+            </script>
 
             <div class="d-flex" style="column-gap: 10px;">
                 <div class="form-group">

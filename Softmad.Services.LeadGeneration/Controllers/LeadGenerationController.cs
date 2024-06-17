@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.Elfie.Diagnostics;
+﻿using Microsoft.AspNetCore.Mvc;
 using Softmad.Services.LeadGeneration.Services.Interfaces;
 using Softmad.Services.Models;
 
@@ -87,5 +85,25 @@ namespace Softmad.Services.LeadGeneration.Controllers
         {
 
         }
+
+        #region Visit APIs
+
+        // POST api/<LeadGenerationController>
+        [HttpPost("addvisit")]
+        public async Task<IActionResult> CreateVisit([FromBody] Visit visit)
+        {
+            try
+            {
+                await _leadGenerationService.CreateVisitAsync(visit);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("One or more error occured.");
+                return BadRequest(ex.Message);
+            }
+        }
+
+        #endregion
     }
 }

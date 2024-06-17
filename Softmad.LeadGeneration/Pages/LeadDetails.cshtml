@@ -124,10 +124,14 @@
                         </div>
                         <div class="d-flex" style="column-gap: 10px;">
                             <div class="form-group">
-                                <button type="button" class="btn btn-primary" asp-action="Put" asp-controller="LeadGeneration">Edit Details</button>
+                                <a href=@($"/lead/{Model.Lead.Id}/edit")>
+                                    <button type="button" class="btn btn-primary">Edit Details</button>
+                                </a>
                             </div>
                             <div class="form-group">
-                                <button type="button" class="btn btn-primary">Add Visit</button>
+                                <a href=@($"/lead/{Model.Lead.Id}/new-visit")>
+                                    <button type="button" class="btn btn-primary">Add Visit</button>
+                                </a>
                             </div>
                         </div>
                     </div>

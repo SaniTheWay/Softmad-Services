@@ -13,6 +13,7 @@ namespace Softmad.Services.LeadGeneration.Repository.Interfaces
 
         public Task UpdateLeadAsync(Lead lead);
 
+        public Task SaveVisit(Visit visit);
 
     }
 }

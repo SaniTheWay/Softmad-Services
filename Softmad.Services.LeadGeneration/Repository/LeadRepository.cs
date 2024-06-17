@@ -76,7 +76,19 @@ namespace Softmad.Services.LeadGeneration.Repository
              await SaveChanges();
         }
 
-
+        public async Task SaveVisit(Visit visitEntry)
+        {
+            try
+            {
+                await _dataContext.Visits.AddAsync(visitEntry);
+                await SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString(), $"Error Occured while saving a new visit for lead {visitEntry.LeadId}.");
+                throw;
+            }
+        }
         private async Task SaveChanges()
         {
             await _dataContext.SaveChangesAsync();
