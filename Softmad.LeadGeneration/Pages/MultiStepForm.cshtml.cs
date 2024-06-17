@@ -49,14 +49,12 @@ namespace Softmad.LeadGeneration.Pages
                 return Page();
             }
 
-            // Handle form submission here, e.g., save Lead to a database
-            // For demonstration purposes, let's assume saving to a database
-            // SaveLeadToDatabase(Lead);
-
-            // Redirect to a success page or return a different view
             Lead.EmployeeId = userId;
+            Lead.CustomerDetails.HospitalDetails.PinCode = Cities.FirstOrDefault(x=> x.CityName == Lead.CustomerDetails.HospitalDetails.City).Pincode;
+
             await _daprClient.InvokeMethodAsync<Lead>(HttpMethod.Post, AppId, MethodURL, Lead);
-            return RedirectToPage("/Index");
+
+            return RedirectToPage("/MyLeads");
         }
     }
 }
