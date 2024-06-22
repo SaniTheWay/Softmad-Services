@@ -89,6 +89,21 @@ namespace Softmad.Services.LeadGeneration.Repository
                 throw;
             }
         }
+
+        public async Task<List<Visit>> GetVisitByIdAsync(Guid leadId)
+        {
+            try
+            {
+                var visit = _dataContext.Visits.Where(v => v.LeadId == leadId);
+                return visit.ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString(), $"No Visit were found or this Lead Id {leadId}");
+                throw;
+            }
+        }
+
         private async Task SaveChanges()
         {
             await _dataContext.SaveChangesAsync();

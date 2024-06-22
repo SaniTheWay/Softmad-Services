@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="smd-heading-div">
-        <h4>My Leads</h4>
+        <h4>My Leads</h4><br/>
     </div>
     <div class="max-w-4xl mx-auto d-grid">
         @foreach (var lead in Model.leadList)
@@ -20,9 +20,19 @@
                         <span title="Type" class="col badge rounded-pill @Model.GetCSSBadgeColor(leadType: lead.Type)">@lead.Type</span>
                         <span title="Status" class="col badge rounded-pill @Model.GetCSSBadgeColor(leadStatus: lead.Status)">@lead.Status</span>
                     </div>
-                    <div class="d-flex">
-                        <span class="fw-bold">@lead.CustomerDetails.CustomerType:&nbsp;</span>
-                        <span>@lead.CustomerDetails.HospitalDetails.Name</span>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex">
+                            <span class="fw-bold">@lead.CustomerDetails.CustomerType:&nbsp;</span>
+                            <span>@lead.CustomerDetails.HospitalDetails.Name</span>
+                        </div>
+                        <div>
+                            <a href="@($"/lead/{lead.Id}/visitdetails")">
+                                <i class="bi bi-info-circle-fill"></i>
+                            </a>
+                            <a href="@($"/lead/{lead.Id}/new-visit")">
+                                <i class="bi bi-file-earmark-plus-fill"></i>
+                            </a>
+                        </div>
                     </div>
                     <div>
                         <span class="fw-bold">Budget:&nbsp;</span>

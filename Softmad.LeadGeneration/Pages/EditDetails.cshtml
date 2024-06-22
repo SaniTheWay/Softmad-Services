@@ -116,9 +116,9 @@
                 @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Cities))
             </script>
 
-            <div class="d-flex" style="column-gap: 10px;">
+            <div class="d-flex pt-4" style="column-gap: 10px;">
                 <div class="form-group">
-                    <button type="button" class="btn" style="background:red;" onclick=@(Model.CancelEdit)>Cancel</button>
+                    <button type="button" class="btn btn-secondary">Cancel</button>
                 </div>
                 <div class="form-group">
                     <button type="button" class="btn btn-next">Next</button>

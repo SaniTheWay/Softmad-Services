@@ -40,7 +40,7 @@ namespace Softmad.LeadGeneration.Pages
             Visit.SalesPersonId = new Guid(User.Claims.ToList()[0].Value);
             
             await _daprClient.InvokeMethodAsync<Visit>(HttpMethod.Post, AppId, MethodBaseURL+ "/addvisit", Visit);
-            return RedirectToPage($"./lead/{Visit.LeadId}/details");
+            return Redirect($"/lead/{Visit.LeadId}/visitdetails");
         }
     }
 }

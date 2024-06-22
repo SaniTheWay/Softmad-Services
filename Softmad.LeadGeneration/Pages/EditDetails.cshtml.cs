@@ -51,8 +51,9 @@ namespace Softmad.LeadGeneration.Pages
             return Page();
         }
 
-        public void CancelEdit()
+        public IActionResult CancelEdit(EventArgs arg)
         {
+            return Redirect($"/lead/{Lead.Id}/details");
             //Response.Redirect("/lead/" + id + "/details");
             //_navManager.NavigateTo(_navManager.BaseUri + "/lead/" + Id + "/details");
         }
@@ -75,7 +76,7 @@ namespace Softmad.LeadGeneration.Pages
                 // Redirect to a success page or return a different view
                 Lead.EmployeeId = userId;
                 await _daprClient.InvokeMethodAsync<Lead>(HttpMethod.Put, AppId, MethodURL + $"{Lead.Id}", Lead);
-                return RedirectToPage($"~/lead/{Lead.Id}/details");
+                return Redirect($"/lead/{Lead.Id}/details");
             }
             catch (Exception ex)
             {

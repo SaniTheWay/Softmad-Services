@@ -20,6 +20,7 @@ namespace Softmad.LeadGeneration.Pages
         public Guid Id { get; set; }
 
         public Lead Lead { get; set; }
+        public List<Lead> leadList { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {

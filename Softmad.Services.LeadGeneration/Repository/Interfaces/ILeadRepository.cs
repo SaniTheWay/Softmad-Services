@@ -15,5 +15,7 @@ namespace Softmad.Services.LeadGeneration.Repository.Interfaces
 
         public Task SaveVisit(Visit visit);
 
+        public Task<List<Visit>> GetVisitByIdAsync(Guid leadId);
+
     }
 }

@@ -34,5 +34,7 @@ namespace Softmad.Services.LeadGeneration.Services.Interfaces
         /// <returns></returns>
         public Task CreateVisitAsync(Visit visit);
 
+        public Task<List<Visit>> GetVisitByIdAsync(Guid leadId);
+
     }
 }

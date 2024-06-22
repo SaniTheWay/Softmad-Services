@@ -46,6 +46,8 @@ namespace Softmad.Services.LeadGeneration.Controllers
                 return Ok(leads);
         }
 
+  
+
         // POST api/<LeadGenerationController>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Lead lead)
@@ -102,6 +104,21 @@ namespace Softmad.Services.LeadGeneration.Controllers
                 _logger.LogError("One or more error occured.");
                 return BadRequest(ex.Message);
             }
+        }
+        [HttpGet("GetVisitById/{leadId}")]
+        public async Task<IActionResult> GetVisitById(Guid leadId)
+        {
+            try
+            {
+                var visit = await _leadGenerationService.GetVisitByIdAsync(leadId);
+                return Ok(visit);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("No Visits Found for Id");
+                return StatusCode(500,ex);
+            }
+
         }
 
         #endregion

@@ -14,6 +14,9 @@ namespace Softmad.LeadGeneration.Pages
         public List<Lead> leadList { get; set; }
 
         private readonly DaprClient _daprClient;
+        public Lead Lead { get; set; }
+
+        
         public MyLeadsModel(DaprClient dapr)
         {
             _daprClient = dapr;

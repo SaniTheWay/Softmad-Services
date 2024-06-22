@@ -72,5 +72,11 @@ namespace Softmad.Services.LeadGeneration.Services
         {
             await _leadRepository.SaveVisit(visit);
         }
+
+        public async Task<List<Visit>> GetVisitByIdAsync(Guid leadId)
+        {
+            return await _leadRepository.GetVisitByIdAsync(leadId);
+        }
+
     }
 }

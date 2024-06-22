@@ -97,6 +97,7 @@ h2 {
     column-gap: 10px;
 }
 
+
 /* Responsive styles */
 @media screen and (max-width: 768px) {
     .form-container {
