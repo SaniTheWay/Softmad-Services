@@ -29,6 +29,17 @@ body {
     font-weight: bolder;
 }
 
+.btn-primary {
+    background-color: black !important;
+    border: 1.5px solid black !important;
+}
+
+.btn-secondary {
+    background-color: white !important;
+    color: black !important;
+    border: 1.5px solid black !important;
+}
+
 /* Adjustments for smaller screens */
 @media screen and (max-width: 768px) {
     .text-center {

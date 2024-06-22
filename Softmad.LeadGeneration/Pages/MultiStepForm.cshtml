@@ -1,8 +1,8 @@
-﻿@page "/Multi"
+﻿@page "/generate-lead"
 @model MultiStepForm
 
 @{
-    ViewData["Title"] = "Multi-Step Form";
+    ViewData["Title"] = "Generate New Lead";
 }
 
 <head>
@@ -12,7 +12,7 @@
 
 
 <div class="smd-heading-div">
-    <h4>Generate New Lead</h4>
+    <h4>@ViewData["Title"]</h4>
 </div>
 <div class="form-container">
     <form id="leadForm" asp-page-handler="SubmitForm" method="post">
@@ -34,6 +34,7 @@
             <div class="form-group">
                 <label asp-for="Lead.CustomerDetails.HospitalDetails.Name">Customer Name</label>
                 <input asp-for="Lead.CustomerDetails.HospitalDetails.Name" type="text" class="form-control">
+                <span asp-validation-for="Lead.CustomerDetails.HospitalDetails.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label>Choose Type:</label>
@@ -49,10 +50,12 @@
                 <div class="form-group">
                     <label asp-for="Lead.CustomerDetails.HospitalDetails.PurchaseHeadName">Name:</label>
                     <input asp-for="Lead.CustomerDetails.HospitalDetails.PurchaseHeadName" type="text" id="purchaseHeadName" class="form-control">
+                    <span asp-validation-for="Lead.CustomerDetails.HospitalDetails.PurchaseHeadName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Lead.CustomerDetails.HospitalDetails.PurchaseHeadPhone">Phone:</label>
                     <input asp-for="Lead.CustomerDetails.HospitalDetails.PurchaseHeadPhone" type="text" id="purchaseHeadPhone" class="form-control">
+                    <span asp-validation-for="Lead.CustomerDetails.HospitalDetails.PurchaseHeadPhone" class="text-danger"></span>
                 </div>
             </div>
 
@@ -60,10 +63,12 @@
                 <div class="form-group">
                     <label asp-for="Lead.CustomerDetails.HospitalDetails.BioMedicalName">Name:</label>
                     <input asp-for="Lead.CustomerDetails.HospitalDetails.BioMedicalName" type="text" id="bioMedicalName" class="form-control">
+                    <span asp-validation-for="Lead.CustomerDetails.HospitalDetails.BioMedicalName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Lead.CustomerDetails.HospitalDetails.BioMedicalPhone">Phone:</label>
                     <input asp-for="Lead.CustomerDetails.HospitalDetails.BioMedicalPhone" type="text" id="bioMedicalPhone" class="form-control">
+                    <span asp-validation-for="Lead.CustomerDetails.HospitalDetails.BioMedicalPhone" class="text-danger"></span>
                 </div>
             </div>
 
@@ -71,10 +76,14 @@
                 <div class="form-group">
                     <label asp-for="Lead.CustomerDetails.HospitalDetails.OwnerName">Name:</label>
                     <input asp-for="Lead.CustomerDetails.HospitalDetails.OwnerName" type="text" id="ownerName" class="form-control">
+                    <span asp-validation-for="Lead.CustomerDetails.HospitalDetails.OwnerName" class="text-danger"></span>
+
                 </div>
                 <div class="form-group">
                     <label asp-for="Lead.CustomerDetails.HospitalDetails.OwnerPhone">Phone:</label>
                     <input asp-for="Lead.CustomerDetails.HospitalDetails.OwnerPhone" type="text" id="ownerPhone" class="form-control">
+                    <span asp-validation-for="Lead.CustomerDetails.HospitalDetails.OwnerPhone" class="text-danger"></span>
+
                 </div>
             </div>
 
@@ -82,30 +91,42 @@
             <div class="form-group">
                 <label asp-for="Lead.CustomerDetails.HospitalDetails.Email">Email</label>
                 <input asp-for="Lead.CustomerDetails.HospitalDetails.Email" id="email" type="email" class="form-control">
+                <span asp-validation-for="Lead.CustomerDetails.HospitalDetails.Email" class="text-danger"></span>
+
             </div>
             <div class="form-group">
                 <label asp-for="Lead.CustomerDetails.HospitalDetails.AddressLine1">Address Line 1</label>
                 <input asp-for="Lead.CustomerDetails.HospitalDetails.AddressLine1" type="text" class="form-control">
+                <span asp-validation-for="Lead.CustomerDetails.HospitalDetails.AddressLine1" class="text-danger"></span>
+
             </div>
             <div class="form-group">
                 <label asp-for="Lead.CustomerDetails.HospitalDetails.AddressLine2">Address Line 2</label>
                 <input asp-for="Lead.CustomerDetails.HospitalDetails.AddressLine2" type="text" class="form-control">
+                <span asp-validation-for="Lead.CustomerDetails.HospitalDetails.AddressLine2" class="text-danger"></span>
+
             </div>
             <div class="form-group">
                 <label asp-for="Lead.CustomerDetails.HospitalDetails.Country">Country</label>
                 <input asp-for="Lead.CustomerDetails.HospitalDetails.Country" type="text" class="form-control" value="India" disabled>
+                <span asp-validation-for="Lead.CustomerDetails.HospitalDetails.Country" class="text-danger"></span>
+
             </div>
 
             <div class="form-group">
                 <label asp-for="Lead.CustomerDetails.HospitalDetails.State">State</label>
                 <input asp-for="Lead.CustomerDetails.HospitalDetails.State" type="text" class="form-control" value="Chhattisgarh" disabled>
+                <span asp-validation-for="Lead.CustomerDetails.HospitalDetails.State" class="text-danger"></span>
+
             </div>
 
             <div class="form-group">
                 <label asp-for="Lead.CustomerDetails.HospitalDetails.City">Select City:</label>
-                <select id="citySelect" asp-for="Lead.CustomerDetails.HospitalDetails.City" class="form-control" asp-items="@(new SelectList(Model.Cities, "CityName", "CityName"))">
+                <select required id="citySelect" asp-for="Lead.CustomerDetails.HospitalDetails.City" class="form-control" asp-items="@(new SelectList(Model.Cities, "CityName", "CityName"))">
                     <option value="">-- Select a City --</option>
                 </select>
+                <span asp-validation-for="Lead.CustomerDetails.HospitalDetails.City" class="text-danger"></span>
+
             </div>
             <div class="form-group">
                 <label asp-for="Lead.CustomerDetails.HospitalDetails.PinCode">PinCode</label>
@@ -131,14 +152,20 @@
             <div class="form-group">
                 <label asp-for="Lead.CustomerDetails.DoctorDetails.Name">Doctor Name</label>
                 <input asp-for="Lead.CustomerDetails.DoctorDetails.Name" type="text" class="form-control">
+                <span asp-validation-for="Lead.CustomerDetails.DoctorDetails.Name" class="text-danger"></span>
+
             </div>
             <div class="form-group">
                 <label asp-for="Lead.CustomerDetails.DoctorDetails.Email">Doctor Email</label>
                 <input asp-for="Lead.CustomerDetails.DoctorDetails.Email" type="email" class="form-control">
+                <span asp-validation-for="Lead.CustomerDetails.DoctorDetails.Email" class="text-danger"></span>
+
             </div>
             <div class="form-group">
                 <label asp-for="Lead.CustomerDetails.DoctorDetails.Phone">Doctor Phone No.</label>
                 <input asp-for="Lead.CustomerDetails.DoctorDetails.Phone" type="text" class="form-control">
+                <span asp-validation-for="Lead.CustomerDetails.DoctorDetails.Phone" class="text-danger"></span>
+
             </div>
             <div class="form-group">
                 <label asp-for="Lead.CustomerDetails.DoctorDetails.Specialization">Doctor Specialization</label>
@@ -156,6 +183,8 @@
                 <div id="add-input-spec" class="p-4">
                     <input asp-for="Lead.CustomerDetails.DoctorDetails.Specialization" type="text" id="otherSpecializationInput" style="display: none;" placeholder="Additional Specialization">
                 </div>
+                <span asp-validation-for="Lead.CustomerDetails.DoctorDetails.Specialization" class="text-danger"></span>
+
             </div>
             <div class="d-flex" style="column-gap: 10px;">
                 <div class="form-group">
@@ -174,8 +203,7 @@
             <div class="form-group">
                 <label asp-for="Lead.Type">Lead Type:</label>
                 <select asp-for="Lead.Type" class="form-select">
-                    <option class="form-option" selected>-- Select Type --</option>
-                    <option class="form-option" value="Hot">Hot</option>
+                    <option class="form-option" value="Hot" selected>Hot</option>
                     <option class="form-option" value="Mild">Mild</option>
                     <option class="form-option" value="Cold">Cold</option>
                 </select>
@@ -183,6 +211,8 @@
             <div class="form-group">
                 <label asp-for="Lead.Budget">Budget: <sup>(in Lac)</sup></label>
                 <input type="text" class="form-control" id="budget" asp-for="Lead.Budget">
+                <span asp-validation-for="Lead.Budget" class="text-danger"></span>
+
             </div>
             <div class="form-group">
                 <label asp-for="Lead.ClosurePlan">Closure Plan</label>
@@ -193,6 +223,8 @@
                     <option class="form-option" value="6-8 Months">6-8 Months</option>
                     <option class="form-option" value=">1 Year">&gt;1 Year</option>
                 </select>
+                <span asp-validation-for="Lead.ClosurePlan" class="text-danger"></span>
+
             </div>
             <div class="form-group">
                 <label asp-for="Lead.Requirements">Requirements</label>
@@ -204,10 +236,14 @@
                 <div id="add-input-req" class="p-4">
                     <input asp-for="Lead.Requirements" type="text" id="otherRequirementsInput" style="display: none;" placeholder="Enter other requirement">
                 </div>
+                <span asp-validation-for="Lead.Requirements" class="text-danger"></span>
+
             </div>
             <div class="form-group">
                 <label asp-for="Lead.ExistingMachines">Existing Machines</label>
                 <input asp-for="Lead.ExistingMachines" type="text" class="form-control">
+                <span asp-validation-for="Lead.ExistingMachines" class="text-danger"></span>
+
             </div>
             <!-- #region Competitor -->
             <div class="form-group">
@@ -216,6 +252,8 @@
                     <option value="@true">Yes</option>
                     <option value="@false" selected>No</option>
                 </select>
+                <span asp-validation-for="Lead.Competitor" class="text-danger"></span>
+
             </div>
             <div id="competitorContainer" style="display: none;background:#eeecec; padding:10px;">
                 <div id="competitorFields">
@@ -227,6 +265,7 @@
                         <label asp-for="Lead.CompetitorModel">Competitor Model</label>
                         <input asp-for="Lead.CompetitorModel" type="text" class="form-control" id="competitorModel">
                     </div>
+                    <span asp-validation-for="Lead.CompetitorModel" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <button type="button" class="btn btn-primary mt-3" id="addCompetitorBtn">Add More Competitor</button>
@@ -237,6 +276,7 @@
             <div class="form-group">
                 <label asp-for="Lead.Remarks">Remark</label>
                 <input asp-for="Lead.Remarks" type="text" class="form-control">
+                <span asp-validation-for="Lead.Remarks" class="text-danger"></span>
             </div>
             <div class="d-flex" style="column-gap: 10px;">
                 <div class="form-group">
@@ -249,3 +289,7 @@
         </div>
     </form>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
