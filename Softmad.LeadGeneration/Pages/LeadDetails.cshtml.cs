@@ -56,10 +56,10 @@ namespace Softmad.LeadGeneration.Pages
             {
                 switch (leadStatus)
                 {
-                    case LeadStatus.Start:
+                    case LeadStatus.Active:
                         bgColorClass = "bg-primary";
                         break;
-                    case LeadStatus.Hold:
+                    case LeadStatus.Passive:
                         bgColorClass = "bg-secondary";
                         break;
                     case LeadStatus.Lost:

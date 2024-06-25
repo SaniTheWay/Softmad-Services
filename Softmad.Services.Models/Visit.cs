@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Softmad.Services.Models
 {
-    public class Visit
+    public class Visit:AdditionalDetails
     {
         // Primary key
         [Key]
@@ -21,10 +21,6 @@ namespace Softmad.Services.Models
         [Required]
         public int Duration { get; set; }
 
-        // Remarks or notes about the visit
-        [MaxLength(1000)]
-        public string Remarks { get; set; }
-
         // Type of visit (e.g., follow-up, technical support, sales pitch, etc.)
         [Required]
         public VisitTypeEnum VisitType { get; set; } = VisitTypeEnum.FollowUp;
@@ -36,10 +32,6 @@ namespace Softmad.Services.Models
         // Any additional feedback from the client
         [MaxLength(1000)]
         public string ClientFeedback { get; set; }
-
-        // Status of the visit (e.g., completed, cancelled, rescheduled)
-        [Required]
-        public VisitStatusEnum Status { get; set; } = VisitStatusEnum.Completed;
 
         [Required]
         public VisitModeEnum Mode { get; set; } = VisitModeEnum.Offline;
@@ -56,14 +48,6 @@ namespace Softmad.Services.Models
         SalesPitch,
         Training,
         Other
-    }
-
-    public enum VisitStatusEnum
-    {
-        Completed,
-        Cancelled,
-        Rescheduled,
-        Pending
     }
 
     public enum VisitModeEnum

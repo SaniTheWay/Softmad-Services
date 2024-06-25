@@ -60,25 +60,25 @@
             <textarea asp-for="Visit.ClientFeedback" class="form-control"></textarea>
             <span asp-validation-for="Visit.ClientFeedback" class="text-danger"></span>
         </div>
-        @* <div class="form-group">
+        <div class="form-group">
         <label asp-for="Visit.Status">Visit Status</label>
         <select asp-for="Visit.Status" class="form-select">
         <option class="form-option" selected>-- Select Status--</option>
-        <option class="form-option" value=@VisitStatusEnum.Pending>
-        Pending
+        <option class="form-option" value=@LeadStatus.Active>
+        Active 
         </option>
-        <option class="form-option" value=@VisitStatusEnum.Completed>
+        <option class="form-option" value=@LeadStatus.Passive>
+        Passive
+        </option>
+        <option class="form-option" value=@LeadStatus.Lost>
+        Lost
+        </option>
+        <option class="form-option" value=@LeadStatus.Completed>
         Completed
-        </option>
-        <option class="form-option" value=@VisitStatusEnum.Cancelled>
-        Cancelled
-        </option>
-        <option class="form-option" value=@VisitStatusEnum.Rescheduled>
-        Rescheduled
         </option>
         </select>
         <span asp-validation-for="Visit.Status" class="text-danger"></span>
-        </div> *@
+        </div>
 
         <div class="form-group">
             <label asp-for="Visit.Mode">Mode of Visit</label>

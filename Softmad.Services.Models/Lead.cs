@@ -5,34 +5,37 @@ using System.Diagnostics.Contracts;
 
 namespace Softmad.Services.Models
 {
-    public class Lead
+    public class Lead:AdditionalDetails
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
+        public Guid EmployeeId { get; set; }
+        [Required]
+        public CustomerDetails CustomerDetails { get; set; }
+    }
+    public class AdditionalDetails
+    {
         [Required]
         public LeadType Type { get; set; }
         [Required]
-        public LeadStatus Status { get; set; } = LeadStatus.Start;
+        public LeadStatus Status { get; set; } = LeadStatus.Active;
         public DateTimeOffset? LastUpdated { get; set; } = DateTimeOffset.UtcNow;
         [Required]
-        public string Budget { get; set; }      
-        [Required]
-        public CustomerDetails CustomerDetails { get; set; }
-        
+        public string Budget { get; set; }
         [Required]
         public string Requirements { get; set; }
         [Required]
         public string ClosurePlan { get; set; }
         [Required]
+        [MaxLength(100)]
         public string ExistingMachines { get; set; }
         public bool Competitor { get; set; } //fixed now
         public string? CompetitorName { get; set; }
         public string? CompetitorModel { get; set; }
+        [MaxLength(1000)]
         public string? Remarks { get; set; }
-        public Guid EmployeeId { get; set; }
     }
-
     public enum LeadType
     {
         Hot,
@@ -42,8 +45,8 @@ namespace Softmad.Services.Models
 
     public enum LeadStatus
     {
-        Start,
-        Hold,
+        Active,
+        Passive,
         Lost,
         Completed
     }

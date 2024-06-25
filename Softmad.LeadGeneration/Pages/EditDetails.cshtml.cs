@@ -54,8 +54,6 @@ namespace Softmad.LeadGeneration.Pages
         public IActionResult CancelEdit(EventArgs arg)
         {
             return Redirect($"/lead/{Lead.Id}/details");
-            //Response.Redirect("/lead/" + id + "/details");
-            //_navManager.NavigateTo(_navManager.BaseUri + "/lead/" + Id + "/details");
         }
 
         public async Task<IActionResult> OnPostSubmitForm()
