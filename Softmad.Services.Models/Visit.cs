@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Softmad.Services.Models
 {
-    public class Visit:AdditionalDetails
+    public class Visit : AdditionalDetails
     {
         // Primary key
         [Key]
@@ -17,9 +18,8 @@ namespace Softmad.Services.Models
         [Required]
         public DateTimeOffset VisitDate { get; set; } = DateTime.Now;
 
-        // Duration of the visit (in minutes)
-        [Required]
-        public int Duration { get; set; }
+        [AllowNull]
+        public int? Duration { get; set; }
 
         // Type of visit (e.g., follow-up, technical support, sales pitch, etc.)
         [Required]
@@ -31,18 +31,34 @@ namespace Softmad.Services.Models
 
         // Any additional feedback from the client
         [MaxLength(1000)]
-        public string ClientFeedback { get; set; }
+        [AllowNull]
+        public string? ClientFeedback { get; set; }
 
-        [Required]
-        public VisitModeEnum Mode { get; set; } = VisitModeEnum.Offline;
-
-        // Potential next steps after the visit
-        [MaxLength(1000)]
-        public string NextSteps { get; set; }
     }
-
+    public class AdditionalDetails
+    {
+        [Required]
+        public LeadType Type { get; set; }
+        [Required]
+        public LeadStatus Status { get; set; } = LeadStatus.Active;
+        [Required]
+        public string Budget { get; set; }
+        [Required]
+        public string Requirements { get; set; }
+        [Required]
+        public string ClosurePlan { get; set; }
+        [Required]
+        [MaxLength(100)]
+        public string ExistingMachines { get; set; }
+        public bool Competitor { get; set; } //fixed now
+        public string? CompetitorName { get; set; }
+        public string? CompetitorModel { get; set; }
+        [MaxLength(1000)]
+        public string? Remarks { get; set; }
+    }
     public enum VisitTypeEnum
     {
+        VisitZero,
         FollowUp,
         TechnicalSupport,
         SalesPitch,

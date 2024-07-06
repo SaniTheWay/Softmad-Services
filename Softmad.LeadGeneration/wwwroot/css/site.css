@@ -31,13 +31,18 @@ body {
 
 .btn-primary {
     background-color: black !important;
-    border: 1.5px solid black !important;
+    border: 2px solid black !important;
 }
 
 .btn-secondary {
     background-color: white !important;
     color: black !important;
-    border: 1.5px solid black !important;
+    border: 2px solid black !important;
+}
+
+.smad-border 
+{
+    border: 2px solid black !important;
 }
 
 /* Adjustments for smaller screens */
@@ -45,5 +50,9 @@ body {
     .text-center {
         padding: 20px;
     }
+}
+
+.other-input {
+    padding: 2px;
 }
 

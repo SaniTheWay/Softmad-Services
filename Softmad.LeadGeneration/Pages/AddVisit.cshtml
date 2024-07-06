@@ -15,92 +15,159 @@
 <div class="smd-heading-div">
     <h4>@ViewData["Title"]</h4>
 </div>
+@* @if (Model.Visit.SalesPersonId.ToString().ToLower() == User.Claims.ToList()[0].Value.ToLower())
+{ *@
+@if (Model.CanCreateVisit)
+{
+    <div class="form-container">
+        <form method="post">
+            <input type="hidden" asp-for="Visit.LeadId" />
+            <div class="form-group">
+                <label asp-for="Visit.VisitDate">Visit Date/Time</label>
+                <input asp-for="Visit.VisitDate" class="form-control" type="datetime-local" />
+                <span asp-validation-for="Visit.VisitDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Visit.Duration">Duration <sub>(in min)</sub></label>
+                <input asp-for="Visit.Duration" class="form-control" type="number" />
+                <span asp-validation-for="Visit.Duration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Visit.VisitType">Visit Type</label>
+                <select asp-for="Visit.VisitType" class="form-select">
+                    <option class="form-option" value=@VisitTypeEnum.FollowUp selected>
+                        FollowUp
+                    </option>
+                    <option class="form-option text-muted" disabled value=@VisitTypeEnum.TechnicalSupport>
+                        Technical Support
+                    </option>
+                    <option class="form-option text-muted" disabled value=@VisitTypeEnum.SalesPitch>
+                        Sales Pitch
+                    </option>
+                    <option class="form-option text-muted" disabled value=@VisitTypeEnum.Training>
+                        Training
+                    </option>
+                </select>
+                <span asp-validation-for="Visit.VisitType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Visit.Type">Lead Type</label>
+                <select asp-for="Visit.Type" class="form-select">
+                    <option class="form-option" value=@LeadType.Hot selected>
+                        Hot
+                    </option>
+                    <option class="form-option" value=@LeadType.Mild>
+                        Mild
+                    </option>
+                    <option class="form-option" value=@LeadType.Cold>
+                        Cold
+                    </option>
+                </select>
+                <span asp-validation-for="Visit.Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Visit.ClientFeedback">Client Feedback</label>
+                <textarea asp-for="Visit.ClientFeedback" class="form-control"></textarea>
+                <span asp-validation-for="Visit.ClientFeedback" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Visit.Status">Visit Status</label>
+                <select asp-for="Visit.Status" class="form-select">
+                    <option class="form-option" selected>-- Select Status--</option>
+                    <option class="form-option" value=@LeadStatus.Active>
+                        Active
+                    </option>
+                    <option class="form-option" value=@LeadStatus.Passive>
+                        Passive
+                    </option>
+                    <option class="form-option" value=@LeadStatus.Lost>
+                        Lost
+                    </option>
+                    <option class="form-option" value=@LeadStatus.Completed>
+                        Completed
+                    </option>
+                </select>
+                <span asp-validation-for="Visit.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Visit.Budget">Budget: <sup>(in Lac)</sup></label>
+                <input type="text" class="form-control" id="budget" asp-for="Visit.Budget">
+                <span asp-validation-for="Visit.Budget" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Visit.ClosurePlan">Closure Plan</label>
+                <select asp-for="Visit.ClosurePlan" class="form-select">
+                    <option class="form-option" selected>-- Select Plan --</option>
+                    <option class="form-option" value="<1 Month">&lt;1 month</option>
+                    <option class="form-option" value="2-3 Months">2-3 Months</option>
+                    <option class="form-option" value="6-8 Months">6-8 Months</option>
+                    <option class="form-option" value=">1 Year">&gt;1 Year</option>
+                </select>
+                <span asp-validation-for="Visit.ClosurePlan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Visit.Requirements">Requirements</label>
+                <select asp-for="Visit.Requirements" id="requirementsDropdown" class="form-select">
+                    <option class="form-option" selected>-- Select Requirement --</option>
+                    <option class="form-option" value="Ultrasound">Ultrasound</option>
+                    <option class="form-option" value="other">Other</option>
+                </select>
+                <div id="add-input-req" class="p-4">
+                    <input asp-for="Visit.Requirements" type="text" id="otherRequirementsInput" style="display: none;" placeholder="Enter other requirement">
+                </div>
+                <span asp-validation-for="Visit.Requirements" class="text-danger"></span>
 
-<div class="form-container">
-    <form method="post">
-        <input type="hidden" asp-for="Visit.LeadId" />
-        <div class="form-group">
-            <label asp-for="Visit.VisitDate">Visit Date/Time</label>
-            <input asp-for="Visit.VisitDate" class="form-control" type="datetime-local" />
-            <span asp-validation-for="Visit.VisitDate" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Visit.Duration">Duration <sub>(in min)</sub></label>
-            <input asp-for="Visit.Duration" class="form-control" type="number" />
-            <span asp-validation-for="Visit.Duration" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Visit.Remarks"></label>
-            <textarea asp-for="Visit.Remarks" class="form-control"></textarea>
-            <span asp-validation-for="Visit.Remarks" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Visit.VisitType">Visit Type</label>
-            <select asp-for="Visit.VisitType" class="form-select">
-                <option class="form-option" value=@VisitTypeEnum.FollowUp selected>
-                    FollowUp
-                </option>
-                <option class="form-option" value=@VisitTypeEnum.TechnicalSupport>
-                    Technical Support
-                </option>
-                <option class="form-option" value=@VisitTypeEnum.SalesPitch>
-                    Sales Pitch
-                </option>
-                <option class="form-option" value=@VisitTypeEnum.Training>
-                    Training
-                </option>
-                <option class="form-option" value=@VisitTypeEnum.Other>
-                    Other
-                </option>
-            </select>
-            <span asp-validation-for="Visit.VisitType" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Visit.ClientFeedback">Client Feedback</label>
-            <textarea asp-for="Visit.ClientFeedback" class="form-control"></textarea>
-            <span asp-validation-for="Visit.ClientFeedback" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-        <label asp-for="Visit.Status">Visit Status</label>
-        <select asp-for="Visit.Status" class="form-select">
-        <option class="form-option" selected>-- Select Status--</option>
-        <option class="form-option" value=@LeadStatus.Active>
-        Active 
-        </option>
-        <option class="form-option" value=@LeadStatus.Passive>
-        Passive
-        </option>
-        <option class="form-option" value=@LeadStatus.Lost>
-        Lost
-        </option>
-        <option class="form-option" value=@LeadStatus.Completed>
-        Completed
-        </option>
-        </select>
-        <span asp-validation-for="Visit.Status" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="Visit.Mode">Mode of Visit</label>
-            <select asp-for="Visit.Mode" class="form-select">
-                <option class="form-option" value=@VisitModeEnum.Offline selected>
-                    Offline
-                </option>
-                <option class="form-option" value=@VisitModeEnum.Online>
-                    Online
-                </option>
-            </select>
-            <span asp-validation-for="Visit.Mode" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Visit.NextSteps"> Next Steps</label>
-            <textarea asp-for="Visit.NextSteps" class="form-control"></textarea>
-            <span asp-validation-for="Visit.NextSteps" class="text-danger"></span>
-        </div>
-        <button type="submit" class="btn btn-primary">Create</button>
-    </form>
-</div>
-
+            </div>
+            <div class="form-group">
+                <label asp-for="Visit.ExistingMachines">Existing Machines <sub><strong>,</strong> separated</sub> </label>
+                <input asp-for="Visit.ExistingMachines" type="text" class="form-control">
+                <span asp-validation-for="Visit.ExistingMachines" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Visit.Competitor">Any Competitor?</label><br>
+                <select asp-for="Visit.Competitor" id="competitorDropdown" class="form-control">
+                    <option value="@true">Yes</option>
+                    <option value="@false">No</option>
+                </select>
+                <span asp-validation-for="Visit.Competitor" class="text-danger"></span>
+            </div>
+            <div id="competitorContainer" style="display: none;background:#eeecec; padding:10px;">
+                <div id="competitorFields">
+                    <div class="form-group">
+                        <label asp-for="Visit.CompetitorName">Competitor Name</label>
+                        <input asp-for="Visit.CompetitorName" type="text" class="form-control" id="competitorName">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Visit.CompetitorModel">Competitor Model</label>
+                        <input asp-for="Visit.CompetitorModel" type="text" class="form-control" id="competitorModel">
+                    </div>
+                </div>
+                <div class="form-group d-none">
+                    <button type="button" class="btn btn-primary mt-3" id="addCompetitorBtn">Add More Competitor</button>
+                </div>
+                <span asp-validation-for="Visit.CompetitorName" class="text-danger"></span>
+                <span asp-validation-for="Visit.CompetitorModel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Visit.Remarks">Remark</label>
+                <textarea asp-for="Visit.Remarks" class="form-control"></textarea>
+                <span asp-validation-for="Visit.Remarks" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+    </div>
+}
+else
+{
+    <div class="alert alert-danger">
+        <strong>You can not create new visits of a completed/lost Lead.</strong>
+    </div>
+}
+@* } *@
+@* else
+{
+    <p class="alert alert-danger text-danger">Only lead owner can create visit for this lead.</p>
+} *@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

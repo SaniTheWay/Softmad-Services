@@ -1,20 +1,40 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Softmad.Services.Models;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
-namespace Softmad.Services.Models
+namespace Softmad.LeadGeneration.Models.DTOs
 {
-    public class Lead
+    public class LeadDTO
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-        public Guid EmployeeId { get; set; }
-        public DateTimeOffset? LastUpdated { get; set; } = DateTimeOffset.UtcNow;
-
         [Required]
         public CustomerDetails CustomerDetails { get; set; }
+
+        public AdditionalDetails AdditionalDetails { get; set; }    
     }
-    
+    public class AdditionalDetails
+    {
+        [Required]
+        public LeadType Type { get; set; }
+        [Required]
+        public LeadStatus Status { get; set; } = LeadStatus.Active;
+        [Required]
+        public string Budget { get; set; }
+        [Required]
+        public string Requirements { get; set; }
+        [Required]
+        public string ClosurePlan { get; set; }
+        [Required]
+        [MaxLength(100)]
+        public string ExistingMachines { get; set; }
+        public bool Competitor { get; set; } //fixed now
+        public string? CompetitorName { get; set; }
+        public string? CompetitorModel { get; set; }
+        [MaxLength(1000)]
+        public string? Remarks { get; set; }
+    }
     public enum LeadType
     {
         Hot,
@@ -34,7 +54,7 @@ namespace Softmad.Services.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set;}
+        public Guid Id { get; set; }
         [Required]
         public HospitalDetails HospitalDetails { get; set; }
         [Required]
@@ -43,7 +63,7 @@ namespace Softmad.Services.Models
         public string CustomerType { get; set; }
     }
 
-    public class HospitalDetails:Address
+    public class HospitalDetails : Address
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -69,18 +89,4 @@ namespace Softmad.Services.Models
         public string Phone { get; set; }
         public string Email { get; set; }
     }
-
-    //public class HospitalContact
-    //{
-    //    [Key]
-    //    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    //    public Guid Id { get; set; }
-    //    public Guid HospitalDetailsId { get; set; }
-    //    [ForeignKey("HospitalDetailsId")]
-    //    public HospitalDetails HospitalDetails { get; set; }
-    //    public ContactRoleEnum Role { get; set; }
-    //    public string Name { get; set; }
-    //    public string Phone { get; set; }
-    //}
-
 }

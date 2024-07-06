@@ -20,14 +20,22 @@ namespace Softmad.LeadGeneration.Pages
         public Guid Id { get; set; }
 
         public Lead Lead { get; set; }
-        public List<Lead> leadList { get; set; }
+        public Visit LatestVisit { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Lead = await _daprClient.InvokeMethodAsync<Lead>(HttpMethod.Get, AppId, MethodURL +$"{Id}");
+            Lead = await _daprClient.InvokeMethodAsync<Lead>(HttpMethod.Get, AppId, MethodURL + $"{Id}");
             if (Lead == null)
             {
                 return NotFound();
+            }
+            else
+            {
+                LatestVisit = await _daprClient.InvokeMethodAsync<Visit>(HttpMethod.Get, AppId, MethodURL + $"visit/latest/{Id}");
+                if (LatestVisit == null)
+                {
+                    return NotFound();
+                }
             }
             return Page();
         }

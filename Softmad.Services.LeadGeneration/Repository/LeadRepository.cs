@@ -35,13 +35,13 @@ namespace Softmad.Services.LeadGeneration.Repository
             }
         }
 
-        public async Task<bool> SaveLead(Lead leadEntry)
+        public async Task<Guid> SaveLead(Lead leadEntry)
         {
             try
             {
-                await _dataContext.Leads.AddAsync(leadEntry);
+                var leadEntity = await _dataContext.Leads.AddAsync(leadEntry);
                 await SaveChanges();
-                return true;
+                return leadEntity.Entity.Id;
 
             }
             catch (Exception ex)

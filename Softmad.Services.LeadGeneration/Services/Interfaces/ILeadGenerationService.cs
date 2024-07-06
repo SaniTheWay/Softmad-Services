@@ -15,7 +15,7 @@ namespace Softmad.Services.LeadGeneration.Services.Interfaces
         /// </summary>
         /// <param name="lead"></param>
         /// <returns>true if succeed, else false</returns>
-        public Task<bool> PostLeadAsync(Lead lead);
+        public Task<Guid> PostLeadAsync(Lead lead);
         /// <summary>
         /// Get Lead By LeadId
         /// </summary>
@@ -35,6 +35,12 @@ namespace Softmad.Services.LeadGeneration.Services.Interfaces
         public Task CreateVisitAsync(Visit visit);
 
         public Task<List<Visit>> GetVisitByIdAsync(Guid leadId);
+        /// <summary>
+        /// Returns latest lead for <seealso cref="Lead.Id"/>
+        /// </summary>
+        /// <param name="leadId"></param>
+        /// <returns></returns>
+        public Task<Visit> GetLatestVisit(Guid leadId);
 
     }
 }

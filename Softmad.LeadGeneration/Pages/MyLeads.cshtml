@@ -8,42 +8,44 @@
 </head>
 <body>
     <div class="smd-heading-div">
-        <h4>My Leads</h4><br/>
+        <h4>My Leads</h4><br />
     </div>
     <div class="max-w-4xl mx-auto d-grid">
         @foreach (var lead in Model.leadList)
         {
-            <a href="/lead/@lead.Id/details" class="text-decoration-none">
-                <div class="lead-card px-4 py-2 m-2 border rounded-lg shadow-sm" style="row-gap:10px;">
+            <div class="lead-card card px-4 py-2 m-2 border rounded-lg shadow-sm" style="row-gap:10px;">
+                <a class="col" href="/lead/@lead.Id/details" class="text-decoration-none">
                     <div class="d-flex align-items-center" style="column-gap:6px;">
                         <label class="col-8 text-muted">@lead.Id.ToString().Split("-")[0].ToUpper()</label>
-                        <span title="Type" class="col badge rounded-pill @Model.GetCSSBadgeColor(leadType: lead.Type)">@lead.Type</span>
-                        <span title="Status" class="col badge rounded-pill @Model.GetCSSBadgeColor(leadStatus: lead.Status)">@lead.Status</span>
+                        <span>
+                            <a href="@($"/lead/{lead.Id}/visitdetails")" title="View Visits">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="black" class="bi bi-info-circle-fill" viewBox="0 0 20 20">
+                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2" />
+                                </svg>
+                            </a>
+                            <a href="@($"/lead/{lead.Id}/new-visit")" title="Add Visit">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="black" class="bi bi-file-earmark-plus-fill" viewBox="0 0 20 20">
+                                    <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0" />
+                                </svg>
+                            </a>
+                        </span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="d-flex">
                             <span class="fw-bold">@lead.CustomerDetails.CustomerType:&nbsp;</span>
                             <span>@lead.CustomerDetails.HospitalDetails.Name</span>
                         </div>
-                        <div>
-                            <a href="@($"/lead/{lead.Id}/visitdetails")">
-                                <i class="bi bi-info-circle-fill"></i>
-                            </a>
-                            <a href="@($"/lead/{lead.Id}/new-visit")">
-                                <i class="bi bi-file-earmark-plus-fill"></i>
-                            </a>
-                        </div>
                     </div>
                     <div>
-                        <span class="fw-bold">Budget:&nbsp;</span>
-                        <span>@lead.Budget</span>
+                        <span class="fw-bold">Owner Name:&nbsp;</span>
+                        <span>@lead.CustomerDetails.HospitalDetails.OwnerName</span>
                     </div>
                     <div class="text-muted">
                         <span>Last Modified:&nbsp;</span>
-                        <span>@lead?.LastUpdated</span>
+                        <span>@lead?.LastUpdated.Value.Date</span>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
         }
     </div>
 </body>

@@ -7,7 +7,7 @@ namespace Softmad.LeadGeneration.Pages
 {
     public class VisitDetailsModel : PageModel
     {
-        public int VisitCount = 1;
+        public int VisitCount = 0;
         private const string AppId = "Softmad-Services-LeadGeneration";
         private const string MethodURL = "api/LeadGeneration/GetVisitById/";
         private readonly DaprClient _daprClient;

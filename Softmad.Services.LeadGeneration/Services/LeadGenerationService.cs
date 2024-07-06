@@ -25,10 +25,9 @@ namespace Softmad.Services.LeadGeneration.Services
         }
 
         /// <inheritdoc/>
-        public async Task<bool> PostLeadAsync(Lead lead)
+        public async Task<Guid> PostLeadAsync(Lead lead)
         {
-            await _leadRepository.SaveLead(lead);
-            return true;
+            return  await _leadRepository.SaveLead(lead);
         }
 
         public async Task<Lead> GetLeadByIdAsync(Guid id)
@@ -78,5 +77,13 @@ namespace Softmad.Services.LeadGeneration.Services
             return await _leadRepository.GetVisitByIdAsync(leadId);
         }
 
+        public async Task<Visit> GetLatestVisit(Guid leadId)
+        {
+            var visits = await _leadRepository.GetVisitByIdAsync(leadId);
+            if (visits != null)
+                return visits.OrderByDescending(v => v.VisitDate).ToList()[0];
+            _logger.LogError($"Can not find any latest visit for Lead Id {leadId}");
+            throw new Exception("One or more exception occured");
+        }
     }
 }

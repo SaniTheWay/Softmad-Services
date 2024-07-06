@@ -20,8 +20,8 @@
                 <div class="px-4 py-2 m-2 border rounded-lg shadow-sm">
                     <div class="d-flex align-items-center" style="column-gap:6px;">
                         <label class="col-8 text-muted">Lead Id:&nbsp @Model.Lead.Id.ToString().Split("-")[0].ToUpper()</label>
-                        <span title="Type" class="col badge rounded-pill @Model.GetCSSBadgeColor(leadType: Model.Lead.Type)">@Model.Lead.Type</span>
-                        <span title="Status" class="col badge rounded-pill @Model.GetCSSBadgeColor(leadStatus: Model.Lead.Status)">@Model.Lead.Status</span>
+                        <span title="Type" class="col badge rounded-pill @Model.GetCSSBadgeColor(leadType: Model.LatestVisit.Type)">@Model.LatestVisit.Type</span>
+                        <span title="Status" class="col badge rounded-pill @Model.GetCSSBadgeColor(leadStatus: Model.LatestVisit.Status)">@Model.LatestVisit.Status</span>
                     </div>
                     <br />
                     <div class="section-header">
@@ -79,61 +79,65 @@
                     <br>
 
                     <div class="section-header">
-                        <h4 class="fw-bold">Additional Details</h4>
+                        <h4 class="fw-bold">Aditional-details <i>(from latest Visit)</i></h4>
                     </div>
 
                     <div class="details-group">
                         <div>
                             <span class="fw-bold">Budget:&nbsp;</span>
-                            <span>@Model.Lead.Budget</span>
+                            <span>@Model.LatestVisit.Budget</span>
                         </div>
                         <div>
                             <span class="fw-bold">Requirements:&nbsp;</span>
-                            <span>@Model.Lead.Requirements</span>
+                            <span>@Model.LatestVisit.Requirements</span>
                         </div>
                         <div>
                             <span class="fw-bold">Closure Plan:&nbsp;</span>
-                            <span>@Model.Lead.ClosurePlan</span>
+                            <span>@Model.LatestVisit.ClosurePlan</span>
                         </div>
                         <div>
                             <span class="fw-bold">Existing Machines:&nbsp;</span>
-                            <span>@Model.Lead.ExistingMachines</span>
+                            <span>@Model.LatestVisit.ExistingMachines</span>
                         </div>
                         <div>
                             <span class="fw-bold">Competitor:&nbsp;</span>
-                            <span>@(Model.Lead.Competitor ? "Yes" : "No")</span>
-                            @if (Model.Lead.Competitor)
+                            <span>@(Model.LatestVisit.Competitor ? "Yes" : "No")</span>
+                            @if (Model.LatestVisit.Competitor)
                             {
                                 <div>
                                     <span class="fw-bold">Competitor Name:&nbsp;</span>
-                                    <span>@Model.Lead.CompetitorName</span>
+                                    <span>@Model.LatestVisit.CompetitorName</span>
                                 </div>
                                 <div>
                                     <span class="fw-bold">Competitor Model:&nbsp;</span>
-                                    <span>@Model.Lead.CompetitorModel</span>
+                                    <span>@Model.LatestVisit.CompetitorModel</span>
                                 </div>
                             }
                         </div>
                         <div>
                             <span class="fw-bold">Remarks:&nbsp;</span>
-                            <span>@Model.Lead.Remarks</span>
+                            <span>@Model.LatestVisit.Remarks</span>
                         </div>
                         <div>
                             <span class="fw-bold">Last Modified:&nbsp;</span>
-                            <span>@Model.Lead.LastUpdated</span>
+                            <span>@Model.LatestVisit.VisitDate</span>
                         </div>
-                        <div class="d-flex" style="column-gap: 10px;">
-                            <div class="form-group">
-                                <a href=@($"/lead/{Model.Lead.Id}/edit")>
-                                    <button type="button" class="btn btn-primary">Edit Details</button>
-                                </a>
+                        @* only lead creator can add visits *@
+                        @if (Model.Lead.EmployeeId.ToString() == User.Claims.ToList()[0].Value)
+                        {
+                            <div class="d-flex" style="column-gap: 10px;">
+                                <div class="form-group">
+                                    <a href=@($"/lead/{Model.Lead.Id}/edit")>
+                                        <button type="button" class="btn btn-primary" disabled title="Non-editable Lead details">Edit Details</button>
+                                    </a>
+                                </div>
+                                <div class="form-group">
+                                    <a href=@($"/lead/{Model.Lead.Id}/new-visit")>
+                                        <button type="button" class="btn btn-primary">Add Visit</button>
+                                    </a>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <a href=@($"/lead/{Model.Lead.Id}/new-visit")>
-                                    <button type="button" class="btn btn-primary">Add Visit</button>
-                                </a>
-                            </div>
-                        </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -145,9 +149,6 @@
                 Lead not found.
             </div>
         }
-
-
-
 
         <footer class="footer">
             <!-- Footer content -->

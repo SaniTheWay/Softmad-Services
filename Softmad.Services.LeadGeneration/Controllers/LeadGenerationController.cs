@@ -120,6 +120,21 @@ namespace Softmad.Services.LeadGeneration.Controllers
             }
 
         }
+        [HttpGet("visit/latest/{leadId}")]
+        public async Task<IActionResult> GetLatestVisit(Guid leadId)
+        {
+            try
+            {
+                var visit = await _leadGenerationService.GetLatestVisit(leadId);
+                return Ok(visit);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex,$"One or more exception occured while fetching latest visit");
+                return StatusCode(500, ex);
+            }
+
+        }
 
         #endregion
     }

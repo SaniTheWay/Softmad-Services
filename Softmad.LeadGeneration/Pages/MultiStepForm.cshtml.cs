@@ -1,8 +1,12 @@
-﻿using Dapr.Client;
+﻿using AutoMapper;
+using Dapr.Client;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Softmad.LeadGeneration.Models.DTOs;
 using Softmad.Services.Models;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace Softmad.LeadGeneration.Pages
 {
@@ -29,16 +33,17 @@ namespace Softmad.LeadGeneration.Pages
             new City { CityName = "Gudhiyari", Pincode = "492009" }
         };
         [BindProperty]
-        public Lead? Lead { get; set; }
+        public LeadDTO? Lead { get; set; }
 
         private const string AppId = "Softmad-Services-LeadGeneration";
         private const string MethodURL = "api/LeadGeneration";
 
         private readonly DaprClient _daprClient;
-
-        public MultiStepForm(DaprClient daprClient)
+        private readonly IMapper _mapper;
+        public MultiStepForm(DaprClient daprClient, IMapper mapper)
         {
             _daprClient = daprClient;
+            _mapper = mapper;
         }
         public async Task<IActionResult> OnPostSubmitForm()
         {
@@ -48,11 +53,19 @@ namespace Softmad.LeadGeneration.Pages
                 // If model validation fails, return the page with validation errors
                 return Page();
             }
+            Lead.CustomerDetails.HospitalDetails.PinCode = Cities.FirstOrDefault(x => x.CityName == Lead.CustomerDetails.HospitalDetails.City).Pincode;
+            var request_Lead = _mapper.Map<Lead>(Lead);
+            request_Lead.EmployeeId = userId;
 
-            Lead.EmployeeId = userId;
-            Lead.CustomerDetails.HospitalDetails.PinCode = Cities.FirstOrDefault(x=> x.CityName == Lead.CustomerDetails.HospitalDetails.City).Pincode;
+            var request_Visit0 = _mapper.Map<Visit>(Lead.AdditionalDetails);
+            request_Visit0.VisitId = new Guid();
+            request_Visit0.VisitDate = DateTimeOffset.Now;
+            request_Visit0.VisitType = VisitTypeEnum.VisitZero;
+            request_Visit0.SalesPersonId = userId;
 
-            await _daprClient.InvokeMethodAsync<Lead>(HttpMethod.Post, AppId, MethodURL, Lead);
+            var leadId = await _daprClient.InvokeMethodAsync<Lead, Guid>(HttpMethod.Post, AppId, MethodURL, request_Lead);
+            request_Visit0.LeadId = leadId;
+            await _daprClient.InvokeMethodAsync<Visit>(HttpMethod.Post, AppId, MethodURL + "/addvisit", request_Visit0);
 
             return RedirectToPage("/MyLeads");
         }
