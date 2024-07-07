@@ -27,11 +27,19 @@ namespace Softmad.LeadGeneration.Pages
         public async Task<IActionResult> OnGet(Guid id)
         {
             LeadId = id;
-            var latestVisit = await _daprClient.InvokeMethodAsync<Visit>(HttpMethod.Get, AppId, MethodBaseURL + $"visit/latest/{id}");
+            Visit? latestVisit;
+            try
+            {
+                latestVisit = await _daprClient.InvokeMethodAsync<Visit?>(HttpMethod.Get, AppId, MethodBaseURL + $"visit/latest/{id}");
+            }
+            catch (Exception ex)
+            {
+                latestVisit = null;
+            }
             Visit.LeadId = LeadId;
             if (latestVisit != null)
             {
-                if(latestVisit.Status == LeadStatus.Completed || latestVisit.Status == LeadStatus.Lost)
+                if (latestVisit.Status == LeadStatus.Completed || latestVisit.Status == LeadStatus.Lost)
                 {
                     CanCreateVisit = false;
                 }
@@ -58,7 +66,7 @@ namespace Softmad.LeadGeneration.Pages
             }
             Visit.SalesPersonId = new Guid(User.Claims.ToList()[0].Value);
 
-            await _daprClient.InvokeMethodAsync<Visit>(HttpMethod.Post, AppId, MethodBaseURL + "addvisit", Visit);
+            await _daprClient.InvokeMethodAsync<Visit>(HttpMethod.Post, AppId, MethodBaseURL + "visit/add", Visit);
             return Redirect($"/lead/{Visit.LeadId}/visitdetails");
         }
     }

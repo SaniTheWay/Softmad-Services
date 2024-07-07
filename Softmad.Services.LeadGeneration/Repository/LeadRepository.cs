@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Humanizer;
+using Microsoft.CodeAnalysis.Elfie.Serialization;
+using Microsoft.EntityFrameworkCore;
 using Softmad.Services.LeadGeneration.Data;
 using Softmad.Services.LeadGeneration.Repository.Interfaces;
 using Softmad.Services.Models;
@@ -26,7 +28,7 @@ namespace Softmad.Services.LeadGeneration.Repository
                                                         .ThenInclude(cd => cd.HospitalDetails)
                                                         .Include(l => l.CustomerDetails)
                                                         .ThenInclude(cd => cd.DoctorDetails);
-                return leads.OrderByDescending(x=>x.LastUpdated).ToList();
+                return leads.OrderByDescending(x => x.LastUpdated).ToList();
             }
             catch (Exception ex)
             {
@@ -72,8 +74,8 @@ namespace Softmad.Services.LeadGeneration.Repository
 
         public async Task UpdateLeadAsync(Lead lead)
         {
-             _dataContext.Leads.Update(lead);
-             await SaveChanges();
+            _dataContext.Leads.Update(lead);
+            await SaveChanges();
         }
 
         public async Task SaveVisit(Visit visitEntry)
@@ -90,7 +92,7 @@ namespace Softmad.Services.LeadGeneration.Repository
             }
         }
 
-        public async Task<List<Visit>> GetVisitByIdAsync(Guid leadId)
+        public async Task<List<Visit>> GetVisitsByLeadIdAsync(Guid leadId)
         {
             try
             {
@@ -102,6 +104,42 @@ namespace Softmad.Services.LeadGeneration.Repository
                 _logger.LogError(ex.ToString(), $"No Visit were found or this Lead Id {leadId}");
                 throw;
             }
+        }
+
+        public async Task<Visit?> GetLatestVisitAsync(Guid leadId)
+        {
+            try
+            {
+                var visit = await _dataContext.Visits.FirstOrDefaultAsync(v => v.LeadId == leadId && v.isLatestVisit == true);
+                return visit;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString(), ex.Message);
+                throw;
+            }
+        }
+
+        public async Task<List<Visit>> GetAllLatestVisitsAsync()
+        {
+            try
+            {
+                var visit = _dataContext.Visits.Where(v => v.isLatestVisit == true);
+                if (visit is not null)
+                    return visit.ToList();
+                throw new Exception($"No latest Visits found");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString(), ex.Message);
+                throw;
+            }
+        }
+
+        public async Task UpdateVisitAsync(Visit visit)
+        {
+            _dataContext.Visits.Update(visit);
+            await SaveChanges();
         }
 
         private async Task SaveChanges()

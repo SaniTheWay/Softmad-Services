@@ -1,0 +1,158 @@
+﻿@using Newtonsoft.Json
+
+<div class="col-l-6 col-sm-12 col-xs-12 container m-5" style="height:200px;display:flex !important;justify-content:center !important;">
+    <div id="leadsStatusChart" style="min-height: 220px !important;">
+
+    </div>
+</div>
+
+<script>
+    var overallLeadOptions = {
+        chart: {
+            type: 'donut'
+        },
+        series: JSON.parse("@(JsonConvert.SerializeObject(PieChartData))"),
+        labels: ['Active', 'Passive', 'Lost', 'Complete'],
+        dataLabels: {
+            enabled: true,
+            formatter: function (val) {
+                return val + "%"
+            },
+        },
+        plotOptions: {
+            pie: {
+                donut: {
+                    size: '60%'
+                }
+            }
+        }
+    }
+    var leadsStatusChart = new ApexCharts(document.querySelector("#leadsStatusChart"), overallLeadOptions);
+    leadsStatusChart.render();
+
+    var monthschartoptions = {
+        series: JSON.parse("@(JsonConvert.SerializeObject(chartData))"),
+        chart: {
+            type: 'bar',
+            height: 350,
+            stacked: true,
+        },
+        plotOptions: {
+            bar: {
+                horizontal: true,
+                dataLabels: {
+                    total: {
+                        enabled: true,
+                        offsetX: 0,
+                        style: {
+                            fontSize: '13px',
+                            fontWeight: 900
+                        }
+                    }
+                }
+            },
+        },
+        stroke: {
+            width: 1,
+            colors: ['#fff']
+        },
+        title: {
+            text: 'Monthly Leads Report'
+        },
+        xaxis: {
+            categories: ['May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov'],
+            labels: {
+                formatter: function (val) {
+                    return val + "K"
+                }
+            }
+        },
+        yaxis: {
+            title: {
+                text: undefined
+            },
+        },
+        tooltip: {
+            y: {
+                formatter: function (val) {
+                    return val + "K"
+                }
+            }
+        },
+        fill: {
+            opacity: 1
+        },
+        legend: {
+            position: 'top',
+            horizontalAlign: 'left',
+            offsetX: 40
+        }
+    };
+
+    var monthschart = new ApexCharts(document.querySelector("#monthschart"), monthschartoptions);
+    monthschart.render();
+
+    var citychartoptions = {
+        series: JSON.parse("@(JsonConvert.SerializeObject(chartData))"),
+        chart: {
+            type: 'bar',
+            height: 350,
+            stacked: true,
+        },
+        plotOptions: {
+            bar: {
+                horizontal: true,
+                dataLabels: {
+                    total: {
+                        enabled: true,
+                        offsetX: 0,
+                        style: {
+                            fontSize: '13px',
+                            fontWeight: 900
+                        }
+                    }
+                }
+            },
+        },
+        stroke: {
+            width: 1,
+            colors: ['#fff']
+        },
+        title: {
+            text: 'Monthly Leads Report'
+        },
+        xaxis: {
+            categories: ['May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov'],
+            labels: {
+                formatter: function (val) {
+                    return val + "K"
+                }
+            }
+        },
+        yaxis: {
+            title: {
+                text: undefined
+            },
+        },
+        tooltip: {
+            y: {
+                formatter: function (val) {
+                    return val + "K"
+                }
+            }
+        },
+        fill: {
+            opacity: 1
+        },
+        legend: {
+            position: 'top',
+            horizontalAlign: 'left',
+            offsetX: 40
+        }
+    };
+
+    var citychart = new ApexCharts(document.querySelector("#citychart"), citychartoptions);
+    citychart.render();
+
+</script>
+

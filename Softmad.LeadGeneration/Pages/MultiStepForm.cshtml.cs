@@ -65,7 +65,7 @@ namespace Softmad.LeadGeneration.Pages
 
             var leadId = await _daprClient.InvokeMethodAsync<Lead, Guid>(HttpMethod.Post, AppId, MethodURL, request_Lead);
             request_Visit0.LeadId = leadId;
-            await _daprClient.InvokeMethodAsync<Visit>(HttpMethod.Post, AppId, MethodURL + "/addvisit", request_Visit0);
+            await _daprClient.InvokeMethodAsync<Visit>(HttpMethod.Post, AppId, MethodURL + "/visit/add", request_Visit0);
 
             return RedirectToPage("/MyLeads");
         }

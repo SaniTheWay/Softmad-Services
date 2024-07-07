@@ -42,5 +42,11 @@ namespace Softmad.Services.LeadGeneration.Services.Interfaces
         /// <returns></returns>
         public Task<Visit> GetLatestVisit(Guid leadId);
 
+        /// <summary>
+        /// Returns all the lastest visits for all leads in the DB
+        /// </summary>
+        /// <returns></returns>
+        public Task<List<Visit>> GetAllLatestVisitsAsync();
+
     }
 }
