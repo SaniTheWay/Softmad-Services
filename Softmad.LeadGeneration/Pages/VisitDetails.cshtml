@@ -27,7 +27,12 @@
             <h2 class="accordion-header" id="flush-heading-@visitId">
                 <button class="accordion-button collapsed pe-4" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-@visitId" aria-expanded="false" aria-controls="flush-collapse-@visitId">
                     <span style="display: flex; justify-content: space-between; width: 100%; align-items:center">
-                        <h5><span class="ps-3 fw-bold">Visit @(Model.VisitCount++)</span></h5> <span class="text-muted">@visit.VisitDate.Date.ToString().Split(" ")[0]</span>
+                        <h5><span class="ps-3 fw-bold">Visit @(Model.VisitCount++)</span></h5>
+                        <span>
+                            <span title="Type" class="col badge rounded-pill @Model.GetCSSBadgeColor(leadType: visit.Type)">@visit.Type</span>
+                            <span title="Status" class="col badge rounded-pill @Model.GetCSSBadgeColor(leadStatus: visit.Status)">@visit.Status</span>
+                        </span>
+                        <span class="text-muted">@visit.VisitDate.Date.ToString().Split(" ")[0]</span>
                     </span>
                 </button>
             </h2>
@@ -36,11 +41,37 @@
                     <span class="fw-bold">Client Feedback:&nbsp;</span>
                     <span>@visit.ClientFeedback</span>
                 </div>
-            </div>
-            <div id="flush-collapse-@visitId" class="accordion-collapse collapse m-2" aria-labelledby="flush-heading-@visitId" data-bs-parent="#accordionExample">
                 <div class="ps-3 d-flex">
                     <span class="fw-bold">Remarks:&nbsp;</span>
                     <span>@visit.Remarks</span>
+                </div>
+                <div class="ps-3 d-flex">
+                    <span class="fw-bold">Budget:&nbsp;</span>
+                    <span>@visit.Budget</span>
+                </div>
+                <div class="ps-3 d-flex">
+                    <span class="fw-bold">Closure Plan:&nbsp;</span>
+                    <span>@visit.ClosurePlan</span>
+                </div>
+                <div class="ps-3 d-flex">
+                    <span class="fw-bold">Existing Machines:&nbsp;</span>
+                    <span>@visit.ExistingMachines</span>
+                </div>
+                <div class="ps-3 d-flex">
+                    <span class="fw-bold">Competitor:&nbsp;</span>
+                    <span>@visit.Competitor</span>
+                </div>
+                <div class="ps-3 d-flex">
+                    <span class="fw-bold">Competitor Name:&nbsp;</span>
+                    <span>@visit.CompetitorName</span>
+                </div>
+                <div class="ps-3 d-flex">
+                    <span class="fw-bold">Competitor Model:&nbsp;</span>
+                    <span>@visit.CompetitorModel</span>
+                </div>
+                <div class="ps-3 d-flex">
+                    <span class="fw-bold">Competitor Name:&nbsp;</span>
+                    <span>@visit.CompetitorName</span>
                 </div>
             </div>
         </div>

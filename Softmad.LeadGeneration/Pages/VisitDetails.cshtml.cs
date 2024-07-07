@@ -17,6 +17,7 @@ namespace Softmad.LeadGeneration.Pages
         }
         [BindProperty]
         public Guid LeadId { get; set; }
+        public Visit LatestVisit { get; set; }
         public List<Visit> VisitList { get; set; }
 
 
@@ -34,7 +35,48 @@ namespace Softmad.LeadGeneration.Pages
         {
 
         }
+        internal string GetCSSBadgeColor(LeadType? leadType = null!, LeadStatus? leadStatus = null!)
+        {
+            string bgColorClass = string.Empty;
+            if (leadType != null)
+            {
+                switch (leadType)
+                {
+                    case LeadType.Hot:
+                        bgColorClass = "bg-danger";
+                        break;
+                    case LeadType.Cold:
+                        bgColorClass = "bg-info";
+                        break;
+                    case LeadType.Mild:
+                        bgColorClass = "bg-warning";
+                        break;
+                    default:
+                        break;
+                }
+            }
+            if (leadStatus != null)
+            {
+                switch (leadStatus)
+                {
+                    case LeadStatus.Active:
+                        bgColorClass = "bg-primary";
+                        break;
+                    case LeadStatus.Passive:
+                        bgColorClass = "bg-secondary";
+                        break;
+                    case LeadStatus.Lost:
+                        bgColorClass = "bg-danger";
+                        break;
+                    case LeadStatus.Completed:
+                        bgColorClass = "bg-success";
+                        break;
+                    default:
+                        break;
+                }
+            }
 
-        
+            return bgColorClass;
+        }
     }
 }
