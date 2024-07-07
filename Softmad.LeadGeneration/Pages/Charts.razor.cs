@@ -18,15 +18,21 @@ namespace Softmad.LeadGeneration.Pages
         public IEnumerable<Visit>? LatestVisits { get; set; }
         public List<SeriesData> chartData { get; set; }
         public List<int> PieChartData { get; set; }
+        public List<int> WeeklyData { get; set; }
         protected override async Task OnInitializedAsync()
         {
             await GetData();
-            var active = visitWithStatus(LeadStatus.Active);
-            var passive = visitWithStatus(LeadStatus.Passive);
-            var lost = visitWithStatus(LeadStatus.Lost);
-            var completed = visitWithStatus(LeadStatus.Completed);
+            var active = visitWithStatus(LeadStatus.Active, LatestVisits.ToList());
+            var passive = visitWithStatus(LeadStatus.Passive, LatestVisits.ToList());
+            var lost = visitWithStatus(LeadStatus.Lost, LatestVisits.ToList());
+            var completed = visitWithStatus(LeadStatus.Completed, LatestVisits.ToList());
             PieChartData = [active.Count(), passive.Count(),  lost.Count(), completed.Count()];
-           chartData = new List<SeriesData>
+            var week = LatestVisits.Where(c => c.VisitDate.AddDays(7).Date >= DateTime.Now.Date).ToList();
+            WeeklyData = [visitWithStatus(LeadStatus.Active, week.ToList()).Count(),
+                          visitWithStatus(LeadStatus.Passive, week.ToList()).Count(),
+                          visitWithStatus(LeadStatus.Lost, week.ToList()).Count(),
+                          visitWithStatus(LeadStatus.Completed, week.ToList()).Count()];
+            chartData = new List<SeriesData>
             {
                 new SeriesData
                 {
@@ -62,18 +68,18 @@ namespace Softmad.LeadGeneration.Pages
             LatestVisits = await _daprClient.InvokeMethodAsync<IEnumerable<Visit>>(HttpMethod.Get, AppId, MethodURL + $"/visit/latest");
         }
 
-        private IEnumerable<Visit> visitWithStatus(LeadStatus status)
+        private IEnumerable<Visit> visitWithStatus(LeadStatus status,List<Visit> Visits)
         {
             switch (status)
-            {
+            { 
                 case LeadStatus.Active:
-                    return LatestVisits?.Where(v=>v.Status == LeadStatus.Active)!;
+                    return Visits?.Where(v=>v.Status == LeadStatus.Active)!;
                 case LeadStatus.Passive:
-                    return LatestVisits?.Where(v=>v.Status == LeadStatus.Passive)!;
+                    return Visits?.Where(v=>v.Status == LeadStatus.Passive)!;
                 case LeadStatus.Lost:
-                    return LatestVisits?.Where(v=>v.Status == LeadStatus.Lost)!;
+                    return Visits?.Where(v=>v.Status == LeadStatus.Lost)!;
                 case LeadStatus.Completed:
-                    return LatestVisits?.Where(v=>v.Status == LeadStatus.Completed)!;
+                    return Visits?.Where(v=>v.Status == LeadStatus.Completed)!;
                 default:
                     throw new Exception($"Does not impliment status type - \"{status}\"");
             }
