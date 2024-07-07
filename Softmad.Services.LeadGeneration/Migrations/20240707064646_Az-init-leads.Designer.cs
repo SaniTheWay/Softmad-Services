@@ -12,8 +12,8 @@ using Softmad.Services.LeadGeneration.Data;
 namespace Softmad.Services.LeadGeneration.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240608143142_08Jun24")]
-    partial class _08Jun24
+    [Migration("20240707064646_Az-init-leads")]
+    partial class Azinitleads
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -150,9 +150,35 @@ namespace Softmad.Services.LeadGeneration.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("CustomerDetailsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("LastUpdated")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerDetailsId");
+
+                    b.ToTable("Leads");
+                });
+
+            modelBuilder.Entity("Softmad.Services.Models.Visit", b =>
+                {
+                    b.Property<Guid>("VisitId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Budget")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClientFeedback")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("ClosurePlan")
                         .IsRequired()
@@ -167,25 +193,27 @@ namespace Softmad.Services.LeadGeneration.Migrations
                     b.Property<string>("CompetitorName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("CustomerDetailsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("EmployeeId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("Duration")
+                        .HasColumnType("int");
 
                     b.Property<string>("ExistingMachines")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                    b.Property<DateTimeOffset?>("LastUpdated")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<Guid>("LeadId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Remarks")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("Requirements")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("SalesPersonId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -193,11 +221,15 @@ namespace Softmad.Services.LeadGeneration.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<DateTimeOffset>("VisitDate")
+                        .HasColumnType("datetimeoffset");
 
-                    b.HasIndex("CustomerDetailsId");
+                    b.Property<int>("VisitType")
+                        .HasColumnType("int");
 
-                    b.ToTable("Leads");
+                    b.HasKey("VisitId");
+
+                    b.ToTable("Visits");
                 });
 
             modelBuilder.Entity("Softmad.Services.Models.CustomerDetails", b =>
