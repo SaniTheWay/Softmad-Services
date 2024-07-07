@@ -29,7 +29,7 @@ namespace Softmad.Services.LeadGeneration.Controllers
 
         // GET api/<LeadGenerationController>/5
         [HttpGet("{id}")]
-        public async Task <Lead> Get(Guid id)
+        public async Task<Lead> Get(Guid id)
         {
             var value = await _leadGenerationService.GetLeadByIdAsync(id);
             return value;
@@ -38,15 +38,15 @@ namespace Softmad.Services.LeadGeneration.Controllers
         [HttpGet("GetUserLeads/{currentUserId}")]
         public async Task<IActionResult> GetByUser(Guid currentUserId)
         {
-                var leads = await _leadGenerationService.GetCurrentUserLeads(currentUserId);
-                if (leads == null)
-                {
-                    return NotFound($"No leads found for the current employee {currentUserId}");
-                }
-                return Ok(leads);
+            var leads = await _leadGenerationService.GetCurrentUserLeads(currentUserId);
+            if (leads == null)
+            {
+                return NotFound($"No leads found for the current employee {currentUserId}");
+            }
+            return Ok(leads);
         }
 
-  
+
 
         // POST api/<LeadGenerationController>
         [HttpPost]
@@ -76,7 +76,7 @@ namespace Softmad.Services.LeadGeneration.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);   
+                _logger.LogError(ex.Message);
                 throw;
             }
             return Ok();
@@ -91,7 +91,7 @@ namespace Softmad.Services.LeadGeneration.Controllers
         #region Visit APIs
 
         // POST api/<LeadGenerationController>
-        [HttpPost("addvisit")]
+        [HttpPost("visit/add")]
         public async Task<IActionResult> CreateVisit([FromBody] Visit visit)
         {
             try
@@ -116,7 +116,7 @@ namespace Softmad.Services.LeadGeneration.Controllers
             catch (Exception ex)
             {
                 _logger.LogError("No Visits Found for Id");
-                return StatusCode(500,ex);
+                return StatusCode(500, ex);
             }
 
         }
@@ -125,17 +125,33 @@ namespace Softmad.Services.LeadGeneration.Controllers
         {
             try
             {
-                var visit = await _leadGenerationService.GetLatestVisit(leadId);
+                var visit = new Visit();
+                visit = await _leadGenerationService.GetLatestVisit(leadId);
                 return Ok(visit);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex,$"One or more exception occured while fetching latest visit");
+                _logger.LogError(ex, $"One or more exception occured while fetching latest visit");
                 return StatusCode(500, ex);
             }
 
         }
 
+        [HttpGet("visit/latest")]
+        public async Task<IActionResult> GetAllLatestVisits()
+        {
+            try
+            {
+                var visit = await _leadGenerationService.GetAllLatestVisitsAsync();
+                return Ok(visit);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"One or more exception occured while fetching latest visit");
+                return StatusCode(500, ex);
+            }
+
+        }
         #endregion
     }
 }

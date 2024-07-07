@@ -55,6 +55,7 @@ namespace Softmad.Services.Models
         public string? CompetitorModel { get; set; }
         [MaxLength(1000)]
         public string? Remarks { get; set; }
+        public bool isLatestVisit { get; set; } = true;
     }
     public enum VisitTypeEnum
     {

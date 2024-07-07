@@ -5,14 +5,14 @@
     <link rel="stylesheet" href="~/css/site.css"/>
 </head>
 <div class="text-center">
-    <h1 class="fw-bolder">Welcome To</h1>
-    <img src="~/Asset/icon.png" style="max-width: 100%;" />
+    <h1 class="fw-bolder">Admin Dashboard,</h1>
     @* 
         learn: render component in .cshtml file, given below
     *@
-    <component type="typeof(DemoComponent)" render-mode="ServerPrerendered" />
+    <component type="typeof(Charts)" render-mode="ServerPrerendered" />
 
 </div>
+
 @{
     ViewData["Title"] = "Home page";
 }

@@ -1,10 +1,12 @@
 using Dapr.Client;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Softmad.Services.Models;
 
 namespace Softmad.LeadGeneration.Pages
 {
+    [Authorize(Policy = "admin")]
     public class IndexModel : PageModel
     {
         private const string AppId = "Softmad-Services-LeadGeneration";

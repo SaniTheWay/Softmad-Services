@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.CodeAnalysis.Elfie.Serialization;
-using Softmad.Services.LeadGeneration.Data;
-using Softmad.Services.LeadGeneration.Repository.Interfaces;
+﻿using Softmad.Services.LeadGeneration.Repository.Interfaces;
 using Softmad.Services.LeadGeneration.Services.Interfaces;
 using Softmad.Services.Models;
 
@@ -27,7 +24,7 @@ namespace Softmad.Services.LeadGeneration.Services
         /// <inheritdoc/>
         public async Task<Guid> PostLeadAsync(Lead lead)
         {
-            return  await _leadRepository.SaveLead(lead);
+            return await _leadRepository.SaveLead(lead);
         }
 
         public async Task<Lead> GetLeadByIdAsync(Guid id)
@@ -54,11 +51,7 @@ namespace Softmad.Services.LeadGeneration.Services
         {
             try
             {
-                var updatedLead = _leadRepository.UpdateLeadAsync(lead);
-                if (updatedLead == null)
-                {
-                    throw new Exception($"Lead not found for Id: {lead.Id}");
-                }
+                await _leadRepository.UpdateLeadAsync(lead);
             }
             catch (Exception ex)
             {
@@ -69,21 +62,67 @@ namespace Softmad.Services.LeadGeneration.Services
 
         public async Task CreateVisitAsync(Visit visit)
         {
-            await _leadRepository.SaveVisit(visit);
+            try
+            {
+                // Update last visit property - lastestVisit = false;
+                var lastVisit = await GetLatestVisit(visit.LeadId);
+                if (lastVisit != null)
+                {
+                    lastVisit.isLatestVisit = false;
+                    await UpdateVisit(lastVisit);
+                }
+                // Create New Visit
+                await _leadRepository.SaveVisit(visit);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"--- Error: While creating new Visit for Lead - {visit.LeadId}");
+                throw;
+            }
         }
 
         public async Task<List<Visit>> GetVisitByIdAsync(Guid leadId)
         {
-            return await _leadRepository.GetVisitByIdAsync(leadId);
+            return await _leadRepository.GetVisitsByLeadIdAsync(leadId);
         }
 
         public async Task<Visit> GetLatestVisit(Guid leadId)
         {
-            var visits = await _leadRepository.GetVisitByIdAsync(leadId);
-            if (visits != null)
-                return visits.OrderByDescending(v => v.VisitDate).ToList()[0];
-            _logger.LogError($"Can not find any latest visit for Lead Id {leadId}");
-            throw new Exception("One or more exception occured");
+            try
+            {
+                var latestVisit = await _leadRepository.GetLatestVisitAsync(leadId);
+                return latestVisit;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
+        public async Task<List<Visit>> GetAllLatestVisitsAsync()
+        {
+            try
+            {
+                var latestVisits = await _leadRepository.GetAllLatestVisitsAsync();
+                return latestVisits;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private async Task UpdateVisit(Visit visit)
+        {
+            try
+            {
+                await _leadRepository.UpdateVisitAsync(visit);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while updating visit with lead Id: {visit.LeadId}");
+                throw;
+            }
+        }
+
     }
 }
