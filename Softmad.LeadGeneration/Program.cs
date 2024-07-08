@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Softmad.LeadGeneration.Areas.Identity.Data;
 using Softmad.LeadGeneration.AutoMapper;
@@ -8,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("AccountsContextConnection") ?? throw new InvalidOperationException("Connection string 'AccountsContextConnection' not found.");
 
 builder.Services.AddDbContext<AccountsContext>(options => options.UseSqlServer(connectionString));
-builder.Services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true).AddDefaultUI().AddEntityFrameworkStores<AccountsContext>().AddDefaultTokenProviders(); 
+builder.Services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true).AddDefaultUI().AddEntityFrameworkStores<AccountsContext>().AddDefaultTokenProviders();
 
 builder.Services.AddAuthorization(options =>
 {
