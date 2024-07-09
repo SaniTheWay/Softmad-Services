@@ -4,19 +4,19 @@
     <button class="btn btn-primary fw-semibold" onclick="SelectReportJs(2)">Monthly Report</button>
 </div>
 <div class="col-l-6 col-sm-12 col-xs-12 container m-5" style="height:200px;display:flex !important;justify-content:center !important;">
-@*     @if (SelectedChart == Models.ChartTypeEnum.WeeklyChart)
+    @*     @if (SelectedChart == Models.ChartTypeEnum.WeeklyChart)
     { *@
-        <div class="row" id="leadsStatusChart" style="min-height: 220px !important;">
-        </div>
-@*     }
+    <div class="row" id="leadsStatusChart" style="min-height: 220px !important;">
+    </div>
+    @*     }
     @if (SelectedChart == Models.ChartTypeEnum.MonthlyChart)
     { *@
-        <div class="row" id="monthchart" style="min-height: 220px !important;">
-        </div>
+    <div class="row" id="monthchart" style="min-height: 220px !important;">
+    </div>
     @* } *@
 </div>
 <div class="row m-4" id="table">
-    <table class="table table-dark table-striped">
+    <table class="table table-dark table-striped table-bordered">
         <thead>
             <tr>
                 <th scope="col">Date</th>
@@ -25,55 +25,55 @@
                 <th scope="col">Status</th>
                 <th scope="col">Budget</th>
                 <th scope="col">Closure Plan</th>
-                <th> </th>
-                @* <th scope="col">Sales Person</th> *@
+                <th scope="col"></th>
             </tr>
         </thead>
-        <tbody>
-            <div id="weekreport">
+        <tbody id="weekid" style="width:auto" >
             @if (WeeklyData != null)
             {
                 @foreach (var visit in WeeklyData?.OrderByDescending(x => x.VisitDate))
                 {
-                    
                     <tr>
-                        <th scope="row">@visit.VisitDate.ToString("dd/MM/yyyy")</th>
+                        <td>@visit.VisitDate.ToString("dd/MM/yyyy")</td>
                         <td>@visit.LeadId</td>
                         <td>@visit.Type</td>
                         <td>@visit.Status @GetStatusIcon(visit.Status)</td>
-                        <td>@visit.Budget</td>
+                        <td class="text-right">@visit.Budget</td>
                         <td>@visit.ClosurePlan</td>
-                        <td><a href=@($"/lead/{visit.LeadId}/details") target="_blank" style="text-decoration:none;">OPEN</a></td>
+                        <td>
+                            <a href="@($"/lead/{visit.LeadId}/details")" target="_blank" class="btn btn-primary btn-sm">OPEN</a>
+                        </td>
                     </tr>
                 }
             }
-            </div>
-            <div id="monthreport">
-
+        </tbody>
+        <tbody id="monthid" style="width:100%">
             @if (MonthData != null)
             {
                 @foreach (var visit in MonthData?.OrderByDescending(x => x.VisitDate))
                 {
                     <tr>
-                        <th scope="row">@visit.VisitDate.ToString("dd/MM/yyyy")</th>
+                        <td>@visit.VisitDate.ToString("dd/MM/yyyy")</td>
                         <td>@visit.LeadId</td>
                         <td>@visit.Type</td>
                         <td>@visit.Status @GetStatusIcon(visit.Status)</td>
-                        <td>@visit.Budget</td>
+                        <td class="text-right">@visit.Budget</td>
                         <td>@visit.ClosurePlan</td>
-                        <td><a href=@($"/lead/{visit.LeadId}/details") target="_blank" style="text-decoration:none;">OPEN</a></td>
+                        <td>
+                            <a href="@($"/lead/{visit.LeadId}/details")" target="_blank" class="btn btn-primary btn-sm">OPEN</a>
+                        </td>
                     </tr>
                 }
             }
-            </div>
         </tbody>
     </table>
 </div>
+
 <script>
-        var WeekChartElement = document.getElementById("leadsStatusChart");
-        var WeekReportElement = document.getElementById("weekreport");
-        var MonthChartElement = document.getElementById("monthchart");
-        var MonthReportElement = document.getElementById("monthreport");
+    var WeekChartElement = document.getElementById("leadsStatusChart");
+    var WeekReportElement = document.getElementById("weekid");
+    var MonthChartElement = document.getElementById("monthchart");
+    var MonthReportElement = document.getElementById("monthid");
 
     function SelectReportJs(reporttype) {
         if (reporttype == 1) {
@@ -82,8 +82,7 @@
             WeekReportElement.style.display = "block";
             MonthReportElement.style.display = "none";
         }
-        else
-        {
+        else {
             WeekChartElement.style.display = "none";
             MonthChartElement.style.display = "block";
             WeekReportElement.style.display = "none";
