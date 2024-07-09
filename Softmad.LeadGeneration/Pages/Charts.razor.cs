@@ -11,105 +11,57 @@ namespace Softmad.LeadGeneration.Pages
         private const string MethodURL = "api/LeadGeneration";
 
         [Inject]
-        private ILogger<IndexModel> _logger { get; set; }
-        [Inject]
         private DaprClient _daprClient { get; set; }
 
-        public IEnumerable<Lead>? LeadList { get; set; }
         public IEnumerable<Visit>? LatestVisits { get; set; }
-        public List<SeriesData> chartData { get; set; }
-        public List<int> PieChartData { get; set; }
         public ChartData? WeeklyDataByStatus { get; set; }
         public ChartData? MonthlyDataByStatus { get; set; }
         public List<Visit>? WeeklyData { get; set; }
         public List<Visit>? MonthData { get; set; }
-        private ChartTypeEnum SelectedChart { get; set; } = ChartTypeEnum.WeeklyChart;
         protected override async Task OnInitializedAsync()
         {
-            await GetData();
+            await SetData();
+        }
+        private async Task SetData()
+        {
+            LatestVisits = await _daprClient.InvokeMethodAsync<IEnumerable<Visit>>(HttpMethod.Get, AppId, MethodURL + $"/visit/latest");
+            
+            // set past 7-days data
             WeeklyData = LatestVisits.Where(c => c.VisitDate.AddDays(7).Date >= DateTime.Now.Date).ToList();
             WeeklyDataByStatus = new()
             {
-                Active = visitWithStatus(LeadStatus.Active, WeeklyData.ToList()).ToList(),
-                Passive = visitWithStatus(LeadStatus.Passive, WeeklyData.ToList()).ToList(),
-                Lost = visitWithStatus(LeadStatus.Lost, WeeklyData.ToList()).ToList(),
-                Completed = visitWithStatus(LeadStatus.Completed, WeeklyData.ToList()).ToList()
+                Active = visitWithStatus(LeadStatus.Active, WeeklyData),
+                Passive = visitWithStatus(LeadStatus.Passive, WeeklyData),
+                Lost = visitWithStatus(LeadStatus.Lost, WeeklyData),
+                Completed = visitWithStatus(LeadStatus.Completed, WeeklyData)
             };
+
+            // set current month data
             MonthData = LatestVisits.Where(c => c.VisitDate.Month == DateTime.Now.Month).ToList();
             MonthlyDataByStatus = new()
             {
-                Active = visitWithStatus(LeadStatus.Active, WeeklyData.ToList()).ToList(),
-                Passive = visitWithStatus(LeadStatus.Passive, WeeklyData.ToList()).ToList(),
-                Lost = visitWithStatus(LeadStatus.Lost, WeeklyData.ToList()).ToList(),
-                Completed = visitWithStatus(LeadStatus.Completed, WeeklyData.ToList()).ToList()
+                Active = visitWithStatus(LeadStatus.Active, MonthData),
+                Passive = visitWithStatus(LeadStatus.Passive, MonthData),
+                Lost = visitWithStatus(LeadStatus.Lost, MonthData),
+                Completed = visitWithStatus(LeadStatus.Completed, MonthData)
             };
-            //var active = visitWithStatus(LeadStatus.Active, LatestVisits.ToList());
-            //var passive = visitWithStatus(LeadStatus.Passive, LatestVisits.ToList());
-            //var lost = visitWithStatus(LeadStatus.Lost, LatestVisits.ToList());
-            //var completed = visitWithStatus(LeadStatus.Completed, LatestVisits.ToList());
-            //PieChartData = [active.Count(), passive.Count(), lost.Count(), completed.Count()];
-        }
-        private async Task GetData()
-        {
-            //var result = await _daprClient.InvokeMethodAsync<IEnumerable<Lead>>(HttpMethod.Get, AppId, MethodURL);
-            LatestVisits = await _daprClient.InvokeMethodAsync<IEnumerable<Visit>>(HttpMethod.Get, AppId, MethodURL + $"/visit/latest");
         }
 
-        private IEnumerable<Visit> visitWithStatus(LeadStatus status, List<Visit> Visits)
+        private List<Visit> visitWithStatus(LeadStatus status, List<Visit> Visits)
         {
             switch (status)
             {
                 case LeadStatus.Active:
-                    return Visits?.Where(v => v.Status == LeadStatus.Active)!;
+                    return Visits?.Where(v => v.Status == LeadStatus.Active).ToList()!;
                 case LeadStatus.Passive:
-                    return Visits?.Where(v => v.Status == LeadStatus.Passive)!;
+                    return Visits?.Where(v => v.Status == LeadStatus.Passive).ToList()!;
                 case LeadStatus.Lost:
-                    return Visits?.Where(v => v.Status == LeadStatus.Lost)!;
+                    return Visits?.Where(v => v.Status == LeadStatus.Lost).ToList()!;
                 case LeadStatus.Completed:
-                    return Visits?.Where(v => v.Status == LeadStatus.Completed)!;
+                    return Visits?.Where(v => v.Status == LeadStatus.Completed).ToList()!;
                 default:
                     throw new Exception($"Does not impliment status type - \"{status}\"");
             }
         }
-
-        private string GetStatusIcon(LeadStatus leadStatus)
-        {
-            string bgColorClass = string.Empty;
-
-            switch (leadStatus)
-            {
-                case LeadStatus.Active:
-                    bgColorClass = "✅";
-                    break;
-                case LeadStatus.Passive:
-                    bgColorClass = "⏸";
-                    break;
-                case LeadStatus.Lost:
-                    bgColorClass = "❌";
-                    break;
-                case LeadStatus.Completed:
-                    bgColorClass = "🏁";
-                    break;
-                default:
-                    break;
-            }
-
-            return bgColorClass;
-        }
-
-        private Object SelectReport(ChartTypeEnum selectedChart)
-        {
-            this.SelectedChart = selectedChart;
-            StateHasChanged();
-            return "ABC";
-        }
     }
-
-    public class SeriesData
-    {
-        public string name { get; set; }
-        public List<int> data { get; set; }
-
-    }
-
 }
