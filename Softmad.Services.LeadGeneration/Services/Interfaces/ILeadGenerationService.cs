@@ -48,5 +48,11 @@ namespace Softmad.Services.LeadGeneration.Services.Interfaces
         /// <returns></returns>
         public Task<List<Visit>> GetAllLatestVisitsAsync();
 
+        /// <summary>
+        /// Create a report digestible data for the current month
+        /// </summary>
+        /// <returns>Returns the response of type <see cref="ReportResponse"/>.</returns>
+        public ReportResponse GetCurrentMonthReport();
+
     }
 }

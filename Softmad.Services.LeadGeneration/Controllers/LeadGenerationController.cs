@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ClosedXML.Excel;
+using ClosedXML.Extensions;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Softmad.Services.LeadGeneration.Services.Interfaces;
 using Softmad.Services.Models;
 
@@ -81,6 +84,7 @@ namespace Softmad.Services.LeadGeneration.Controllers
             }
             return Ok();
         }
+
         // DELETE api/<LeadGenerationController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
@@ -151,6 +155,24 @@ namespace Softmad.Services.LeadGeneration.Controllers
                 return StatusCode(500, ex);
             }
 
+        }
+        #endregion
+
+
+        #region Documents APIs
+        [HttpGet("report")]
+        public async Task<IActionResult> GetReport([FromQuery] string type)
+        {
+            switch(type)
+            {
+                case "weekly":
+                    return Ok();
+                case "monthly":
+                    var result = _leadGenerationService.GetCurrentMonthReport();
+                    return Ok(result);
+                default:
+                    throw new Exception($"Report type : {type} does not exist.");
+            }
         }
         #endregion
     }

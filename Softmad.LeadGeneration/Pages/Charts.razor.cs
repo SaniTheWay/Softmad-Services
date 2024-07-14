@@ -25,7 +25,6 @@ namespace Softmad.LeadGeneration.Pages
         private async Task SetData()
         {
             LatestVisits = await _daprClient.InvokeMethodAsync<IEnumerable<Visit>>(HttpMethod.Get, AppId, MethodURL + $"/visit/latest");
-            
             // set past 7-days data
             WeeklyData = LatestVisits.Where(c => c.VisitDate.AddDays(7).Date >= DateTime.Now.Date).ToList();
             WeeklyDataByStatus = new()
@@ -37,7 +36,7 @@ namespace Softmad.LeadGeneration.Pages
             };
 
             // set current month data
-            MonthData = LatestVisits.Where(c => c.VisitDate.Month == DateTime.Now.Month).ToList();
+            MonthData = LatestVisits.Where(c => c.VisitDate.Month == DateTime.Now.Month && c.VisitDate.Year == DateTime.Now.Year).ToList();
             MonthlyDataByStatus = new()
             {
                 Active = visitWithStatus(LeadStatus.Active, MonthData),

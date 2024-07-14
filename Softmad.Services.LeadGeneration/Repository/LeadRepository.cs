@@ -1,6 +1,4 @@
-﻿using Humanizer;
-using Microsoft.CodeAnalysis.Elfie.Serialization;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Softmad.Services.LeadGeneration.Data;
 using Softmad.Services.LeadGeneration.Repository.Interfaces;
 using Softmad.Services.Models;
@@ -140,6 +138,32 @@ namespace Softmad.Services.LeadGeneration.Repository
         {
             _dataContext.Visits.Update(visit);
             await SaveChanges();
+        }
+
+        public IQueryable<LeadsWithVists> GetCurrentMonthReport()
+        {
+            var currentMonth = DateTime.Now.Month;
+            var currentYear = DateTime.Now.Year;
+
+            var leadsWithLatestVisits = _dataContext.Visits
+                .Where(visit => visit.VisitDate.Month == currentMonth
+                                && visit.VisitDate.Year == currentYear
+                                && visit.isLatestVisit)
+                .Join(
+                    _dataContext.Leads.Include(l => l.CustomerDetails)
+                                                        .ThenInclude(cd => cd.HospitalDetails)
+                                                        .Include(l => l.CustomerDetails)
+                                                        .ThenInclude(cd => cd.DoctorDetails),
+                    visit => visit.LeadId,
+                    lead => lead.Id,
+                    (visit, lead) => new { Visit = visit, Lead = lead }
+                )
+                .Select(row => new LeadsWithVists
+                {
+                    Lead = row.Lead,
+                    Visit = row.Visit
+                });
+            return leadsWithLatestVisits;
         }
 
         private async Task SaveChanges()

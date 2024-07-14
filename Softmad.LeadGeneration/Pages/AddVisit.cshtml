@@ -107,10 +107,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="Visit.Requirements">Requirements</label>
-                <select asp-for="Visit.Requirements" id="requirementsDropdown" class="form-select">
+                <select asp-for="Visit.Requirements" id="requirementsDropdown" onchange="DisplayRequirements(true)" class="form-select">
                     <option class="form-option" selected>-- Select Requirement --</option>
                     <option class="form-option" value="Ultrasound">Ultrasound</option>
-                    <option class="form-option" value="other" onchange="DisplayRequirements(true)">Other</option>
+                    <option class="form-option" value="other">Other</option>
                 </select>
                 <input asp-for="Visit.Requirements" type="text" id="otherRequirementsInput" placeholder="Enter Requirement">
                 <span asp-validation-for="Visit.Requirements" class="text-danger"></span>
@@ -172,7 +172,6 @@ else
 
 <script>
     var element = document.getElementById("otherRequirementsInput");
-    element.style.display = "none";
     function DisplayRequirements(val) {
         console.log(element);
         console.log(val);

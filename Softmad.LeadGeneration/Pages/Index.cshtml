@@ -1,14 +1,27 @@
 ﻿@page "/"
+@using Softmad.LeadGeneration.Models
 @model IndexModel
 
 <head>
     <link rel="stylesheet" href="~/css/site.css"/>
 </head>
 <div class="text-center">
-    <h1 class="fw-bolder">Admin Dashboard,</h1>
+    <h1 class="fw-bolder">Admin Dashboard</h1>
     @* 
         learn: render component in .cshtml file, given below
     *@
+
+
+    <form method="post" asp-page-handler="DowloadReport">
+        <div class="form-group">
+            <label for="fileSelection">Select File to Download:</label>
+            <select id="fileSelection" name="fileSelection" class="form-control" asp-for="FileSelection">
+                <option value=@ChartTypeEnum.WeeklyChart>Past 7 days Report</option>
+                <option value=@ChartTypeEnum.MonthlyChart>Current Month Report</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Download</button>
+    </form>
     <component type="typeof(Charts)" render-mode="ServerPrerendered" />
 
 </div>

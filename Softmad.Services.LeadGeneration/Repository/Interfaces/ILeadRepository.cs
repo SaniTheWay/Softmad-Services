@@ -19,6 +19,7 @@ namespace Softmad.Services.LeadGeneration.Repository.Interfaces
         public Task<Visit?> GetLatestVisitAsync(Guid leadId);
         public Task<List<Visit>> GetAllLatestVisitsAsync();
         public Task UpdateVisitAsync(Visit visit);
+        public IQueryable<LeadsWithVists> GetCurrentMonthReport();
 
     }
 }

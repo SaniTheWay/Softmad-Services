@@ -124,5 +124,12 @@ namespace Softmad.Services.LeadGeneration.Services
             }
         }
 
+        public ReportResponse GetCurrentMonthReport()
+        {
+            _logger.LogDebug("Generating report");
+            var a = new ReportResponse(_leadRepository.GetCurrentMonthReport().ToList());
+            return a;
+        }
+
     }
 }
