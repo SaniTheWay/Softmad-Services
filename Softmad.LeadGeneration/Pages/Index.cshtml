@@ -16,8 +16,8 @@
         <div class="form-group">
             <label for="fileSelection">Select File to Download:</label>
             <select id="fileSelection" name="fileSelection" class="form-control" asp-for="FileSelection">
-                <option value=@ChartTypeEnum.WeeklyChart>Past 7 days Report</option>
-                <option value=@ChartTypeEnum.MonthlyChart>Current Month Report</option>
+                <option value=@ChartTypeEnum.MonthlyChart>Past 7 days Report</option>
+                <option value=@ChartTypeEnum.WeeklyChart>Current Month Report</option>
             </select>
         </div>
         <button type="submit" class="btn btn-primary">Download</button>
