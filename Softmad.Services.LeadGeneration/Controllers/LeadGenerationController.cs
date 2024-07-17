@@ -166,7 +166,8 @@ namespace Softmad.Services.LeadGeneration.Controllers
             switch(type)
             {
                 case "weekly":
-                    return Ok();
+                    var result1 = _leadGenerationService.GetCurrentWeekReport();
+                    return Ok(result1);
                 case "monthly":
                     var result = _leadGenerationService.GetCurrentMonthReport();
                     return Ok(result);

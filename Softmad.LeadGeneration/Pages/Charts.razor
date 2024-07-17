@@ -1,23 +1,27 @@
 ﻿@using Newtonsoft.Json
-<div class="row-cols-4">
-    <button class="btn btn-primary fw-semibold" onclick="SelectReportJs(1)">Weekly Report</button>
-    <button class="btn btn-primary fw-semibold" onclick="SelectReportJs(2)">Monthly Report</button>
-</div>
-<div class="col-l-6 col-sm-12 col-xs-12 container m-5" style="height:200px;display:flex !important;justify-content:center !important;">
-    @*     @if (SelectedChart == Models.ChartTypeEnum.WeeklyChart)
-    { *@
-    <div class="row" id="leadsStatusChart" style="min-height: 220px !important;">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+</head>
+
+<div class="container my-5">
+    <div class="row my-4 justify-content-center">
+        <div class="col-auto">
+            <button class="btn btn-primary fw-semibold mx-1" onclick="SelectReportJs(1)">Weekly Report</button>
+            <button class="btn btn-primary fw-semibold mx-1" onclick="SelectReportJs(2)">Monthly Report</button>
+        </div>
     </div>
-    @*     }
-    @if (SelectedChart == Models.ChartTypeEnum.MonthlyChart)
-    { *@
-    <div class="row" id="monthchart" style="min-height: 220px !important;">
+
+    <div class="container my-5" style="justify-content:center;">
+        <div class="row w-100" id="leadsStatusChart">
+        </div>
+        <div class="row w-100" id="monthchart" style="display: none;">
+        </div>
     </div>
-    @* } *@
-</div>
-<div class="row m-4" id="table">
-    <ChartTableComponent TableBodyId="weekid" TableCaption="Past 7-Days Leads Status Report" TableData=@WeeklyData />
-    <ChartTableComponent TableBodyId="monthid" TableCaption="Current Month Leads Status Report" TableData=@MonthData Display="none"/>
+
+    <div class="row mys-4 overflow-x-auto" id="table">
+        <ChartTableComponent TableBodyId="weekid" TableCaption="Past 7-Days Leads Status Report" TableData=@WeeklyData />
+        <ChartTableComponent TableBodyId="monthid" TableCaption="Current Month Leads Status Report" TableData=@MonthData Display="none" />
+    </div>
 </div>
 
 <script>
@@ -25,28 +29,27 @@
     var WeekReportElement = document.getElementById("weekid");
     var MonthChartElement = document.getElementById("monthchart");
     var MonthReportElement = document.getElementById("monthid");
-    WeekChartElement.style.minHeight = "220px !important;";
-    MonthChartElement.style.minHeight = "220px !important;";
+    WeekChartElement.style.minHeight = "150px !important;";
+    MonthChartElement.style.minHeight = "150px !important;";
 
     function SelectReportJs(reporttype) {
         if (reporttype == 1) {
-            WeekChartElement.style.display = "table";
+            WeekChartElement.style.display = "flex";
             MonthChartElement.style.display = "none";
             WeekReportElement.style.display = "table";
             MonthReportElement.style.display = "none";
-        }
-        else {
+        } else {
             WeekChartElement.style.display = "none";
-            MonthChartElement.style.display = "table";
+            MonthChartElement.style.display = "flex";
             WeekReportElement.style.display = "none";
             MonthReportElement.style.display = "table";
         }
     }
+
     var weeklyLeadOptions = {
         chart: {
             type: 'donut'
         },
-        // series: JSON.parse("@(JsonConvert.SerializeObject(WeeklyData))"),
         series: [@WeeklyDataByStatus?.Active.Count(), @WeeklyDataByStatus?.Passive.Count(), @WeeklyDataByStatus?.Lost.Count(), @WeeklyDataByStatus?.Completed.Count()],
         labels: ['Active', 'Passive', 'Lost', 'Complete'],
         dataLabels: {
@@ -78,7 +81,6 @@
         chart: {
             type: 'donut'
         },
-        // series: JSON.parse("(JsonConvert.SerializeObject(WeeklyData))"),
         series: [@MonthlyDataByStatus?.Active.Count(), @MonthlyDataByStatus?.Passive.Count(), @MonthlyDataByStatus?.Lost.Count(), @MonthlyDataByStatus?.Completed.Count()],
         labels: ['Active', 'Passive', 'Lost', 'Complete'],
         dataLabels: {
@@ -103,132 +105,6 @@
             text: 'Current Month Leads Status Report'
         },
     }
-    var leadsStatusChart = new ApexCharts(document.querySelector("#monthchart"), monthlyLeadOptions);
-    leadsStatusChart.render();
-
-    // var monthschartoptions = {
-    //     series: JSON.parse("(JsonConvert.SerializeObject(chartData))"),
-    //     chart: {
-    //         type: 'bar',
-    //         height: 350,
-    //         stacked: true,
-    //     },
-    //     plotOptions: {
-    //         bar: {
-    //             horizontal: true,
-    //             dataLabels: {
-    //                 total: {
-    //                     enabled: true,
-    //                     offsetX: 0,
-    //                     style: {
-    //                         fontSize: '13px',
-    //                         fontWeight: 900
-    //                     }
-    //                 }
-    //             }
-    //         },
-    //     },
-    //     stroke: {
-    //         width: 1,
-    //         colors: ['#fff']
-    //     },
-    //     title: {
-    //         text: 'Monthly Leads Report'
-    //     },
-    //     xaxis: {
-    //         categories: ['May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov'],
-    //         labels: {
-    //             formatter: function (val) {
-    //                 return val + "K"
-    //             }
-    //         }
-    //     },
-    //     yaxis: {
-    //         title: {
-    //             text: undefined
-    //         },
-    //     },
-    //     tooltip: {
-    //         y: {
-    //             formatter: function (val) {
-    //                 return val + "K"
-    //             }
-    //         }
-    //     },
-    //     fill: {
-    //         opacity: 1
-    //     },
-    //     legend: {
-    //         position: 'top',
-    //         horizontalAlign: 'left',
-    //         offsetX: 40
-    //     }
-    // };
-
-    // var monthschart = new ApexCharts(document.querySelector("#monthschart"), monthschartoptions);
-    // monthschart.render();
-
-    // var citychartoptions = {
-    //     series: JSON.parse("(JsonConvert.SerializeObject(chartData))"),
-    //     chart: {
-    //         type: 'bar',
-    //         height: 350,
-    //         stacked: true,
-    //     },
-    //     plotOptions: {
-    //         bar: {
-    //             horizontal: true,
-    //             dataLabels: {
-    //                 total: {
-    //                     enabled: true,
-    //                     offsetX: 0,
-    //                     style: {
-    //                         fontSize: '13px',
-    //                         fontWeight: 900
-    //                     }
-    //                 }
-    //             }
-    //         },
-    //     },
-    //     stroke: {
-    //         width: 1,
-    //         colors: ['#fff']
-    //     },
-    //     title: {
-    //         text: 'Monthly Leads Report'
-    //     },
-    //     xaxis: {
-    //         categories: ['May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov'],
-    //         labels: {
-    //             formatter: function (val) {
-    //                 return val + "K"
-    //             }
-    //         }
-    //     },
-    //     yaxis: {
-    //         title: {
-    //             text: undefined
-    //         },
-    //     },
-    //     tooltip: {
-    //         y: {
-    //             formatter: function (val) {
-    //                 return val + "K"
-    //             }
-    //         }
-    //     },
-    //     fill: {
-    //         opacity: 1
-    //     },
-    //     legend: {
-    //         position: 'top',
-    //         horizontalAlign: 'left',
-    //         offsetX: 40
-    //     }
-    // };
-
-    // var citychart = new ApexCharts(document.querySelector("#citychart"), citychartoptions);
-    // citychart.render();
-
+    var monthlyStatusChart = new ApexCharts(document.querySelector("#monthchart"), monthlyLeadOptions);
+    monthlyStatusChart.render();
 </script>
-

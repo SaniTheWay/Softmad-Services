@@ -2,6 +2,7 @@
 using Softmad.Services.LeadGeneration.Data;
 using Softmad.Services.LeadGeneration.Repository.Interfaces;
 using Softmad.Services.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Softmad.Services.LeadGeneration.Repository
 {
@@ -148,6 +149,28 @@ namespace Softmad.Services.LeadGeneration.Repository
             var leadsWithLatestVisits = _dataContext.Visits
                 .Where(visit => visit.VisitDate.Month == currentMonth
                                 && visit.VisitDate.Year == currentYear
+                                && visit.isLatestVisit)
+                .Join(
+                    _dataContext.Leads.Include(l => l.CustomerDetails)
+                                                        .ThenInclude(cd => cd.HospitalDetails)
+                                                        .Include(l => l.CustomerDetails)
+                                                        .ThenInclude(cd => cd.DoctorDetails),
+                    visit => visit.LeadId,
+                    lead => lead.Id,
+                    (visit, lead) => new { Visit = visit, Lead = lead }
+                )
+                .Select(row => new LeadsWithVists
+                {
+                    Lead = row.Lead,
+                    Visit = row.Visit
+                });
+            return leadsWithLatestVisits;
+        }
+
+        public IQueryable<LeadsWithVists> GetCurrentWeekReport()
+        {
+            var leadsWithLatestVisits = _dataContext.Visits
+                .Where(visit => visit.VisitDate.AddDays(7).Date >= DateTime.Now.Date
                                 && visit.isLatestVisit)
                 .Join(
                     _dataContext.Leads.Include(l => l.CustomerDetails)

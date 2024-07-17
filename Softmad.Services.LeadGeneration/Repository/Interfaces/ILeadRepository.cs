@@ -21,5 +21,7 @@ namespace Softmad.Services.LeadGeneration.Repository.Interfaces
         public Task UpdateVisitAsync(Visit visit);
         public IQueryable<LeadsWithVists> GetCurrentMonthReport();
 
+        public IQueryable<LeadsWithVists> GetCurrentWeekReport();
+
     }
 }

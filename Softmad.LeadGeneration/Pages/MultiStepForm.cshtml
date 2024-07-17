@@ -39,7 +39,7 @@
             <div class="form-group">
                 <label>Choose Type:</label>
                 <select id="chooseType" class="form-select" onchange="showFields()">
-                    <option value="Default" selected>-- Select --</option>
+                    <option value="" disabled selected>-- Select --</option>
                     <option value="Owner">Owner</option>
                     <option value="Purchase Head">Purchase Head</option>
                     <option value="Bio Medical">Bio Medical</option>
@@ -172,7 +172,7 @@
             <div class="form-group">
                 <label asp-for="Lead.CustomerDetails.DoctorDetails.Specialization">Doctor Specialization</label>
                 <select id="Specialization" asp-for="Lead.CustomerDetails.DoctorDetails.Specialization" class="form-select">
-                    <option class="form-option" selected>-- Select Specialization --</option>
+                    <option class="form-option" value="" disabled selected>-- Select Specialization --</option>
                     <option class="form-option" value="Cardiologist">Cardiologist</option>
                     <option class="form-option" value="Radiologist">Radiologist</option>
                     <option class="form-option" value="Obs/Gyn">Obs/Gyn</option>
@@ -219,7 +219,7 @@
             <div class="form-group">
                 <label asp-for="Lead.AdditionalDetails.ClosurePlan">Closure Plan</label>
                 <select asp-for="Lead.AdditionalDetails.ClosurePlan" class="form-select">
-                    <option class="form-option" selected>-- Select Plan --</option>
+                    <option class="form-option" value="" selected disabled>-- Select Plan --</option>
                     <option class="form-option" value="<1 Month">&lt;1 month</option>
                     <option class="form-option" value="2-3 Months">2-3 Months</option>
                     <option class="form-option" value="6-8 Months">6-8 Months</option>
@@ -231,7 +231,7 @@
             <div class="form-group">
                 <label asp-for="Lead.AdditionalDetails.Requirements">Requirements</label>
                 <select asp-for="Lead.AdditionalDetails.Requirements" id="requirementsDropdown" class="form-select">
-                    <option class="form-option" selected>-- Select Requirement --</option>
+                    <option class="form-option" value="" selected disabled>-- Select Requirement -- </option>
                     <option class="form-option" value="Ultrasound">Ultrasound</option>
                     <option class="form-option" value="other">Other</option>
                 </select>
@@ -293,6 +293,3 @@
     </form>
 </div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}

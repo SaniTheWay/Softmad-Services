@@ -54,5 +54,7 @@ namespace Softmad.Services.LeadGeneration.Services.Interfaces
         /// <returns>Returns the response of type <see cref="ReportResponse"/>.</returns>
         public ReportResponse GetCurrentMonthReport();
 
+        public ReportResponse GetCurrentWeekReport();
+
     }
 }

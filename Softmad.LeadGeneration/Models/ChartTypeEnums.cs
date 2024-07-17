@@ -1,6 +1,8 @@
-﻿namespace Softmad.LeadGeneration.Models
+﻿using System.ComponentModel;
+
+namespace Softmad.LeadGeneration.Models
 {
-    internal enum ChartTypeEnum
+    public enum ChartTypeEnum
     {
         WeeklyChart,
         MonthlyChart

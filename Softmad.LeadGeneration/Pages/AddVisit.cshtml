@@ -73,7 +73,7 @@
             <div class="form-group">
                 <label asp-for="Visit.Status">Visit Status</label>
                 <select asp-for="Visit.Status" class="form-select">
-                    <option class="form-option" selected>-- Select Status--</option>
+                    <option class="form-option" value="" disabled selected>-- Select Status--</option>
                     <option class="form-option" value=@LeadStatus.Active>
                         Active
                     </option>
@@ -86,7 +86,7 @@
                     <option class="form-option" value=@LeadStatus.Completed>
                         Completed
                     </option>
-                </select>+
+                </select>``
                 <span asp-validation-for="Visit.Status" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -97,7 +97,7 @@
             <div class="form-group">
                 <label asp-for="Visit.ClosurePlan">Closure Plan</label>
                 <select asp-for="Visit.ClosurePlan" class="form-select">
-                    <option class="form-option" selected>-- Select Plan --</option>
+                    <option class="form-option" value="" disabled selected>-- Select Plan --</option>
                     <option class="form-option" value="<1 Month">&lt;1 month</option>
                     <option class="form-option" value="2-3 Months">2-3 Months</option>
                     <option class="form-option" value="6-8 Months">6-8 Months</option>
@@ -106,15 +106,9 @@
                 <span asp-validation-for="Visit.ClosurePlan" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Visit.Requirements">Requirements</label>
-                <select asp-for="Visit.Requirements" id="requirementsDropdown" onchange="DisplayRequirements(true)" class="form-select">
-                    <option class="form-option" selected>-- Select Requirement --</option>
-                    <option class="form-option" value="Ultrasound">Ultrasound</option>
-                    <option class="form-option" value="other">Other</option>
-                </select>
-                <input asp-for="Visit.Requirements" type="text" id="otherRequirementsInput" placeholder="Enter Requirement">
+                <label asp-for="Visit.Requirements">Requiremnts <sub><strong>,</strong> separated</sub> </label>
+                <textarea asp-for="Visit.Requirements" class="form-control"></textarea>
                 <span asp-validation-for="Visit.Requirements" class="text-danger"></span>
-
             </div>
             <div class="form-group">
                 <label asp-for="Visit.ExistingMachines">Existing Machines <sub><strong>,</strong> separated</sub> </label>
@@ -171,15 +165,17 @@ else
 }
 
 <script>
-    var element = document.getElementById("otherRequirementsInput");
-    function DisplayRequirements(val) {
-        console.log(element);
-        console.log(val);
 
-        if (val == true) {
+    var element = document.getElementById("otherRequirementsInput");
+
+    function DisplayRequirements(value) {
+        console.log(element);
+        console.log(value); // This argument isn't currently used
+
+        // Check if the selected value from the dropdown is "other"
+        if (document.getElementById("requirementsDropdown").value === "other") {
             element.style.display = "block";
-        }
-        else {
+        } else {
             element.style.display = "none";
         }
     }

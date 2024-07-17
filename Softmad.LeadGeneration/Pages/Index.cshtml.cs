@@ -19,7 +19,7 @@ namespace Softmad.LeadGeneration.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly DaprClient _daprClient;
         [BindProperty]
-        internal ChartTypeEnum FileSelection { get; set; }
+        public ChartTypeEnum FileSelection { get; set; } 
         public IEnumerable<Lead>? LeadList { get; set; }
 
         public IndexModel(ILogger<IndexModel> logger, DaprClient daprClient)
@@ -27,8 +27,13 @@ namespace Softmad.LeadGeneration.Pages
             _logger = logger;
             _daprClient = daprClient;
         }
+        public void OnGet()
+        {
+            
+        }
 
-        public async Task<IActionResult> OnPostDowloadReport()
+
+        public async Task<IActionResult> OnPostDownloadReport()
         {
             var request = new HttpRequestMessage();
             var stream = new MemoryStream();
@@ -36,7 +41,6 @@ namespace Softmad.LeadGeneration.Pages
             string filename = "Error-File";
             if (FileSelection == ChartTypeEnum.WeeklyChart)
             {
-                //data = LatestVisits.Where(c => c.VisitDate.AddDays(7).Date >= DateTime.Now.Date).ToList();
                 request = _daprClient.CreateInvokeMethodRequest(HttpMethod.Get, AppId, MethodURL + $"/report?type=weekly");
                 filename = $"WeekReport {DateTime.Now.Date.AddDays(-7).ToString("dd-MM-yy")} to {DateTime.Now.Date.ToString("dd-MM-yy")}.xlsx";
             }
@@ -62,7 +66,7 @@ namespace Softmad.LeadGeneration.Pages
 
                     var responseList = data.Response;
                     // Setting Values
-                    for (var i = 2; i < responseList.Count; i++)
+                    for (var i = 2; i < responseList.Count + 2; i++)
                     {
                         var row = responseList[i - 2];
                         setRows(worksheet, row, i);
