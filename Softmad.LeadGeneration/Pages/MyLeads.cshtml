@@ -37,8 +37,19 @@
                         </div>
                     </div>
                     <div>
+                        @{
+                            var visitsCount = await Model.GetVisitsCount(lead.Id);
+                        }
+                        <span class="fw-bold">Visits Count:&nbsp;</span>
+                        <span>@visitsCount</span>
+                    </div>
+                    <div>
                         <span class="fw-bold">Owner Name:&nbsp;</span>
                         <span>@lead.CustomerDetails.HospitalDetails.OwnerName</span>
+                    </div>
+                    <div>
+                        <span class="fw-bold">City:&nbsp;</span>
+                        <span>@lead.CustomerDetails.HospitalDetails.City</span>
                     </div>
                     <div class="text-muted">
                         <span>Last Modified:&nbsp;</span>

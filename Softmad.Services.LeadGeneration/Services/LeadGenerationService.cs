@@ -60,6 +60,19 @@ namespace Softmad.Services.LeadGeneration.Services
             }
         }
 
+        public async Task GetSearchResultLeadsAsync(string SearchString)
+        {
+            try 
+            {
+                await _leadRepository.GetSearchResultLeadsAsync(SearchString);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"No Leads found for : {SearchString}");
+                throw;
+            }
+        }
+
         public async Task CreateVisitAsync(Visit visit)
         {
             try

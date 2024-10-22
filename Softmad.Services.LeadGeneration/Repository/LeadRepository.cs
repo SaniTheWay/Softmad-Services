@@ -77,6 +77,15 @@ namespace Softmad.Services.LeadGeneration.Repository
             await SaveChanges();
         }
 
+        public async Task GetSearchResultLeadsAsync(string SearchString)
+        {
+            //if (!string.IsNullOrEmpty(SearchString))
+            //            //{
+            //            //    movies = movies.Where(s => s.Title.Contains(SearchString));
+            //            //}
+            //
+        }
+
         public async Task SaveVisit(Visit visitEntry)
         {
             try

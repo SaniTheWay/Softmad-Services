@@ -121,22 +121,17 @@
                 <span asp-validation-for="Lead.CustomerDetails.HospitalDetails.State" class="text-danger"></span>
 
             </div>
-
+             
             <div class="form-group">
-                <label asp-for="Lead.CustomerDetails.HospitalDetails.City">Select City:</label>
-                <select required id="citySelect" asp-for="Lead.CustomerDetails.HospitalDetails.City" class="form-control" asp-items="@(new SelectList(Model.Cities, "CityName", "CityName"))">
-                    <option value="">-- Select a City --</option>
-                </select>
+                <label asp-for="Lead.CustomerDetails.HospitalDetails.City">City:</label>
+                <input asp-for="Lead.CustomerDetails.HospitalDetails.City" type="text" class="form-control">
                 <span asp-validation-for="Lead.CustomerDetails.HospitalDetails.City" class="text-danger"></span>
 
             </div>
             <div class="form-group">
                 <label asp-for="Lead.CustomerDetails.HospitalDetails.PinCode">PinCode</label>
-                <input asp-for="Lead.CustomerDetails.HospitalDetails.PinCode" type="text" id="pincode" class="form-control" disabled>
+                <input asp-for="Lead.CustomerDetails.HospitalDetails.PinCode" type="text" id="pincode" class="form-control">
             </div>
-            <script id="cities-data" type="application/json">
-                @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Cities))
-            </script>
 
             <div class="d-flex" style="column-gap: 10px;">
                 <div class="form-group">
