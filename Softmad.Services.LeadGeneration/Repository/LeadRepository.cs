@@ -76,14 +76,26 @@ namespace Softmad.Services.LeadGeneration.Repository
             _dataContext.Leads.Update(lead);
             await SaveChanges();
         }
-
-        public async Task GetSearchResultLeadsAsync(string SearchString)
+        public List<Lead> GetSearchResultLeadsAsync(string SearchString)
         {
-            //if (!string.IsNullOrEmpty(SearchString))
-            //            //{
-            //            //    movies = movies.Where(s => s.Title.Contains(SearchString));
-            //            //}
-            //
+            var sleads = new List<Lead>();
+            if (!string.IsNullOrEmpty(SearchString))
+            {
+                try
+                {
+                    sleads = _dataContext.Leads.Include(l => l.CustomerDetails)
+                                 .ThenInclude(cd => cd.HospitalDetails)
+                                 .Include(l => l.CustomerDetails.DoctorDetails).Where(l => l.CustomerDetails.HospitalDetails.Name.Contains(SearchString)).ToList();
+                                                    
+                    return sleads;
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex.ToString(), ex.Message);
+                    throw;
+                }
+            }
+            return sleads;
         }
 
         public async Task SaveVisit(Visit visitEntry)

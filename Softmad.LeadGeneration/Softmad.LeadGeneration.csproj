@@ -10,10 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Pages\Search.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Dapr.AspNetCore" Version="1.14.0" />
     <PackageReference Include="EPPlus" Version="7.3.2" />
@@ -38,18 +34,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Softmad.Services.Models\Softmad.Services.Models.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\Search.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Pages\Search.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Pages\Search.cshtml" />
   </ItemGroup>
 
 </Project>

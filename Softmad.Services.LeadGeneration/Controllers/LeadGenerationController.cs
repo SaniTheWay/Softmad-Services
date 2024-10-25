@@ -23,11 +23,11 @@ namespace Softmad.Services.LeadGeneration.Controllers
             _logger = logger;
         }
         // GET: api/<LeadGenerationController>
-        [HttpGet]
-        public async Task<IEnumerable<Lead>> GetLeads()
+        [HttpGet("GetAllLeads")]
+        public async Task<IActionResult> GetLeads()
         {  
             var result = await _leadGenerationService.GetLeads();
-            return result;
+            return Ok(result);
         }
 
         // GET api/<LeadGenerationController>/5
@@ -52,7 +52,7 @@ namespace Softmad.Services.LeadGeneration.Controllers
         [HttpGet("GetSearchLeads/{SearchString}")]
         public async Task<IActionResult> GetSearchResult(string SearchString)
         {
-            var searchleads = await _leadGenerationService.GetSearchResultLeads(SearchString);
+            var searchleads = _leadGenerationService.GetSearchResultLeads(SearchString);
             if(searchleads == null)
             {
                 return NotFound($"No leads found for {SearchString}");
