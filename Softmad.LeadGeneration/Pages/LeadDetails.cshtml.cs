@@ -1,37 +1,51 @@
+using AutoMapper;
 using Dapr.Client;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Softmad.Services.Models;
+using System.Text.Json;
 
 
 namespace Softmad.LeadGeneration.Pages
 {
     public class LeadDetailsModel : PageModel
     {
+        #region Service Injection
+        private readonly HttpClient _httpClient;
         private readonly DaprClient _daprClient;
+        private readonly ILogger<LeadDetailsModel> _logger;
+        #endregion
         private const string AppId = "Softmad-Services-LeadGeneration";
         private const string MethodURL = "api/LeadGeneration/";
-        public LeadDetailsModel(DaprClient daprClient)
+        public LeadDetailsModel(DaprClient daprClient, IHttpClientFactory httpClientFactory, ILogger<LeadDetailsModel> logger)
         {
             _daprClient = daprClient;
+            _httpClient = httpClientFactory.CreateClient("MyApiClient");
+            _logger = logger;
         }
 
         [BindProperty(SupportsGet = true)]
         public Guid Id { get; set; }
 
-        public Lead Lead { get; set; }
-        public Visit LatestVisit { get; set; }
+        public Lead? Lead { get; set; }
+        public Visit? LatestVisit { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Lead = await _daprClient.InvokeMethodAsync<Lead>(HttpMethod.Get, AppId, MethodURL + $"{Id}");
+            //Lead = await _daprClient.InvokeMethodAsync<Lead>(HttpMethod.Get, AppId, MethodURL + $"{Id}");
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            Lead = await _httpClient.GetFromJsonAsync<Lead>(MethodURL + $"{Id}", options);
+
             if (Lead == null)
             {
                 return NotFound();
             }
             else
             {
-                LatestVisit = await _daprClient.InvokeMethodAsync<Visit>(HttpMethod.Get, AppId, MethodURL + $"visit/latest/{Id}");
+                LatestVisit = await _httpClient.GetFromJsonAsync<Visit>(MethodURL + $"visit/latest/{Id}", options);
                 if (LatestVisit == null)
                 {
                     return NotFound();

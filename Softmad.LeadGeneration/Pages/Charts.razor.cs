@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using Softmad.LeadGeneration.Models;
 using Softmad.Services.Models;
+using System.Net.Http;
 
 namespace Softmad.LeadGeneration.Pages
 {
@@ -12,7 +13,9 @@ namespace Softmad.LeadGeneration.Pages
 
         [Inject]
         private DaprClient _daprClient { get; set; }
-
+        private HttpClient _httpClient { get; set; }
+        [Inject]
+        private IHttpClientFactory HttpClientFactory { get; set; }
         public IEnumerable<Visit>? LatestVisits { get; set; }
         public ChartData? WeeklyDataByStatus { get; set; }
         public ChartData? MonthlyDataByStatus { get; set; }
@@ -20,11 +23,13 @@ namespace Softmad.LeadGeneration.Pages
         public List<Visit>? MonthData { get; set; }
         protected override async Task OnInitializedAsync()
         {
+            _httpClient = HttpClientFactory.CreateClient("MyApiClient");
             await SetData();
         }
         private async Task SetData()
         {
-            LatestVisits = await _daprClient.InvokeMethodAsync<IEnumerable<Visit>>(HttpMethod.Get, AppId, MethodURL + $"/visit/latest");
+            //LatestVisits = await _daprClient.InvokeMethodAsync<IEnumerable<Visit>>(HttpMethod.Get, AppId, MethodURL + $"/visit/latest");
+            LatestVisits = await _httpClient.GetFromJsonAsync<List<Visit>>(MethodURL + "/visit/latest");
             // set past 7-days data
             WeeklyData = LatestVisits.Where(c => c.VisitDate.AddDays(7).Date >= DateTime.Now.Date).ToList();
             WeeklyDataByStatus = new()

@@ -1,7 +1,9 @@
+using AutoMapper;
 using Dapr.Client;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Softmad.Services.Models;
+using System.Text.Json;
 
 namespace Softmad.LeadGeneration.Pages
 {
@@ -10,21 +12,31 @@ namespace Softmad.LeadGeneration.Pages
         public int VisitCount = 0;
         private const string AppId = "Softmad-Services-LeadGeneration";
         private const string MethodURL = "api/LeadGeneration/GetVisitById/";
+        #region Service Injection
+        private readonly HttpClient _httpClient;
         private readonly DaprClient _daprClient;
-        public VisitDetailsModel(DaprClient daprClient)
+        private readonly ILogger<VisitDetailsModel> _logger;
+        #endregion
+        public VisitDetailsModel(DaprClient daprClient, IHttpClientFactory httpClientFactory, ILogger<VisitDetailsModel> logger)
         {
             _daprClient = daprClient;
+            _httpClient = httpClientFactory.CreateClient("MyApiClient");
+            _logger = logger;
         }
         [BindProperty]
         public Guid LeadId { get; set; }
-        public Visit LatestVisit { get; set; }
-        public List<Visit> VisitList { get; set; }
+        public List<Visit>? VisitList { get; set; }
 
 
         public async Task<IActionResult> OnGetAsync(Guid id)
         {
             LeadId = id;
-            VisitList = await _daprClient.InvokeMethodAsync<List<Visit>>(HttpMethod.Get, AppId, MethodURL + $"{id}");
+            //VisitList = await _daprClient.InvokeMethodAsync<List<Visit>>(HttpMethod.Get, AppId, MethodURL + $"{id}");
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            VisitList = await _httpClient.GetFromJsonAsync<List<Visit>>(MethodURL + $"{LeadId}", options);
             if (VisitList == null)
             {
                 return NotFound();

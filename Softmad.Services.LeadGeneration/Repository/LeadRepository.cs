@@ -20,7 +20,6 @@ namespace Softmad.Services.LeadGeneration.Repository
         {
             try
             {
-
                 ///Learn: https://www.linkedin.com/advice/3/how-do-you-avoid-ef-lazy-loading-pitfalls-n1-problem
                 //Here '.Include()' do EAGER loading 
                 var leads = _dataContext.Leads.Include(l => l.CustomerDetails)
@@ -97,6 +96,15 @@ namespace Softmad.Services.LeadGeneration.Repository
             }
             return sleads;
         }
+
+        //public async Task GetSearchResultLeadsAsync(string SearchString)
+        //{
+        //    //if (!string.IsNullOrEmpty(SearchString))
+        //    //            //{
+        //    //            //    movies = movies.Where(s => s.Title.Contains(SearchString));
+        //    //            //}
+        //    //
+        //}
 
         public async Task SaveVisit(Visit visitEntry)
         {
@@ -214,5 +222,10 @@ namespace Softmad.Services.LeadGeneration.Repository
         {
             await _dataContext.SaveChangesAsync();
         }
+
+        //Task<List<Lead>> ILeadRepository.GetSearchResultLeadsAsync(string SearchString)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }
