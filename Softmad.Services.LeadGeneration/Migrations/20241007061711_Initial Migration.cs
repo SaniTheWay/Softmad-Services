@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Softmad.Services.LeadGeneration.Migrations
 {
     /// <inheritdoc />
-    public partial class Azinitleads : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -71,7 +71,8 @@ namespace Softmad.Services.LeadGeneration.Migrations
                     Competitor = table.Column<bool>(type: "bit", nullable: false),
                     CompetitorName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CompetitorModel = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Remarks = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true)
+                    Remarks = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
+                    isLatestVisit = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

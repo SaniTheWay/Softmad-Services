@@ -1,0 +1,64 @@
+﻿@page "/search"
+@model PrivacyModel
+@{
+    ViewData["Title"] = "Search User Leads";
+}
+<h1 style = "text-align:center; margin-top:2rem;">@ViewData["Title"]</h1>
+
+<div class="container">
+    <form method="get" class="row justify-content-center" style="margin-bottom:1.5rem;">
+        <div class="col-md-6">
+            <div class="input-group" style="display:flex;">
+            <input type="text" class="form-control" placeholder="Search Name" asp-for="SearchString" id="searchField" />
+            <button type ="submit" class="btn btn-primary">Search</button>
+            </div>
+            </div>
+    </form>
+
+<div style="text-align:center;margin-bottom:2rem;">
+    @if (!string.IsNullOrEmpty(Model.SearchString))
+    {
+        <h3>Search Results for <strong>@Model.SearchString</strong></h3>
+    }
+    else
+    {
+        <h3>Showing All Leads</h3>
+    }
+</div>
+
+<div class="table-responsive" style="overflow-x:auto; -webkit-overflow-scrolling:touch;">
+<table class="table table-hover table-bordered table-striped" style="width:100%; max-width:100%; margin-bottom:1rem;">
+<thead class="table-dark text-center">
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Lead Id</th>
+                <th scope="col">Customer Name</th>
+                <th scope="col">Customer Type</th>
+                <th scope="col">Lead Type</th> 
+                <th scope="col">Status</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+                @foreach (var lead in Model.leadList?.OrderByDescending(x => x.LastUpdated))
+                {
+                    <tr>
+                        <td>@lead.LastUpdated</td>
+                        <td>@lead.Id</td>
+                        <td>@lead.CustomerDetails.HospitalDetails.Name</td>
+                        <td>@lead.CustomerDetails.CustomerType</td>
+                        <td>"ABC"</td>
+                        <td>"ABC"</td>
+                        <td>
+                            <a href="@($"/lead/{lead.Id}/details")" target="_blank" class="btn btn-sm btn-primary">OPEN</a>
+                        </td>
+                    </tr>
+                }
+        </tbody>
+    </table>
+</div>
+</div>
+
+
+
+

@@ -27,12 +27,18 @@ namespace Softmad.LeadGeneration.Pages
             {
                 leadList = await GetCurrentUserLeads();
             }
+            
 
         }
         private async Task<List<Lead>> GetCurrentUserLeads()
         {
             var result = await _daprClient.InvokeMethodAsync<IEnumerable<Lead>>(HttpMethod.Get, AppId, MethodURL +$"{CurrentUserId}");
             return result.ToList();
+        }
+        public async Task <int> GetVisitsCount(Guid leadId)
+        {
+            var result = await _daprClient.InvokeMethodAsync<int>(HttpMethod.Get, AppId, $"api/LeadGeneration/GetVisitsCount/{leadId}");
+            return result;
         }
 
         internal string GetCSSBadgeColor(LeadType? leadType = null!, LeadStatus? leadStatus = null!)

@@ -23,11 +23,11 @@ namespace Softmad.Services.LeadGeneration.Controllers
             _logger = logger;
         }
         // GET: api/<LeadGenerationController>
-        [HttpGet]
-        public async Task<IEnumerable<Lead>> GetLeads()
-        {
+        [HttpGet("GetAllLeads")]
+        public async Task<IActionResult> GetLeads()
+        {  
             var result = await _leadGenerationService.GetLeads();
-            return result;
+            return Ok(result);
         }
 
         // GET api/<LeadGenerationController>/5
@@ -47,6 +47,17 @@ namespace Softmad.Services.LeadGeneration.Controllers
                 return NotFound($"No leads found for the current employee {currentUserId}");
             }
             return Ok(leads);
+        }
+
+        [HttpGet("GetSearchLeads/{SearchString}")]
+        public async Task<IActionResult> GetSearchResult(string SearchString)
+        {
+            var searchleads = _leadGenerationService.GetSearchResultLeads(SearchString);
+            if(searchleads == null)
+            {
+                return NotFound($"No leads found for {SearchString}");
+            }
+            return Ok(searchleads);
         }
 
 
@@ -109,6 +120,7 @@ namespace Softmad.Services.LeadGeneration.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpGet("GetVisitById/{leadId}")]
         public async Task<IActionResult> GetVisitById(Guid leadId)
         {
@@ -156,6 +168,22 @@ namespace Softmad.Services.LeadGeneration.Controllers
             }
 
         }
+        
+        [HttpGet("GetVisitsCount/{leadId}")]
+        public async Task<IActionResult> GetVisitsCount(Guid leadId)
+        {
+            try
+            {
+                var visit = await _leadGenerationService.GetVisitByIdAsync(leadId);
+                return Ok(visit.Count);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("No Visits Found for Id");
+                return StatusCode(500, ex);
+            }
+
+        }
         #endregion
 
 
@@ -176,5 +204,6 @@ namespace Softmad.Services.LeadGeneration.Controllers
             }
         }
         #endregion
+
     }
 }

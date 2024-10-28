@@ -116,6 +116,15 @@ namespace Softmad.LeadGeneration.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                    var isAdmin = User.IsInRole("admin");
+                    if (isAdmin)
+                    {
+                        returnUrl = Url.Content("~/admin");                            
+                    }
+                    else
+                    {
+                        returnUrl = Url.Content("~/generate-lead");
+                    }
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

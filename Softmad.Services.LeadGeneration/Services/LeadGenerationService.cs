@@ -60,6 +60,7 @@ namespace Softmad.Services.LeadGeneration.Services
             }
         }
 
+
         public async Task CreateVisitAsync(Visit visit)
         {
             try
@@ -144,5 +145,10 @@ namespace Softmad.Services.LeadGeneration.Services
             return b;
         }
 
+        public List<Lead> GetSearchResultLeads(string SearchString)
+        {
+            var searchleads = _leadRepository.GetSearchResultLeadsAsync(SearchString);
+            return searchleads;
+        }
     }
 }
