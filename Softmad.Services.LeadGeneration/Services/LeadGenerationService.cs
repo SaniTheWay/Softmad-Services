@@ -60,18 +60,6 @@ namespace Softmad.Services.LeadGeneration.Services
             }
         }
 
-        public async Task GetSearchResultLeadsAsync(string SearchString)
-        {
-            try 
-            {
-                await _leadRepository.GetSearchResultLeadsAsync(SearchString);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"No Leads found for : {SearchString}");
-                throw;
-            }
-        }
 
         public async Task CreateVisitAsync(Visit visit)
         {
@@ -157,9 +145,10 @@ namespace Softmad.Services.LeadGeneration.Services
             return b;
         }
 
-        public Task<List<Lead>> GetSearchResultLeads(string SearchString)
+        public List<Lead> GetSearchResultLeads(string SearchString)
         {
-            throw new NotImplementedException();
+            var searchleads = _leadRepository.GetSearchResultLeadsAsync(SearchString);
+            return searchleads;
         }
     }
 }

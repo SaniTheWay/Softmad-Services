@@ -28,7 +28,7 @@
                 <span asp-validation-for="Visit.VisitDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Visit.Duration">Duration <sub>(in min)</sub></label>
+                <label asp-for="Visit.Duration">Duration <sup>(in min)</sup></label>
                 <input asp-for="Visit.Duration" class="form-control" type="number" />
                 <span asp-validation-for="Visit.Duration" class="text-danger"></span>
             </div>
@@ -86,7 +86,7 @@
                     <option class="form-option" value=@LeadStatus.Completed>
                         Completed
                     </option>
-                </select>``
+                </select>
                 <span asp-validation-for="Visit.Status" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -106,12 +106,12 @@
                 <span asp-validation-for="Visit.ClosurePlan" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Visit.Requirements">Requiremnts <sub><strong>,</strong> separated</sub> </label>
+                <label asp-for="Visit.Requirements">Requirements <sub>, separated</sub> </label>
                 <textarea asp-for="Visit.Requirements" class="form-control"></textarea>
                 <span asp-validation-for="Visit.Requirements" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Visit.ExistingMachines">Existing Machines <sub><strong>,</strong> separated</sub> </label>
+                <label asp-for="Visit.ExistingMachines">Existing Machines <sub>, separated</sub> </label>
                 <input asp-for="Visit.ExistingMachines" type="text" class="form-control">
                 <span asp-validation-for="Visit.ExistingMachines" class="text-danger"></span>
             </div>

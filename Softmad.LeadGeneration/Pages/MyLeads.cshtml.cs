@@ -36,11 +36,11 @@ namespace Softmad.LeadGeneration.Pages
                 leadList = await HTTPClient_GetCurrentUserLeads();
             }
         }
-        private async Task<List<Lead>> GetCurrentUserLeads()
-        {
-            var result = await _daprClient.InvokeMethodAsync<IEnumerable<Lead>>(HttpMethod.Get, AppId, MethodURL + $"{CurrentUserId}");
-            return result.ToList();
-        }
+        //private async Task<List<Lead>> GetCurrentUserLeads()
+        //{
+        //    var result = await _daprClient.InvokeMethodAsync<IEnumerable<Lead>>(HttpMethod.Get, AppId, MethodURL + $"{CurrentUserId}");
+        //    return result.ToList();
+        //}
 
         private async Task<List<Lead>?> HTTPClient_GetCurrentUserLeads()
         {

@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient.DataClassification;
+using Microsoft.Extensions.Primitives;
 using OfficeOpenXml;
 using Softmad.LeadGeneration.Models;
 using Softmad.LeadGeneration.Models.DTOs;
 using Softmad.Services.Models;
 using System.Net.Http;
+using System.Text;
 
 namespace Softmad.LeadGeneration.Pages
 {
@@ -15,7 +17,7 @@ namespace Softmad.LeadGeneration.Pages
     public class IndexModel : PageModel
     {
         private const string AppId = "Softmad-Services-LeadGeneration";
-        private const string MethodURL = "api/LeadGeneration";
+        private const string MethodBaseURL = "api/LeadGeneration";
 
         private readonly ILogger<IndexModel> _logger;
         private readonly DaprClient _daprClient;
@@ -38,18 +40,21 @@ namespace Softmad.LeadGeneration.Pages
 
         public async Task<IActionResult> OnPostDownloadReport()
         {
-            var request = new HttpRequestMessage();
+            //var request = new HttpRequestMessage();
+            var MethodURL = new StringBuilder(MethodBaseURL);
             var stream = new MemoryStream();
 
             string filename = "Error-File";
             if (FileSelection == ChartTypeEnum.WeeklyChart)
             {
-                request = _daprClient.CreateInvokeMethodRequest(HttpMethod.Get, AppId, MethodURL + $"/report?type=weekly");
+                //request = _daprClient.CreateInvokeMethodRequest(HttpMethod.Get, AppId, MethodURL + $"/report?type=weekly");
+                MethodURL.Append($"/report?type=weekly");
                 filename = $"WeekReport {DateTime.Now.Date.AddDays(-7).ToString("dd-MM-yy")} to {DateTime.Now.Date.ToString("dd-MM-yy")}.xlsx";
             }
             else if (FileSelection == ChartTypeEnum.MonthlyChart)
             {
-                request = _daprClient.CreateInvokeMethodRequest(HttpMethod.Get, AppId, MethodURL + $"/report?type=monthly");
+                //request = _daprClient.CreateInvokeMethodRequest(HttpMethod.Get, AppId, MethodURL + $"/report?type=monthly");
+                MethodURL.Append($"/report?type=monthly");
                 filename = $"MonthReport - {DateTime.Now.ToString("MMMM")}.xlsx";
             }
             else
@@ -59,7 +64,7 @@ namespace Softmad.LeadGeneration.Pages
             }
             try
             {
-                var data = await _daprClient.InvokeMethodAsync<ReportResponse>(request);
+                var data = await _httpClient.GetFromJsonAsync<ReportResponse>(MethodURL.ToString());
                 using (var package = new ExcelPackage(stream))
                 {
                     var worksheet = package.Workbook.Worksheets.Add(filename);
@@ -67,9 +72,9 @@ namespace Softmad.LeadGeneration.Pages
                     // Setting Column Names:
                     setColumns(worksheet);
 
-                    var responseList = data.Response;
+                    var responseList = data?.Response;
                     // Setting Values
-                    for (var i = 2; i < responseList.Count + 2; i++)
+                    for (var i = 2; i < responseList?.Count + 2; i++)
                     {
                         var row = responseList[i - 2];
                         setRows(worksheet, row, i);

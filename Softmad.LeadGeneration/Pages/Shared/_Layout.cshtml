@@ -41,13 +41,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/MultiStepForm">Generate</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/MyLeads">Leads</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Search">Search</a>
                         </li>
                         @{
                             var isAdmin = User.IsInRole("admin");
@@ -56,6 +50,10 @@
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Index">Admin</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/SearchLeads">Search</a>
                             </li>
                         }
                     </ul>
