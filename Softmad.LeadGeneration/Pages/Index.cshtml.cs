@@ -7,6 +7,7 @@ using OfficeOpenXml;
 using Softmad.LeadGeneration.Models;
 using Softmad.LeadGeneration.Models.DTOs;
 using Softmad.Services.Models;
+using System.Net.Http;
 
 namespace Softmad.LeadGeneration.Pages
 {
@@ -18,14 +19,16 @@ namespace Softmad.LeadGeneration.Pages
 
         private readonly ILogger<IndexModel> _logger;
         private readonly DaprClient _daprClient;
+        private readonly HttpClient _httpClient;
         [BindProperty]
         public ChartTypeEnum FileSelection { get; set; } 
         public IEnumerable<Lead>? LeadList { get; set; }
 
-        public IndexModel(ILogger<IndexModel> logger, DaprClient daprClient)
+        public IndexModel(ILogger<IndexModel> logger, DaprClient daprClient, IHttpClientFactory httpClientFactory)
         {
             _logger = logger;
             _daprClient = daprClient;
+            _httpClient = httpClientFactory.CreateClient("MyApiClient");
         }
         public void OnGet()
         {

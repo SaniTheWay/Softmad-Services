@@ -180,7 +180,7 @@ namespace Softmad.Services.LeadGeneration.Controllers
             catch (Exception ex)
             {
                 _logger.LogError("No Visits Found for Id");
-                return StatusCode(500, ex);
+                return Ok(0);
             }
 
         }

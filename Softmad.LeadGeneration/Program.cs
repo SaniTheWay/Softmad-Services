@@ -7,6 +7,11 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("AccountsContextConnection") ?? throw new InvalidOperationException("Connection string 'AccountsContextConnection' not found.");
 
 builder.Services.AddDbContext<AccountsContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddHttpClient("MyApiClient", client =>
+{
+    client.BaseAddress = new Uri("http://softmad.services.leadgeneration:8080/");
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
 builder.Services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true).AddDefaultUI().AddEntityFrameworkStores<AccountsContext>().AddDefaultTokenProviders();
 
 builder.Services.AddAuthorization(options =>

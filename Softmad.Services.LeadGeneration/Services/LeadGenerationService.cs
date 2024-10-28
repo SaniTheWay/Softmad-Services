@@ -157,5 +157,9 @@ namespace Softmad.Services.LeadGeneration.Services
             return b;
         }
 
+        public Task<List<Lead>> GetSearchResultLeads(string SearchString)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

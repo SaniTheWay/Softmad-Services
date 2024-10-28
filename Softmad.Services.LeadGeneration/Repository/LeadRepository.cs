@@ -202,5 +202,10 @@ namespace Softmad.Services.LeadGeneration.Repository
         {
             await _dataContext.SaveChangesAsync();
         }
+
+        Task<List<Lead>> ILeadRepository.GetSearchResultLeadsAsync(string SearchString)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
