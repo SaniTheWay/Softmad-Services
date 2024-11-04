@@ -12,15 +12,15 @@ using Softmad.LeadGeneration.Data;
 namespace Softmad.LeadGeneration.Migrations
 {
     [DbContext(typeof(AccountsContext))]
-    [Migration("20240926072807_Initial Migration")]
-    partial class InitialMigration
+    [Migration("20241104181617_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.6")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
