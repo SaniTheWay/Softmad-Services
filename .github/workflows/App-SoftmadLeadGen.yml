@@ -1,10 +1,10 @@
-name: Build and deploy .NET Core application to Web App AppSoftmadLeadGeneration
+name: Build and deploy .NET Core application to Web App App-SoftmadLeadGen
 on:
   push:
     branches:
-    - master
+    - sd/azure-configuration
 env:
-  AZURE_WEBAPP_NAME: AppSoftmadLeadGeneration
+  AZURE_WEBAPP_NAME: App-SoftmadLeadGen
   AZURE_WEBAPP_PACKAGE_PATH: Softmad.LeadGeneration\published
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 8.0.x
@@ -44,5 +44,5 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.AppSoftmadLeadGeneration_B583 }}
+        publish-profile: ${{ secrets.App_SoftmadLeadGen_E29A }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
