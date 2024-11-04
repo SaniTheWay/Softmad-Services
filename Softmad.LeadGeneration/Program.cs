@@ -1,10 +1,17 @@
+using Azure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Softmad.LeadGeneration.Areas.Identity.Data;
 using Softmad.LeadGeneration.AutoMapper;
 using Softmad.LeadGeneration.Data;
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("AccountsContextConnection") ?? throw new InvalidOperationException("Connection string 'AccountsContextConnection' not found.");
+
+// Fetch the connection string from Azure App Configuration
+builder.Configuration.AddAzureAppConfiguration(builder.Configuration["ConnectionStrings:AppConfig"]);
+
+// Now retrieve the connection string from App Configuration
+var connectionString = builder.Configuration["DefaultDatabaseConnectionString"]
+                       ?? throw new InvalidOperationException("Connection string 'AccountsContextConnection' not found.");
 
 builder.Services.AddDbContext<AccountsContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddHttpClient("MyApiClient", client =>
