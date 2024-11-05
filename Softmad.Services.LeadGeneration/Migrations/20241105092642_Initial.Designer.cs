@@ -12,8 +12,8 @@ using Softmad.Services.LeadGeneration.Data;
 namespace Softmad.Services.LeadGeneration.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20241007061711_Initial Migration")]
-    partial class InitialMigration
+    [Migration("20241105092642_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
