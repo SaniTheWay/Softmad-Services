@@ -16,7 +16,9 @@ var connectionString = builder.Configuration["DefaultDatabaseConnectionString"]
 builder.Services.AddDbContext<AccountsContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddHttpClient("MyApiClient", client =>
 {
-    client.BaseAddress = new Uri("http://softmad.services.leadgeneration:8080/");
+    //client.BaseAddress = new Uri("http://softmad.services.leadgeneration:8080/");
+    client.BaseAddress = new Uri(builder.Configuration["ApiClientUri"]);
+
     client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
 builder.Services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true).AddDefaultUI().AddEntityFrameworkStores<AccountsContext>().AddDefaultTokenProviders();

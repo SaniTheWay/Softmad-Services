@@ -13,7 +13,15 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<DataContext>(opt=> opt.UseSqlServer(builder.Configuration.GetConnectionString("LeadsConnection"))); //move this to SQL Server
+// Fetch the connection string from Azure App Configuration
+builder.Configuration.AddAzureAppConfiguration(builder.Configuration["ConnectionStrings:AppConfig"]);
+
+// Now retrieve the connection string from App Configuration
+var connectionString = builder.Configuration["DefaultDatabaseConnectionString"]
+                       ?? throw new InvalidOperationException("Connection string 'DB Connection String' not found.");
+
+builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionString));
+//builder.Services.AddDbContext<DataContext>(opt=> opt.UseSqlServer(builder.Configuration.GetConnectionString("LeadsConnection"))); //move this to SQL Server
 
 #region Application Services
 // builder.Services.Lifetime<Interface, Implimentation>();
