@@ -70,12 +70,13 @@ namespace Softmad.LeadGeneration.Models.DTOs
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
+        //[Phone]
         public string OwnerPhone { get; set; }
         public string OwnerName { get; set; }
-        public string BioMedicalPhone { get; set; }
-        public string BioMedicalName { get; set; }
-        public string PurchaseHeadPhone { get; set; }
-        public string PurchaseHeadName { get; set; }
+        public string BioMedicalPhone { get; set; } = "NA";
+        public string BioMedicalName { get; set; } = "NA";
+        public string PurchaseHeadPhone { get; set; } = "NA";
+        public string PurchaseHeadName { get; set; } = "NA";
         //public ICollection<HospitalContact> HospitalContacts { get; set; }
     }
 
