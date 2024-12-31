@@ -30,7 +30,11 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index" style="display: flex; align-items: center;">
+                @{
+                    var isAdmin = User.IsInRole("admin");
+                    var logoURL = isAdmin ? "/Index" : "/generate-lead";
+                }
+                <a class="navbar-brand" asp-area="" asp-page=logoURL style="display: flex; align-items: center;">
                     <img src="~/Asset/logo_main.jpeg" alt="Icon" style="width: auto; height: 40px; margin-right: 10px;" />
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent"
@@ -45,9 +49,6 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/MyLeads">Leads</a>
                         </li>
-                        @{
-                            var isAdmin = User.IsInRole("admin");
-                        }
                         @if (isAdmin)
                         {
                             <li class="nav-item">
@@ -101,7 +102,7 @@
                 &copy; 2024 - Softmad Services - <a asp-area="" asp-page="/Privacy">Privacy</a>
             </div>
             <div>
-                <a class="navbar-brand" asp-area="" asp-page="/Index" style="display: flex; align-items: center;">
+                <a class="navbar-brand" asp-area="" asp-page=logoURL style="display: flex; align-items: center;">
                     <img src="~/Asset/logo_main.jpeg" alt="Icon" style="width: auto; height: 30px; margin-left: 10px;">
                 </a>
             </div>

@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Softmad.LeadGeneration.Pages
 {
-    [Authorize(Policy = "admin")]
     public class BlankModel : PageModel
     {
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            return Redirect("/generate-lead");
         }
     }
 }
