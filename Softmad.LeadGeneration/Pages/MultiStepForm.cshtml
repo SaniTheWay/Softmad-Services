@@ -41,8 +41,8 @@
                 <select id="chooseType" class="form-select" onchange="showFields()">
                     <option value="" disabled selected>-- Select --</option>
                     <option value="Owner">Point Of Contact (POC)</option>
-                    <option value="Purchase Head">Purchase Head</option>
-                    <option value="Bio Medical">Bio Medical</option>
+                    <option value="Purchase Head" disabled="true" style="display:none;">Purchase Head</option>
+                    <option value="Bio Medical" disabled="true" style="display:none;">Bio Medical</option>
                 </select>
             </div>
             <div class="form-group gap-0">
@@ -50,22 +50,22 @@
                 <div id="purchaseHeadFields" style="display: none;background:#eeecec; padding:10px;">
                     <div class="form-group">
                         <label asp-for="Lead.CustomerDetails.HospitalDetails.PurchaseHeadName">Name:</label>
-                        <input asp-for="Lead.CustomerDetails.HospitalDetails.PurchaseHeadName" type="text" id="purchaseHeadName" class="form-control">
+                        <input asp-for="Lead.CustomerDetails.HospitalDetails.PurchaseHeadName" value="NA" type="text" id="purchaseHeadName" class="form-control">
                     </div>
                     <div class="form-group">
                         <label asp-for="Lead.CustomerDetails.HospitalDetails.PurchaseHeadPhone">Phone:</label>
-                        <input asp-for="Lead.CustomerDetails.HospitalDetails.PurchaseHeadPhone" type="text" id="purchaseHeadPhone" class="form-control">
+                        <input asp-for="Lead.CustomerDetails.HospitalDetails.PurchaseHeadPhone" value="NA" type="text" id="purchaseHeadPhone" class="form-control">
                     </div>
                 </div>
 
                 <div id="bioMedicalFields" style="display: none;background:#eeecec; padding:10px;">
                     <div class="form-group">
                         <label asp-for="Lead.CustomerDetails.HospitalDetails.BioMedicalName">Name:</label>
-                        <input asp-for="Lead.CustomerDetails.HospitalDetails.BioMedicalName" type="text" id="bioMedicalName" class="form-control">
+                        <input asp-for="Lead.CustomerDetails.HospitalDetails.BioMedicalName" value="NA" type="text" id="bioMedicalName" class="form-control">
                     </div>
                     <div class="form-group">
                         <label asp-for="Lead.CustomerDetails.HospitalDetails.BioMedicalPhone">Phone:</label>
-                        <input asp-for="Lead.CustomerDetails.HospitalDetails.BioMedicalPhone" type="text" id="bioMedicalPhone" class="form-control">
+                        <input asp-for="Lead.CustomerDetails.HospitalDetails.BioMedicalPhone" value="NA" type="text" id="bioMedicalPhone" class="form-control">
                     </div>
                 </div>
 
@@ -92,7 +92,7 @@
 
             <div class="form-group">
                 <label asp-for="Lead.CustomerDetails.HospitalDetails.Email">Email</label>
-                <input asp-for="Lead.CustomerDetails.HospitalDetails.Email" id="email" type="email" class="form-control">
+                <input asp-for="Lead.CustomerDetails.HospitalDetails.Email" type="text" class="form-control">
                 <span asp-validation-for="Lead.CustomerDetails.HospitalDetails.Email" class="text-danger"></span>
 
             </div>
@@ -154,7 +154,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Lead.CustomerDetails.DoctorDetails.Email">Doctor Email</label>
-                <input asp-for="Lead.CustomerDetails.DoctorDetails.Email" type="email" class="form-control">
+                <input asp-for="Lead.CustomerDetails.DoctorDetails.Email" type="text" class="form-control">
                 <span asp-validation-for="Lead.CustomerDetails.DoctorDetails.Email" class="text-danger"></span>
 
             </div>

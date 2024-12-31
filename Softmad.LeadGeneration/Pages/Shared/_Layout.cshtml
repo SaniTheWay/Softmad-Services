@@ -117,5 +117,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> *@
 
     @await RenderSectionAsync("Scripts", required: false)
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+
 </body>
 </html>

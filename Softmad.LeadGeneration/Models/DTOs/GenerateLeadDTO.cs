@@ -9,7 +9,6 @@ namespace Softmad.LeadGeneration.Models.DTOs
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-        [Required]
         public CustomerDetails CustomerDetails { get; set; }
 
         public AdditionalDetails AdditionalDetails { get; set; }    
@@ -55,7 +54,6 @@ namespace Softmad.LeadGeneration.Models.DTOs
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-        [Required]
         public HospitalDetails HospitalDetails { get; set; }
         [Required]
         public DoctorDetails DoctorDetails { get; set; }
@@ -68,9 +66,13 @@ namespace Softmad.LeadGeneration.Models.DTOs
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
+        [Required] [MaxLength(100)]
         public string Name { get; set; }
+        [EmailAddress]
         public string Email { get; set; }
-        //[Phone]
+        [Phone]
+        [MaxLength(10,ErrorMessage ="Phone should not be more than 10 digits")]
+        [MinLength(10,ErrorMessage ="Phone should be strict 10 digits")]
         public string OwnerPhone { get; set; }
         public string OwnerName { get; set; }
         public string BioMedicalPhone { get; set; } = "NA";
@@ -87,7 +89,11 @@ namespace Softmad.LeadGeneration.Models.DTOs
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Specialization { get; set; }
+        [Phone]
+        [MaxLength(10, ErrorMessage = "Should not be more than 10 digits")]
+        [MinLength(10, ErrorMessage = "Should be strict 10 digits")]
         public string Phone { get; set; }
+        [EmailAddress]
         public string Email { get; set; }
     }
 }
