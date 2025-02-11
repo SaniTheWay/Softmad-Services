@@ -1,6 +1,7 @@
 ﻿using Softmad.Services.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Softmad.LeadGeneration.Models.DTOs
 {
@@ -69,7 +70,8 @@ namespace Softmad.LeadGeneration.Models.DTOs
         [Required] [MaxLength(100)]
         public string Name { get; set; }
         [EmailAddress]
-        public string Email { get; set; }
+        [AllowNull]
+        public string? Email { get; set; }
         [Phone]
         [MaxLength(10,ErrorMessage ="Phone should not be more than 10 digits")]
         [MinLength(10,ErrorMessage ="Phone should be strict 10 digits")]
@@ -92,8 +94,9 @@ namespace Softmad.LeadGeneration.Models.DTOs
         [Phone]
         [MaxLength(10, ErrorMessage = "Should not be more than 10 digits")]
         [MinLength(10, ErrorMessage = "Should be strict 10 digits")]
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
         [EmailAddress]
-        public string Email { get; set; }
+        [AllowNull]
+        public string? Email { get; set; } = string.Empty;
     }
 }
