@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Softmad.Services.Models
 {
@@ -25,10 +26,12 @@ namespace Softmad.Services.Models
     public class Address
     {
         public string AddressLine1 { get; set; }
-        public string AddressLine2 { get; set; }
+        [AllowNull]
+        public string? AddressLine2 { get; set; }
         public string City { get; set; }
         public string State { get; set; } = "Chhattisgarh";
-        public string PinCode { get; set; } = "492006";
+        [AllowNull]
+        public string? PinCode { get; set; }
         public string Country { get; set; } = "India";
 
     }

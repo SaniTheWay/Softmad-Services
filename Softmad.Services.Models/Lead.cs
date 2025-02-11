@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Softmad.Services.Models
 {
@@ -49,7 +50,8 @@ namespace Softmad.Services.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string Email { get; set; }
+        [AllowNull]
+        public string? Email { get; set; }
         public string OwnerPhone { get; set; }
         public string OwnerName { get; set; }
         public string BioMedicalPhone { get; set; }
@@ -66,8 +68,10 @@ namespace Softmad.Services.Models
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Specialization { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
+        [AllowNull]
+        public string? Phone { get; set; }
+        [AllowNull]
+        public string? Email { get; set; }
     }
 
     //public class HospitalContact
